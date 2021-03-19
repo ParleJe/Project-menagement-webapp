@@ -1,20 +1,21 @@
 package live.rkozik.pm_app.backend.models;
 
+import lombok.Data;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "toDos")
+public @Data
+class ToDo {
 
-public class ToDo {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private SmallTask task;
-
     private String name;
 
-    public ToDo(Long id, SmallTask task, String name) {
-        this.id = id;
-        this.task = task;
-        this.name = name;
-    }
+    @ManyToOne
+    private SmallTask smallTask;
+
+
 }

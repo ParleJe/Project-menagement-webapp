@@ -1,29 +1,32 @@
 package live.rkozik.pm_app.backend.models;
 
 
+import lombok.Data;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SmallTask {
 
+@Entity
+@Table(name = "SmallTasks")
+public @Data
+class SmallTask {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private HugeTask hugeTask;
-
     private String description;
-
-    private List<ToDo> toDos;
-
     private boolean isDone;
 
-    private List<User> assigned;
+    @ManyToMany
+    @JoinTable(
+        name = "SmallTasks_assigned",
+        joinColumns = @JoinColumn(name = "id_smallTasks"),
+        inverseJoinColumns = @JoinColumn(name = "id_users"))
+    private List<User> projectAssigned;
+    @OneToMany(targetEntity = ToDo.class, mappedBy = "smallTask")
+    private List<ToDo> toDos = new ArrayList<>();
+    @ManyToOne
+    private HugeTask hugeTask;
 
-    public SmallTask(Long id, HugeTask hugeTask, String description, List<ToDo> toDos, boolean isDone, List<User> assigned) {
-        this.id = id;
-        this.hugeTask = hugeTask;
-        this.description = description;
-        this.toDos = toDos;
-        this.isDone = isDone;
-        this.assigned = assigned;
-    }
 }
