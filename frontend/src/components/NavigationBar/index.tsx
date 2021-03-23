@@ -16,14 +16,19 @@ import {
   MDBDropdownLink,
   MDBCollapse
 } from 'mdb-react-ui-kit';
-import {useState} from 'react'
+import {useState } from 'react'
+import NavigationBarProps from '../../helpers/interfaces/NavigationBarProps';
 
-const NavigationBar = () => {
+
+const NavigationBar = ({projects}: NavigationBarProps) => {
   const [showBasic, setShowBasic] = useState(false);
+
+  
+
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
       <MDBContainer fluid>
-        <MDBNavbarBrand href='#'>Brand</MDBNavbarBrand>
+        <MDBNavbarBrand href='#'>Bénévoles</MDBNavbarBrand>
 
         <MDBNavbarToggler
           aria-controls='navbarSupportedContent'
@@ -36,36 +41,9 @@ const NavigationBar = () => {
 
         <MDBCollapse navbar show={showBasic}>
           <MDBNavbarNav>
-            <MDBNavbarItem>
-              <MDBNavbarLink active aria-current='page' href='#'>
-                Home
-              </MDBNavbarLink>
-            </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href='#'>Link</MDBNavbarLink>
-            </MDBNavbarItem>
-
-            <MDBNavbarItem>
-              <MDBDropdown>
-                <MDBDropdownToggle tag='a' className='nav-link'>
-                  Dropdown
-                </MDBDropdownToggle>
-                <MDBDropdownMenu>
-                  <MDBDropdownItem>
-                    <MDBDropdownLink>Action</MDBDropdownLink>
-                  </MDBDropdownItem>
-                  <MDBDropdownItem>
-                    <MDBDropdownLink>Another action</MDBDropdownLink>
-                  </MDBDropdownItem>
-                </MDBDropdownMenu>
-              </MDBDropdown>
-            </MDBNavbarItem>
-
-            <MDBNavbarItem>
-              <MDBNavbarLink disabled href='#' tabIndex={1} aria-disabled='true'>
-                Disabled
-              </MDBNavbarLink>
-            </MDBNavbarItem>
+          {projects.map((value, index) => {
+            return <MDBNavbarItem><MDBNavbarLink>{value.name}</MDBNavbarLink></MDBNavbarItem>
+          })}
           </MDBNavbarNav>
           <div style={{minWidth: '20%'}} className="d-flex justify-content-end">
             <span className="navbar-text p-3">Name Surname</span>
@@ -78,3 +56,19 @@ const NavigationBar = () => {
 }
 
 export default NavigationBar;
+
+            // <MDBNavbarItem>
+            //   <MDBDropdown>
+            //     <MDBDropdownToggle tag='a' className='nav-link'>
+            //       Dropdown
+            //     </MDBDropdownToggle>
+            //     <MDBDropdownMenu>
+            //       <MDBDropdownItem>
+            //         <MDBDropdownLink>Action</MDBDropdownLink>
+            //       </MDBDropdownItem>
+            //       <MDBDropdownItem>
+            //         <MDBDropdownLink>Another action</MDBDropdownLink>
+            //       </MDBDropdownItem>
+            //     </MDBDropdownMenu>
+            //   </MDBDropdown>
+            // </MDBNavbarItem>
