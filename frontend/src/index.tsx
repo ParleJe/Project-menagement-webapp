@@ -5,13 +5,18 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import NavigationBar from './components/NavigationBar';
 import reportWebVitals from './reportWebVitals';
 import Project from './helpers/classes/Project';
+import MainBoard from './components/MainBoard';
+import { MDBContainer } from 'mdb-react-ui-kit';
 
 
 let projects: Array<Project> = [new Project(1, "name1", "description1"), new Project(2, "name2", "description2"), new Project(3, "name3", "description3")];
 
 ReactDOM.render(
   <React.StrictMode>
-    <NavigationBar projects={projects} />
+      <MDBContainer className="h-100" fluid>
+        <NavigationBar projects={projects} />
+        <MainBoard />
+      </MDBContainer>
   </React.StrictMode>,
   document.getElementById('root')
 );
