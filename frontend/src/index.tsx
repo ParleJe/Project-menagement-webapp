@@ -13,8 +13,8 @@ let projects: Array<Project> = [new Project(1, "name1", "description1"), new Pro
 
 ReactDOM.render(
   <React.StrictMode>
-      <MDBContainer className="h-100" fluid>
-        <NavigationBar projects={projects} />
+      <MDBContainer className="h-100">
+        <NavigationBar  projects={projects} />
         <MainBoard />
       </MDBContainer>
   </React.StrictMode>,
