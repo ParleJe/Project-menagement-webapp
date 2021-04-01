@@ -1,5 +1,6 @@
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 import DonutChart from "../DonutChart";
+import MembersTab from "../MembersTab";
 import ToDoList from "../ToDoList";
 const MainBoard = () => {
     return(
@@ -13,7 +14,7 @@ const MainBoard = () => {
                     <MDBCol size="6" className="h-100 bg-secondary"> <ToDoList/> </MDBCol>
                 </MDBRow>
                 <MDBRow className="h-50 my-2">
-                    <MDBCol size="6" className="h-100 bg-success">MEMBERS TAB</MDBCol>
+                    <MDBCol size="6" className="h-100 bg-success"> <MembersTab/> </MDBCol>
                     <MDBCol size="6" className="h-100 bg-danger">CHAT TAB</MDBCol>
                 </MDBRow>
             </div>
