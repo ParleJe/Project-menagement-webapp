@@ -7065,9 +7065,9 @@ md5.js@^1.3.4:
     safe-buffer "^5.1.2"
 
 mdb-react-ui-kit@^1.0.0-alpha4:
-  version "1.0.0-alpha4"
-  resolved "https://registry.yarnpkg.com/mdb-react-ui-kit/-/mdb-react-ui-kit-1.0.0-alpha4.tgz#497a81321bf97d9c708553135d3d136384db44eb"
-  integrity sha512-6Z4Kub39USWBvz1u5K4qdMVVD0nnboUazneSCzbmy22U9pnc8yPe4mk2BNwv9JZpaXjQkAAxBq2qslTRRt1JBw==
+  version "1.0.0-beta1"
+  resolved "https://registry.yarnpkg.com/mdb-react-ui-kit/-/mdb-react-ui-kit-1.0.0-beta1.tgz#215ef748fb1f41dd8358fb42337518c86569f15e"
+  integrity sha512-xc8QEi9fqjtVwjfkIlo9r+hayOxAvJPdblIJCweAlIQwwAQhKqH28tMvKEyGle9gcUf1sWX75ugSO2lPlMJ2KA==
   dependencies:
     "@popperjs/core" "2.6.0"
     clsx "1.1.1"
