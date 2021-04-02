@@ -9,3 +9,7 @@ body {
 #root {
   height: 88%;
 }
+
+.h-80 {
+  height: 80% !important ;
+}
