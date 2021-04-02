@@ -10,8 +10,8 @@ const MainBoard = () => {
             </div>
             <div className="col-lg-6 col-md-12 h-100">
                 <MDBRow className="h-50 my-2">
-                    <MDBCol size="6" className="h-100 bg-warning"> <DonutChart/> </MDBCol>
-                    <MDBCol size="6" className="h-100 bg-secondary"> <ToDoList/> </MDBCol>
+                    <MDBCol size="6" className="h-100 border-bottom"> <DonutChart/> </MDBCol>
+                    <MDBCol size="6" className="h-100 border-bottom"> <ToDoList/> </MDBCol>
                 </MDBRow>
                 <MDBRow className="h-50 my-2">
                     <MDBCol size="6" className="h-100"> <MembersTab/> </MDBCol>
