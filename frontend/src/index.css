@@ -13,3 +13,22 @@ body {
 .h-80 {
   height: 80% !important ;
 }
+
+
+.component {
+  height: 100% !important;
+}
+
+.component-wrapper {
+  height: 50% !important;
+}
+
+@media (max-width: 575.98px){
+  .component {
+    height: 50% !important;
+  }
+  
+  .component-wrapper {
+    height: 100% !important;
+  }
+}
