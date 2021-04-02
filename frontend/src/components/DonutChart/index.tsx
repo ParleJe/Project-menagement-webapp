@@ -10,7 +10,7 @@ const DonutChart = () => {
       ];
 
     return (
-        <MDBContainer className="p-5 h-100">
+        <MDBContainer className="h-100">
                 <PieChart lineWidth={20} rounded data={dataMock} />
         </MDBContainer>
     )
