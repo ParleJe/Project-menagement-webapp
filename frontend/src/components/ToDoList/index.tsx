@@ -18,8 +18,8 @@ const ToDoList = () => {
     return (
         <Fragment>
             <MDBInputGroup className="mb-1 shadow"> 
-                <MDBInputGroupElement type='text' placeholder="find by name" />
-                <MDBBtn outline color="success">add</MDBBtn>
+                <MDBInputGroupElement type='text' placeholder="new TO DO? :)" />
+                <MDBBtn outline color="primary">add</MDBBtn>
             </MDBInputGroup>
             <MDBContainer className="h-80 overflow-auto shadow-sm">
                 <MDBListGroup className="">
