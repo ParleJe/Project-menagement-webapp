@@ -21,7 +21,7 @@ const ToDoList = () => {
                 <MDBInputGroupElement type='text' placeholder="find by name" />
                 <MDBBtn outline color="success">add</MDBBtn>
             </MDBInputGroup>
-            <MDBContainer className="h-80 overflow-auto">
+            <MDBContainer className="h-80 overflow-auto shadow-sm">
                 <MDBListGroup className="">
                     {MockData.ToDos.map((el:ToDo, key:number) => {
                         return(

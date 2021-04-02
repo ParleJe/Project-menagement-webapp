@@ -20,7 +20,7 @@ const MembersTab = () => {
                     <MDBInputGroupElement type='text' placeholder="find by name" />
                     <MDBBtn outline color="success">add</MDBBtn>
             </MDBInputGroup>  
-        <MDBContainer className="w-100 h-80 overflow-auto">
+        <MDBContainer className="w-100 h-80 overflow-auto shadow-sm">
             {UserMock.map((user:User, key:number) => {
                 return (
                     <MDBRow between className="h-25 border"> 
