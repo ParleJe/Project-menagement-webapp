@@ -8,13 +8,13 @@ const MainBoard = () => {
             <div className="col-lg-6 col-md-12 h-100 bg-primary">
                 <MDBContainer fluid>KANBON</MDBContainer>
             </div>
-            <div className="col-lg-6 col-md-12 h-100 bg-warning">
+            <div className="col-lg-6 col-md-12 h-100">
                 <MDBRow className="h-50 my-2">
                     <MDBCol size="6" className="h-100 bg-warning"> <DonutChart/> </MDBCol>
                     <MDBCol size="6" className="h-100 bg-secondary"> <ToDoList/> </MDBCol>
                 </MDBRow>
                 <MDBRow className="h-50 my-2">
-                    <MDBCol size="6" className="h-100 bg-success"> <MembersTab/> </MDBCol>
+                    <MDBCol size="6" className="h-100"> <MembersTab/> </MDBCol>
                     <MDBCol size="6" className="h-100 bg-danger">CHAT TAB</MDBCol>
                 </MDBRow>
             </div>
