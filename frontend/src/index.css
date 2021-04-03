@@ -14,6 +14,19 @@ body {
   height: 80% !important ;
 }
 
+.h-90 {
+  height: 90% !important ;
+}
+
+.bg-lightblue {
+  background-color: #B3E5FC !important;
+}
+.bg-lightyellow {
+  background-color: #F0F4C3 !important;
+}
+.bg-lightred {
+  background-color: #EF9A9A !important;
+}
 
 .component {
   height: 100% !important;
