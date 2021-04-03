@@ -36,6 +36,14 @@ body {
   height: 50% !important;
 }
 
+.kanban-wrapper {
+  height: 100% !important;
+}
+
+.kanban {
+  height: 100% !important;
+}
+
 @media (max-width: 575.98px){
   .component {
     height: 50% !important;
@@ -43,5 +51,13 @@ body {
   
   .component-wrapper {
     height: 100% !important;
+  }
+
+  .kanban-wrapper {
+    height: 300% !important;
+  }
+
+  .kanban {
+    height: 33.333% !important;
   }
 }

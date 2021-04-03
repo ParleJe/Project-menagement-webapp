@@ -3,14 +3,15 @@ import { Fragment } from "react"
 
 interface props {
     color: string
+    title: string
 }
 
-const KanbanPiece = ({color}: props) => {
+const KanbanPiece = ({color, title}: props) => {
 
     return (
         <Fragment>
             <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top "+color}>
-                <h5>Not Started</h5>
+                <h5>{title}</h5>
             </MDBRow>
             <MDBContainer className="mt-0 p-0 overflow-auto h-90 w-100">
                             <div className="card my-1 mx-2 border shadow-lg">

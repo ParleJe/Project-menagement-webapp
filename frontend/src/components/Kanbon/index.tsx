@@ -12,16 +12,16 @@ const Kanbon = () => {
         <Fragment>
             <MDBRow between className="h-100 w-100 pt-2">
 
-                <MDBCol size="4 h-100" className="">
-                    <KanbanPiece color="bg-lightblue" />
+                <MDBCol size="sm-4 md-12 kanban" className="">
+                    <KanbanPiece title="Not Started" color="bg-lightblue" />
                 </MDBCol>
 
-                <MDBCol size="4 h-100" className="">
-                    <KanbanPiece color="bg-lightyellow" />
+                <MDBCol size="sm-4 lg-12 kanban" className="">
+                    <KanbanPiece title="In Progress" color="bg-lightyellow" />
                 </MDBCol>
 
-                <MDBCol size="4 h-100" className="">
-                    <KanbanPiece color="bg-lightred" />
+                <MDBCol size="sm-4 lg-12 kanban" className="">
+                    <KanbanPiece title="Done" color="bg-lightred" />
                 </MDBCol>
 
             </MDBRow>
