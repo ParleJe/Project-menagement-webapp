@@ -17,12 +17,12 @@ const ToDoList = () => {
 
     return (
         <Fragment>
-            <MDBInputGroup className="mb-1 shadow"> 
+            <MDBInputGroup className="mb-2 shadow"> 
                 <MDBInputGroupElement type='text' placeholder="new TO DO? :)" />
                 <MDBBtn outline color="primary">add</MDBBtn>
             </MDBInputGroup>
-            <MDBContainer className="h-80 overflow-auto shadow-sm">
-                <MDBListGroup className="">
+            <MDBContainer className="m-0 p-0 h-80 overflow-auto shadow-sm">
+                <MDBListGroup className="m-0 p-0 px-2">
                     {MockData.ToDos.map((el:ToDo, key:number) => {
                         return(
                             <MDBListGroupItem key={key} color={(key%2===0)?"dark":"light"}>
