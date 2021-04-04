@@ -1,20 +1,28 @@
 import { MDBContainer } from 'mdb-react-ui-kit';
+import { CSSProperties, Fragment } from 'react';
 import {PieChart} from 'react-minimal-pie-chart';
 
 const DonutChart = () => {
 
     const dataMock = [
-        { title: 'Done', value: 10, color: '#00b74a' },
-        { title: 'Not Started', value: 6, color: '#f93154' },
-        { title: 'In Progress', value: 20, color: '#39c0ed' },
+        { title: 'Done', key: 1, value: 10, color: '#00b74a' },
+        { title: 'Not Started', key: 2, value: 6, color: '#f93154' },
+        { title: 'In Progress', key: 3, value: 20, color: '#39c0ed' },
       ];
 
+      const style:CSSProperties = {
+        fontSize: "0.5em"
+      }
+
     return (
-        <MDBContainer className="h-100">
-                <PieChart lineWidth={20} rounded data={dataMock} />
-        </MDBContainer>
+        <Fragment>
+            <h1 className="text-center">Progress:</h1>
+            <MDBContainer className="h-80 w-100">
+                    <PieChart viewBoxSize={[100,100]} animate onClick={(e,index) => alert(dataMock[index].title)} lineWidth={30} rounded data={dataMock} />
+            </MDBContainer>
+        </Fragment>
     )
 
 } 
-
+//labelPosition={90} labelStyle={style} label={(key) => key.dataEntry.title}
 export default DonutChart;
