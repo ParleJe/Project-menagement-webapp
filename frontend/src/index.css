@@ -3,9 +3,61 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  height: 88%;
+}
+
+.h-80 {
+  height: 80% !important ;
+}
+
+.h-90 {
+  height: 90% !important ;
+}
+
+.bg-lightblue {
+  background-color: #B3E5FC !important;
+}
+.bg-lightyellow {
+  background-color: #F0F4C3 !important;
+}
+.bg-lightred {
+  background-color: #EF9A9A !important;
+}
+
+.component {
+  height: 100% !important;
+}
+
+.component-wrapper {
+  height: 50% !important;
+}
+
+.kanban-wrapper {
+  height: 100% !important;
+}
+
+.kanban {
+  height: 100% !important;
+}
+
+@media (max-width: 575.98px){
+  .component {
+    height: 50% !important;
+  }
+  
+  .component-wrapper {
+    height: 100% !important;
+  }
+
+  .kanban-wrapper {
+    height: 300% !important;
+  }
+
+  .kanban {
+    height: 33.333% !important;
+  }
 }
