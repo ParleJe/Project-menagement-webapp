@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
     reducer: {
-      projects: projectsReducer,
-      hugeTasks: hugeTasksReducer,
-      smallTasks: smallTasksReducer,
-      toDos: toDosReducer,
+      // projects: projectsReducer,
+      // hugeTasks: hugeTasksReducer,
+      // smallTasks: smallTasksReducer,
+      // toDos: toDosReducer,
     },
   })
 
@@ -13,3 +13,5 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>
 
 export type AppDispatch = typeof store.dispatch
+
+export {};
