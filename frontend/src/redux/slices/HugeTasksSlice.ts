@@ -26,7 +26,7 @@ const fetchHugeTasks = createAsyncThunk(
 const addHugeTask = createAsyncThunk(
     'HugeTask/add',
     async(hugeTask: HugeTask) => {
-        const response = await add(hugeTask.id, hugeTask);
+        const response = await add(hugeTask);
         return await response.json;
     }
     )
@@ -42,7 +42,7 @@ const removeHugeTasks = createAsyncThunk(
 const updateHugeTask = createAsyncThunk(
       'HugeTask/update',
       async (hugeTask: HugeTask) => {
-        const response = await update(hugeTask.idProject, hugeTask.id);
+        const response = await update(hugeTask);
         return await response.json();
       }
     )
