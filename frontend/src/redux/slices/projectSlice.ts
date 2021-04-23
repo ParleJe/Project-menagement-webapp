@@ -39,7 +39,6 @@ const removeProject = createAsyncThunk(
   }
 )
 
-//TODO end implementing asyncThunk addProject, removeProject
 
 export const projectSlice = createSlice({
     name: 'project',
@@ -66,9 +65,12 @@ export const projectSlice = createSlice({
       .addCase(addProject.fulfilled, (state, action) => {
         state.projects.push(action.payload);
       })
+      .addCase(addProject.pending, (state, action) => {
+        state.loading = "pending";
+      })
 
       .addCase(removeProject.fulfilled, (state, action) => {
-        //TODO remove from list removed project
+        state.projects.filter(project => project.id !== action.payload);
       })
     }
   });
