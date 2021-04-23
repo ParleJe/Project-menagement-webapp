@@ -13,11 +13,12 @@ const fetchAll = ():Promise<any> => {
 }
 
 const add = (project:Project):Promise<any> => {
-    const promise = fetch(API_URL+"TODO", {
+    const promise = fetch(API_URL, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
           },
+          body: JSON.stringify(project)
     });
     return promise;
 }
