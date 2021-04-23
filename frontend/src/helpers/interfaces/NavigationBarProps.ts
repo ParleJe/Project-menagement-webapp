@@ -1,5 +1,5 @@
-import Project from "../classes/Project";
-import User from "../classes/User";
+import Project from "../responseInterfaces/Project";
+import User from "../responseInterfaces/User";
 
 
 export default interface NaviationBarProps {

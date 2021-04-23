@@ -1,14 +1,14 @@
 import { MDBListGroup, MDBListGroupItem, MDBBadge, MDBContainer, MDBIcon, MDBInput, MDBBtn, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
-import ToDo from "../../helpers/classes/ToDo";
+import ToDo from "../../helpers/responseInterfaces/ToDo";
 import ToDoListProps from "../../helpers/interfaces/ToDoListProps";
 import React, {Fragment, useState} from "react";
 
-const MockData: ToDoListProps = {
-    ToDos: [new ToDo(1, "task1", [], false),new ToDo(2, "task2", [], false),new ToDo(3, "task3", [], false),
-            new ToDo(4, "task4", [], true),new ToDo(5, "task5", [], true),new ToDo(6, "task6", [], false),
-            new ToDo(7, "task7", [], false),new ToDo(8, "task8", [], true)]
-    //ToDos: []
-}
+// const MockData: ToDoListProps = {
+//     ToDos: [new ToDo(1, "task1", [], false),new ToDo(2, "task2", [], false),new ToDo(3, "task3", [], false),
+//             new ToDo(4, "task4", [], true),new ToDo(5, "task5", [], true),new ToDo(6, "task6", [], false),
+//             new ToDo(7, "task7", [], false),new ToDo(8, "task8", [], true)]
+//     //ToDos: []
+// }
 
 const ToDoList = () => {
     const [count, forceRefresh] = useState<number>(0);

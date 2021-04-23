@@ -1,4 +1,4 @@
-import Project from "../classes/Project";
+import Project from "../responseInterfaces/Project";
 
 const API_URL:string = "https://localhost:8080/api/projects/";
 

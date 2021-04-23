@@ -1,18 +1,13 @@
 import {MDBBtn, MDBCol, MDBContainer, MDBRow, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
 import React, { Fragment } from "react";
-import User from "../../helpers/classes/User";
+import User from "../../helpers/responseInterfaces/User";
 
 
 const MembersTab = () => {
 
-    const UserMock = [new User(1, "name", "surname", "", [], [], []), new User(1, "name", "surname", "", [], [], []), 
-                    new User(1, "name", "surname", "", [], [], []), new User(1, "name", "surname", "", [], [], []), 
-                    new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []), new User(1, "name", "surname", "", [], [], []), 
-                    new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []), new User(1, "name", "surname", "", [], [], []), 
-                    new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []), new User(1, "name", "surname", "", [], [], []), 
-                    new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []), new User(1, "name", "surname", "", [], [], []), 
-                    new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []), new User(1, "name", "surname", "", [], [], []), 
-                    new User(1, "name", "surname", "", [], [], []),new User(1, "name", "surname", "", [], [], []), ]
+    const UserMock: array<User> = [{id: 1,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, {id: 2,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, 
+                                   {id: 3,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, {id: 4,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, 
+                                   {id: 6,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, {id: 5,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, ]
 
     return (
         <Fragment>
