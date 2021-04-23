@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import HugeTask from "../../helpers/responseInterfaces/HugeTask";
-import {fetchAll, add, remove, update} from '../../helpers/API/HugeTask';
+import {fetchAll, add, remove, update} from '../../helpers/API/hugeTask';
 
 interface HugeTaskState {
     HugeTasks: HugeTask[],

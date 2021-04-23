@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Project from "../../helpers/responseInterfaces/Project";
-import {fetchAll, add, remove} from "../../helpers/API/Projects"
+import {fetchAll, add, remove} from "../../helpers/API/projects"
 
 
 interface projectState {
@@ -76,7 +76,4 @@ export const projectSlice = createSlice({
 
 export const {select} = projectSlice.actions;
 export {fetchProjects, addProject, removeProject};
-
-
-const projectReducer = projectSlice.reducer;
-export default projectReducer;
+export default projectSlice.reducer;
