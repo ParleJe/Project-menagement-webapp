@@ -5,9 +5,7 @@ import User from "../../helpers/responseInterfaces/User";
 
 const MembersTab = () => {
 
-    const UserMock: array<User> = [{id: 1,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, {id: 2,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, 
-                                   {id: 3,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, {id: 4,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, 
-                                   {id: 6,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, {id: 5,name: "name",surname: "surname",email: "",toDos: [],hugeTasks: []}, ]
+    const UserMock: Array<User> = [];
 
     return (
         <Fragment>
