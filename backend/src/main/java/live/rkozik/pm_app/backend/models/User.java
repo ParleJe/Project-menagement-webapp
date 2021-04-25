@@ -1,40 +1,40 @@
 package live.rkozik.pm_app.backend.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "Users")
-public @Data
-class User {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String email;
-    private Character[] password;
+    private String password;
     private String name;
     private String surname;
 
     @ManyToMany
     @JoinTable(
-            name = "project_assigned",
-            joinColumns = @JoinColumn(name = "id_users"),
-            inverseJoinColumns = @JoinColumn(name = "id_projects"))
+            name = "projectAssigned",
+            joinColumns = @JoinColumn(name = "idUsers"),
+            inverseJoinColumns = @JoinColumn(name = "idProjects"))
     private List<Project> projects;
     @ManyToMany
     @JoinTable(
-            name = "SmallTasks_assigned",
-            joinColumns = @JoinColumn(name = "id_users"),
-            inverseJoinColumns = @JoinColumn(name = "id_smallTasks"))
-    private List<SmallTask> smallTasks;
-    @ManyToMany
-    @JoinTable(
-            name = "HugeTasks_assigned",
-            joinColumns = @JoinColumn(name = "id_users"),
-            inverseJoinColumns = @JoinColumn(name = "id_hugeTasks"))
+            name = "HugeTasksAssigned",
+            joinColumns = @JoinColumn(name = "idUsers"),
+            inverseJoinColumns = @JoinColumn(name = "idHugeTasks"))
     private List<HugeTask> hugeTasks;
 
 }

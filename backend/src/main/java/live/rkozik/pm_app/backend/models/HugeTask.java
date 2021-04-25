@@ -1,30 +1,38 @@
 package live.rkozik.pm_app.backend.models;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "HugeTasks")
-public @Data
-class HugeTask {
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class HugeTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
     private String description;
     private boolean isDone;
 
     @ManyToMany
     @JoinTable(
-            name = "HugeTasks_assigned",
-            joinColumns = @JoinColumn(name = "id_hugeTasks"),
-            inverseJoinColumns = @JoinColumn(name = "id_users"))
+            name = "HugeTasksAssigned",
+            joinColumns = @JoinColumn(name = "idHugeTasks"),
+            inverseJoinColumns = @JoinColumn(name = "idUsers"))
     private List<User> hugeTaskAssigned;
-    @OneToMany(targetEntity = SmallTask.class, mappedBy = "hugeTask")
-    private List<SmallTask> smallTasks;
+    @OneToMany(targetEntity = ToDo.class, mappedBy = "hugeTask")
+    private List<ToDo> toDos;
     @ManyToOne
     private Project project;
 }

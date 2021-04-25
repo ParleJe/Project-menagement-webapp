@@ -1,6 +1,9 @@
 package live.rkozik.pm_app.backend.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,8 +11,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "Projects")
-public @Data
-class Project {
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,9 +26,9 @@ class Project {
 
     @ManyToMany
     @JoinTable(
-            name = "project_assigned",
-            joinColumns = @JoinColumn(name = "id_projects"),
-            inverseJoinColumns = @JoinColumn(name = "id_users"))
+            name = "projectAssigned",
+            joinColumns = @JoinColumn(name = "idProjects"),
+            inverseJoinColumns = @JoinColumn(name = "idUsers"))
     private List<User> projectAssigned;
     @OneToMany(targetEntity = HugeTask.class, mappedBy = "project")
     private List<HugeTask> tasks;
