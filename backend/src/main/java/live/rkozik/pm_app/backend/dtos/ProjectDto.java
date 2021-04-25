@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.util.UriComponents;
 
 import java.util.List;
 
@@ -15,6 +16,6 @@ public class ProjectDto {
     private Long id;
     private String name;
     private String description;
-    private List<SimpleUserDto> userAssigned;
-    private List<HugeTaskDto> hugeTasks;
+    private List<SimplifiedDto> userAssigned;
+    private List<SimplifiedDto> tasks;
 }

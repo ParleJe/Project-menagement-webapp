@@ -12,11 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserGetDto {
-
     private Long id;
     private String email;
     private String name;
     private String surname;
-    private List<HugeTaskDto> hugeTasks;
-    private List<ToDoDto> toDos;
+    private List<SimplifiedDto> hugeTasks;
+    private List<SimplifiedDto> projects;
 }

@@ -12,13 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPostDto {
-
     private Long id;
     private String email;
-    private Character[] password;
+    private String password;
     private String name;
     private String surname;
-    private List<HugeTaskDto> hugeTasks;
-    private List<ToDoDto> toDos;
 
 }

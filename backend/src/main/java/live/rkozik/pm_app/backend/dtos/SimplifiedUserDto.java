@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SimpleUserDto {
-
+public class SimplifiedUserDto {
     private Long id;
     private String email;
     private String name;
