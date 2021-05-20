@@ -19,7 +19,7 @@ const fetchProjects = createAsyncThunk(
   'projects/fetchAll',
   async () => {
     const response = await fetchAll();
-    return await response.json();
+    return (await response.json()) as Project[];
   }
 )
 

@@ -7,16 +7,20 @@ import reportWebVitals from './reportWebVitals';
 import Project from './helpers/responseInterfaces/Project';
 import MainBoard from './components/MainBoard';
 import { MDBContainer } from 'mdb-react-ui-kit';
+import { Provider } from 'react-redux';
+import {store} from './redux/store';
 
 
 let projects: Array<Project> = [];
 
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
       <MDBContainer fluid className="h-100">
-        <NavigationBar  projects={projects} />
+        <NavigationBar />
         <MainBoard />
       </MDBContainer>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

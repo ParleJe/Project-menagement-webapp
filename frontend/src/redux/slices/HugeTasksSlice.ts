@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import HugeTask from "../../helpers/responseInterfaces/HugeTask";
-import {fetchAll, add, remove, update} from '../../helpers/API/hugeTask';
+import {fetchAll, add, remove, update} from '../../helpers/API/HugeTask';
 
 interface HugeTaskState {
     HugeTasks: HugeTask[],
@@ -32,7 +32,7 @@ const addHugeTask = createAsyncThunk(
     )
 
 const removeHugeTasks = createAsyncThunk(
-    'HugeTask/fetchAllByProject',
+    'HugeTask/remove',
     async (hugeTask: HugeTask) => {
       const response = await remove(hugeTask.idProject, hugeTask.id);
       return await response.json();
@@ -81,7 +81,6 @@ export const HugeTasksSlice = createSlice({
        .addCase(addHugeTask.rejected, (state) => {
            state.loading = 'failed';
        })
-
        .addCase(removeHugeTasks.fulfilled, (state, action) => {
            state.HugeTasks.filter(HT => HT.id !== action.payload);
        })

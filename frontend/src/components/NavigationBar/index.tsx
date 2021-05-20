@@ -11,14 +11,19 @@ import {
   MDBBtn,
   MDBCollapse
 } from 'mdb-react-ui-kit';
-import {useState } from 'react'
-import NavigationBarProps from '../../helpers/interfaces/NavigationBarProps';
+import {useEffect, useState } from 'react'
+import {useAppSelector, useAppDispatch} from '../../redux/hooks'
+import Project from '../../helpers/responseInterfaces/Project';
+import {select, fetchProjects} from '../../redux/slices/projectSlice';
 
 
-const NavigationBar = ({projects}: NavigationBarProps) => {
+const NavigationBar = () => {
   const [showBasic, setShowBasic] = useState(false);
+  /*________________________REDUX________________________*/ 
+  const projects: Project[] = useAppSelector((state) => state.projects.projects);
+  const dispatch = useAppDispatch();
 
-  
+  useEffect(() => {dispatch(fetchProjects())})
 
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
@@ -37,7 +42,7 @@ const NavigationBar = ({projects}: NavigationBarProps) => {
         <MDBCollapse navbar show={showBasic}>
           <MDBNavbarNav>
           {projects.map((value, index) => {
-            return <MDBNavbarItem><MDBNavbarLink>{value.name}</MDBNavbarLink></MDBNavbarItem>
+            return <MDBNavbarItem key={index}><MDBNavbarLink onClick = {dispatch(select(value.id))}>{value.name}</MDBNavbarLink></MDBNavbarItem>
           })}
           </MDBNavbarNav>
           <div style={{minWidth: '20%'}} className="d-flex justify-content-end">
@@ -51,19 +56,3 @@ const NavigationBar = ({projects}: NavigationBarProps) => {
 }
 
 export default NavigationBar;
-
-            // <MDBNavbarItem>
-            //   <MDBDropdown>
-            //     <MDBDropdownToggle tag='a' className='nav-link'>
-            //       Dropdown
-            //     </MDBDropdownToggle>
-            //     <MDBDropdownMenu>
-            //       <MDBDropdownItem>
-            //         <MDBDropdownLink>Action</MDBDropdownLink>
-            //       </MDBDropdownItem>
-            //       <MDBDropdownItem>
-            //         <MDBDropdownLink>Another action</MDBDropdownLink>
-            //       </MDBDropdownItem>
-            //     </MDBDropdownMenu>
-            //   </MDBDropdown>
-            // </MDBNavbarItem>

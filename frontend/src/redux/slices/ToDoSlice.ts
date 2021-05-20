@@ -79,16 +79,11 @@ export const projectSlice = createSlice({
         .addCase(addToDo.rejected, (state) => {
             state.loading = 'failed';
         })
-
         .addCase(removeToDo.fulfilled, (state, action) => {
             console.log(action.payload);
             state.toDos.filter(TD => TD.id != action.payload);
             state.loading = 'succeeded';
         })
-        .addCase(addToDo.rejected, (state) => {
-            state.loading = 'failed';
-        })
-
         .addCase(updateToDo.fulfilled, (state, action) => {
             console.log(action.payload);
             state.toDos.filter(TD => TD.id != action.payload.id);

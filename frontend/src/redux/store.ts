@@ -3,7 +3,7 @@ import projectReducer from './slices/projectSlice';
 import hugeTaskReducer from './slices/HugeTasksSlice';
 import toDoReducer from './slices/ToDoSlice';
 
-const store = configureStore({
+export const store = configureStore({
     reducer: {
       projects: projectReducer,
       hugeTasks: hugeTaskReducer,
