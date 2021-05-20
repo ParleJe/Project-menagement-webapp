@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    @Query(value = "SELECT p FROM Project p inner join fetch p.projectAssigned as pa where pa.id = ?1")
+    @Query(value = "SELECT p FROM Project p inner join fetch p.usersAssigned as pa where pa.id = ?1")
     List<Project> findByIdUser(Long idUsers);
 }

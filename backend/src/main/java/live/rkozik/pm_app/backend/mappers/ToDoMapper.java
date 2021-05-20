@@ -15,5 +15,5 @@ public interface ToDoMapper {
     ToDoDto ToDoToToDoDto(ToDo source);
     ToDo ToDoDtoToToDo(ToDoDto source);
 
-    SimplifiedDto ToDoToSimplifiedDto(ToDo source);
+    ToDo SimplifiedDtoToToDo(SimplifiedDto source);
 }

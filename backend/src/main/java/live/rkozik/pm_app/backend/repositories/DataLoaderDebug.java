@@ -47,9 +47,9 @@ public class DataLoaderDebug implements ApplicationRunner {
     }
 
     private void initProjects() {
-        projects.add(Project.builder().name("human relations").description("table for HR").projectAssigned(users.subList(0,1)).build());
-        projects.add(Project.builder().name("IT department").description("table for IT").projectAssigned(users.subList(0,3)).build());
-        projects.add(Project.builder().name("marketing").description("table for marketing").projectAssigned(users.subList(1,4)).build());
+        projects.add(Project.builder().name("human relations").description("table for HR").usersAssigned(users.subList(0,1)).build());
+        projects.add(Project.builder().name("IT department").description("table for IT").usersAssigned(users.subList(0,3)).build());
+        projects.add(Project.builder().name("marketing").description("table for marketing").usersAssigned(users.subList(1,4)).build());
 
         projectRepository.saveAll(projects);
         projectRepository.flush();

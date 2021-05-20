@@ -29,7 +29,7 @@ public class Project {
             name = "projectAssigned",
             joinColumns = @JoinColumn(name = "idProjects"),
             inverseJoinColumns = @JoinColumn(name = "idUsers"))
-    private List<User> projectAssigned;
+    private List<User> usersAssigned;
     @OneToMany(targetEntity = HugeTask.class, mappedBy = "project")
     private List<HugeTask> tasks;
 

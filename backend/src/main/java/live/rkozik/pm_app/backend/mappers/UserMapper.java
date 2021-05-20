@@ -17,6 +17,4 @@ public interface UserMapper {
 
     UserGetDto UserToUserGetDto(User source);
     User UserGetDtoToUser(UserGetDto source);
-
-    SimplifiedUserDto UserToSimplifiedUserDto(User source);
 }

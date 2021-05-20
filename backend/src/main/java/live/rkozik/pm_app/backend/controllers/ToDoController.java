@@ -1,24 +1,34 @@
 package live.rkozik.pm_app.backend.controllers;
 
+import live.rkozik.pm_app.backend.dtos.ToDoDto;
 import live.rkozik.pm_app.backend.repositories.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ToDoController {
 
-    final private ToDoRepository repository;
-
-    @Autowired
-    public ToDoController(ToDoRepository _repository) {
-        this.repository = _repository;
+    @PutMapping("/todo/{id}")
+    private ResponseEntity<ToDoDto> updateToDo(@PathVariable Long id) {
+        return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/ToDo")
-    public String getAllToDos() {
-        repository.findAll();
-        return "Hello World";
+    @DeleteMapping("/todo/{id}")
+    private ResponseEntity<Boolean> deleteToDo(@PathVariable Long id) {
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/hugetask/{id}/todo")
+    private ResponseEntity<List<ToDoDto>> getToDoByHugeTask(@PathVariable Long id) {
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/todo/{id}")
+    private ResponseEntity<ToDoDto> getToDoById(@PathVariable Long id) {
+        return ResponseEntity.notFound().build();
     }
 
 }

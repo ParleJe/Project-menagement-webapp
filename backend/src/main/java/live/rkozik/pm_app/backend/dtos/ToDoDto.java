@@ -1,16 +1,12 @@
 package live.rkozik.pm_app.backend.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToDoDto {
-    private Long id;
-    private String name;
+public class ToDoDto extends SimplifiedDto {
     private boolean isDone;
 }

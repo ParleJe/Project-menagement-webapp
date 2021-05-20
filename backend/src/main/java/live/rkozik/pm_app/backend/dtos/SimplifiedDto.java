@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SimplifiedDto {
 
-    private Long id;
-    private String name;
-    private String description;
+public class SimplifiedDto {
+    protected Long id;
+    protected String name;
+    protected String description;
 }
