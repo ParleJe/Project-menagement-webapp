@@ -1,12 +1,14 @@
-import { MDBContainer, MDBRow } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
 import { Fragment } from "react"
+import HugeTask from "../../../helpers/responseInterfaces/HugeTask";
 
 interface props {
-    color: string
-    title: string
+    color: string,
+    title: string,
+    tasks: HugeTask[]
 }
 
-const KanbanPiece = ({color, title}: props) => {
+const KanbanPiece = ({color, title, tasks}: props) => {
 
     return (
         <Fragment>
@@ -14,55 +16,24 @@ const KanbanPiece = ({color, title}: props) => {
                 <h5>{title}</h5>
             </MDBRow>
             <MDBContainer className="mt-0 p-0 overflow-auto h-90 w-100">
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
+                {tasks.length === 0 && 
+                        <div className="card my-1 mx-2 border shadow-lg">
+                            <div className="card-body">
+                                <h5 className="card-title">Nothing here yet :c</h5>
                             </div>
-
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
+                        </div>
+                        }
+                {tasks.map(task => {
+                    return(
+                        <div className="card my-1 mx-2 border shadow-lg">
+                            <div className="card-body">
+                                <h5 className="card-title">{task.name}</h5>
+                                <p className="card-text">{task.description}</p>
                             </div>
-
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
-                            </div>
-
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
-                            </div>
-
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
-                            </div>
+                            <div className="card-footer">2 days ago</div>
+                        </div>
+                    )
+                })}
             </MDBContainer>
         </Fragment>
     )

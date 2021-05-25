@@ -1,4 +1,4 @@
-import ToDo from "../classes/ToDo";
+import ToDo from "../responseInterfaces/ToDo";
 
 interface ToDoListProps {
     ToDos: ToDo[];
