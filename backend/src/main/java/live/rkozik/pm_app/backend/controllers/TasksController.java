@@ -1,6 +1,6 @@
 package live.rkozik.pm_app.backend.controllers;
 
-import live.rkozik.pm_app.backend.dtos.HugeTaskDto;
+import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
 import live.rkozik.pm_app.backend.services.HugeTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class TasksController extends AbstractController {
 
     private final HugeTaskService service;
@@ -20,11 +21,10 @@ public class TasksController extends AbstractController {
         this.service = service;
     }
 
-    //TODO
     @GetMapping("/user/{id}/hugetask")
-    private ResponseEntity< List<HugeTaskDto> > getHugeTasksByUserId(@PathVariable Long id) {
+    private ResponseEntity< List<SimplifiedDto> > getHugeTasksByUserId(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":getHugeTasksByUserId:"+getTime());
-        List<HugeTaskDto> projectList = service.getTasksByIdUser(id);
+        List<SimplifiedDto> projectList = service.getTasksByIdUser(id);
 
         if(projectList.isEmpty())
             return ResponseEntity.notFound().build();
@@ -32,11 +32,10 @@ public class TasksController extends AbstractController {
         return ResponseEntity.ok(projectList);
     }
 
-    //TODO
     @GetMapping("/project/{id}/hugetask")
-    private ResponseEntity< List<HugeTaskDto> > getHugeTasksByProjectId(@PathVariable Long id) {
+    private ResponseEntity< List<SimplifiedDto> > getHugeTasksByProjectId(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":getHugeTasksByProjectId:"+getTime());
-        List<HugeTaskDto> projectList = service.getTasksByIdProject(id);
+        List<SimplifiedDto> projectList = service.getTasksByIdProject(id);
 
         if(projectList.isEmpty())
             return ResponseEntity.notFound().build();
@@ -44,35 +43,31 @@ public class TasksController extends AbstractController {
         return ResponseEntity.ok(projectList);
     }
 
-    //TODO
     @GetMapping("/hugetask/{id}")
-    private ResponseEntity<HugeTaskDto> getHugeTaskById(@PathVariable Long id) {
+    private ResponseEntity<SimplifiedDto> getHugeTaskById(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":getHugeTaskById:"+getTime());
 
         return ResponseEntity.ok(service.getTaskById(id));
     }
 
-    //TODO
     @PostMapping("/project/{id}/hugetask")
-    private ResponseEntity<HugeTaskDto> createHugeTask(@PathVariable Long id, @RequestBody HugeTaskDto task) {
+    private ResponseEntity<SimplifiedDto> createHugeTask(@PathVariable Long id, @RequestBody SimplifiedDto task) {
         logger.info(this.getClass().toString()+":createProject:"+getTime());
-        HugeTaskDto savedProject = service.dispatchTask(task, id);
+        SimplifiedDto savedProject = service.dispatchTask(task, id);
 
         return ResponseEntity.ok(savedProject);
     }
 
-    //TODO
     @PutMapping("/hugetask")
-    private ResponseEntity<HugeTaskDto> updateHugeTask(@RequestBody HugeTaskDto task) {
+    private ResponseEntity<SimplifiedDto> updateHugeTask(@RequestBody SimplifiedDto task) {
         logger.info(this.getClass().toString()+":createProject:"+getTime());
-        HugeTaskDto savedProject = service.updateTask(task);
+        SimplifiedDto savedProject = service.updateTask(task);
 
         return ResponseEntity.ok(savedProject);
     }
 
-    //TODO
     @DeleteMapping("/hugetask")
-    private ResponseEntity<Boolean> removeHugeTask(@RequestBody HugeTaskDto task) {
+    private ResponseEntity<Boolean> removeHugeTask(@RequestBody SimplifiedDto task) {
         logger.info(this.getClass().toString()+":removeProject:"+getTime());
 
         return service.deleteTask(task)? ResponseEntity.ok(true): ResponseEntity.badRequest().build();

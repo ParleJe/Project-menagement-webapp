@@ -5,12 +5,14 @@ import org.springframework.web.util.UriComponents;
 
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectDto extends SimplifiedDto {
+public class ProjectDto {
+    protected Long id;
+    protected String name;
+    protected String description;
     private List<SimplifiedUserDto> usersAssigned;
     private List<SimplifiedUserDto> tasks;
 }

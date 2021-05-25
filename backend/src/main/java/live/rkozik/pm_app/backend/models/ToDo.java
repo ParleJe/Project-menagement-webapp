@@ -20,7 +20,7 @@ public class ToDo {
     private Long id;
     private String name;
     private String description;
-    private boolean isDone;
+    private String state;
     @ManyToOne
     private HugeTask hugeTask;
 

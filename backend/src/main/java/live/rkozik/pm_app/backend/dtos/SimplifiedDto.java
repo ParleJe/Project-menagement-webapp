@@ -15,4 +15,5 @@ public class SimplifiedDto {
     protected Long id;
     protected String name;
     protected String description;
+    private boolean isDone;
 }

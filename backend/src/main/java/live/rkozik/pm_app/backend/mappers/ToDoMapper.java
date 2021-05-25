@@ -1,10 +1,8 @@
 package live.rkozik.pm_app.backend.mappers;
 
 import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
-import live.rkozik.pm_app.backend.dtos.ToDoDto;
 import live.rkozik.pm_app.backend.models.ToDo;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 
 @Mapper(
         componentModel = "spring",
@@ -12,8 +10,6 @@ import org.mapstruct.Mappings;
 )
 public interface ToDoMapper {
 
-    ToDoDto ToDoToToDoDto(ToDo source);
-    ToDo ToDoDtoToToDo(ToDoDto source);
-
-    ToDo SimplifiedDtoToToDo(SimplifiedDto source);
+    SimplifiedDto ToDoToSimplifiedDto(ToDo source);
+    ToDo ToDoDtoToToDo(SimplifiedDto source);
 }

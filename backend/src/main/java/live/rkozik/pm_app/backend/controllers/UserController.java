@@ -1,14 +1,12 @@
 package live.rkozik.pm_app.backend.controllers;
 
-import live.rkozik.pm_app.backend.dtos.HugeTaskDto;
-import live.rkozik.pm_app.backend.dtos.ProjectDto;
 import live.rkozik.pm_app.backend.dtos.UserGetDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @GetMapping("/users/{id}")

@@ -1,7 +1,6 @@
 package live.rkozik.pm_app.backend.services;
 
 
-import live.rkozik.pm_app.backend.dtos.HugeTaskDto;
 import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
 import live.rkozik.pm_app.backend.mappers.HugeTaskMapper;
 import live.rkozik.pm_app.backend.models.HugeTask;
@@ -31,29 +30,29 @@ public class HugeTaskService {
         this.taskMapper = taskMapper;
     }
 
-    public List<HugeTaskDto> getTasksByIdUser(Long id) {
+    public List<SimplifiedDto> getTasksByIdUser(Long id) {
         List<HugeTask> projects = taskRepository.findByIdUser(id);
         return projects.stream()
-                .map(taskMapper::HugeTaskToHugeTaskDto)
+                .map(taskMapper::TaskToSimplifiedDto)
                 .collect(Collectors.toList());
     }
 
-    public List<HugeTaskDto> getTasksByIdProject(Long id) {
+    public List<SimplifiedDto> getTasksByIdProject(Long id) {
         List<HugeTask> projects = taskRepository.findByIdProject(id);
         return projects.stream()
-                .map(taskMapper::HugeTaskToHugeTaskDto)
+                .map(taskMapper::TaskToSimplifiedDto)
                 .collect(Collectors.toList());
     }
 
-    public HugeTaskDto getTaskById(Long id) {
+    public SimplifiedDto getTaskById(Long id) {
         Optional<HugeTask> OptionalProject = taskRepository.findById(id);
 
-        return OptionalProject.map(taskMapper::HugeTaskToHugeTaskDto).orElseThrow(
+        return OptionalProject.map(taskMapper::TaskToSimplifiedDto).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "cannot find task")
         );
     }
 
-    public HugeTaskDto dispatchTask(HugeTaskDto task, Long idProject) {
+    public SimplifiedDto dispatchTask(SimplifiedDto task, Long idProject) {
         Optional<Project> precedentProject = projectRepository.findById(idProject);
         Project fetchedProject = precedentProject.orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "precedent Project is invalid")
@@ -62,16 +61,16 @@ public class HugeTaskService {
         HugeTask taskEntity = taskMapper.HugeTaskDtoToHugeTask(task);
         taskEntity.setProject(fetchedProject);
 
-        return taskMapper.HugeTaskToHugeTaskDto(taskRepository.saveAndFlush(taskEntity));
+        return taskMapper.TaskToSimplifiedDto(taskRepository.saveAndFlush(taskEntity));
     }
 
-    public HugeTaskDto updateTask(HugeTaskDto task) {
+    public SimplifiedDto updateTask(SimplifiedDto task) {
         if(task.getId() == null || !taskRepository.existsById(task.getId()))
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"id doesn't exists");
 
         HugeTask mappedTask = taskMapper.HugeTaskDtoToHugeTask(task);
 
-        return taskMapper.HugeTaskToHugeTaskDto( taskRepository.saveAndFlush(mappedTask) );
+        return taskMapper.TaskToSimplifiedDto( taskRepository.saveAndFlush(mappedTask) );
     }
 
     public boolean deleteTask(SimplifiedDto task) {
