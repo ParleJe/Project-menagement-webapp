@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setTextRange } from 'typescript';
 import {fetchAll, add, remove, update} from '../../helpers/API/toDo';
-import HugeTask from '../../helpers/responseInterfaces/HugeTask';
+import Simplified from '../../helpers/responseInterfaces/Simplified';
 import ToDo from '../../helpers/responseInterfaces/ToDo';
 
 interface toDoState {
-    toDos: ToDo[],
+    toDos: Simplified[],
     selected: number,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed'
 };
+
+interface ToDoPayload {
+    toDo: Simplified,
+    idTask: number
+}
 
 const initialState: toDoState = {
     toDos: [],
@@ -18,8 +22,8 @@ const initialState: toDoState = {
 
 const addToDo = createAsyncThunk(
     'toDo/add',
-    async (toDo: ToDo) => {
-      const response = await add(toDo);
+    async ({toDo, idTask}: ToDoPayload) => {
+      const response = await add(toDo, idTask);
       return await response.json();
     }
   )
@@ -34,7 +38,7 @@ const removeToDo = createAsyncThunk(
 
 const updateToDo = createAsyncThunk(
     'toDo/update',
-    async (toDo: ToDo) => {
+    async (toDo: Simplified) => {
         const response = await update(toDo);
         return await response.json();
     }

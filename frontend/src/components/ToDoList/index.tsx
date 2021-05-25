@@ -5,6 +5,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
 import { clearArr, fetchAllToDo, updateToDo } from "../../redux/slices/ToDoSlice";
 import { scopes } from "../../redux/slices/LoggedUserSlice";
+import Simplified from "../../helpers/responseInterfaces/Simplified";
 
 const ToDoList = () => {
     const scopeSelected = useAppSelector(state => state.logged.scope);
@@ -29,13 +30,13 @@ const ToDoList = () => {
             </MDBInputGroup>
             <MDBContainer className="m-0 p-0 h-80 overflow-auto shadow-sm">
                 <MDBListGroup className="m-0 p-0 px-2">
-                    {ToDos.map((el:ToDo, key:number) => {
+                    {ToDos.map((el:Simplified, key:number) => {
                         return(
                             <MDBListGroupItem key={key} color={(key%2===0)?"dark":"light"}>
                                 <div className="d-flex w-100 justify-content-between align-items-center ">
                                     <h5>{el.name}</h5>
-                                    <MDBBadge onClick={() => {dispatch(updateToDo(el))}} color={el.isDone?"success":"danger"} pill>
-                                        {el.isDone?"done": "not done"}
+                                    <MDBBadge onClick={() => {dispatch(updateToDo(el))}} color={el.state === 'done'?"success":"danger"} pill>
+                                        {el.state === 'done'?"done": "not done"}
                                     </MDBBadge>
                                 </div>
                             </MDBListGroupItem>
