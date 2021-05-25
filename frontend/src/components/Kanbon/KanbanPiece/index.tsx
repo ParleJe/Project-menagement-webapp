@@ -1,6 +1,9 @@
 import { MDBContainer, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
 import { Fragment } from "react"
+import { useDispatch } from "react-redux";
 import Simplified from "../../../helpers/responseInterfaces/Simplified";
+import { select } from "../../../redux/slices/HugeTasksSlice";
+import { scopes, setScope } from "../../../redux/slices/LoggedUserSlice";
 
 interface props {
     color: string,
@@ -9,6 +12,11 @@ interface props {
 }
 
 const KanbanPiece = ({color, title, tasks}: props) => {
+    const dispatch = useDispatch();
+    const onClickKanbanPiece = (idTask: number) => {
+        dispatch(select(idTask));
+        dispatch(setScope(scopes.HugeTask));
+    }
 
     return (
         <Fragment>
@@ -25,7 +33,7 @@ const KanbanPiece = ({color, title, tasks}: props) => {
                         }
                 {tasks.map(task => {
                     return(
-                        <div className="card my-1 mx-2 border shadow-lg">
+                        <div onClick={() => onClickKanbanPiece(task.id)} className="card my-1 mx-2 border shadow-lg">
                             <div className="card-body">
                                 <h5 className="card-title">{task.name}</h5>
                                 <p className="card-text">{task.description}</p>

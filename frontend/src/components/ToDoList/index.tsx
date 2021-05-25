@@ -1,23 +1,25 @@
-import { MDBListGroup, MDBListGroupItem, MDBBadge, MDBContainer, MDBIcon, MDBInput, MDBBtn, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
+import { MDBListGroup, MDBListGroupItem, MDBBadge, MDBContainer, MDBBtn, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
 import ToDo from "../../helpers/responseInterfaces/ToDo";
-import ToDoListProps from "../../helpers/interfaces/ToDoListProps";
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useEffect} from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
-import { fetchAllToDo, updateToDo } from "../../redux/slices/ToDoSlice";
+import { clearArr, fetchAllToDo, updateToDo } from "../../redux/slices/ToDoSlice";
 import { scopes } from "../../redux/slices/LoggedUserSlice";
-
 
 const ToDoList = () => {
     const scopeSelected = useAppSelector(state => state.logged.scope);
-    const ToDos = useAppSelector(state => state.toDos.toDos);
+    let ToDos = useAppSelector(state => state.toDos.toDos);
     const selected = useAppSelector(state => state.hugeTasks.selected);
+
     const dispatch = useDispatch();
     
     useEffect(() => {
-        if(scopeSelected !== scopes.HugeTask) return;
+        if(scopeSelected !== scopes.HugeTask){
+         dispatch(clearArr())
+         return;
+        }
         dispatch(fetchAllToDo(selected!));
-    })
+    }, [dispatch, scopeSelected, selected])
 
     return (
         <Fragment>

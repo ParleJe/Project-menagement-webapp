@@ -54,8 +54,11 @@ export const projectSlice = createSlice({
     reducers: {
       select: (state, action:PayloadAction<number>) => {
         state.selected = action.payload;
+      },
+      clearArr:(state) => {
+          state.selected = -1;
+          state.toDos = [];
       }
-
       
     },
     extraReducers: (builder) => {
@@ -93,6 +96,6 @@ export const projectSlice = createSlice({
     }
 });
 
-export const {select} = projectSlice.actions;
+export const {select, clearArr} = projectSlice.actions;
 export {fetchAllToDo, removeToDo, addToDo, updateToDo};
 export default projectSlice.reducer;

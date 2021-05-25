@@ -18,6 +18,7 @@ import {select, fetchProjects} from '../../redux/slices/projectSlice';
 import LoginTab from '../SecurityPopover';
 import AddProjectPopover from '../AddPopover';
 import SecurityPopover from '../SecurityPopover';
+import { scopes, setScope } from '../../redux/slices/LoggedUserSlice';
 
 
 const NavigationBar = () => {
@@ -31,6 +32,11 @@ const NavigationBar = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {dispatch(fetchProjects(1))}, [dispatch])
+
+  const onClickProject = (idProject: number) => {
+    dispatch(setScope(scopes.Project))
+    dispatch(select(idProject));
+  }
 
   return (
     <Fragment>
@@ -51,7 +57,7 @@ const NavigationBar = () => {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav>
             {projects.map((value, index) => {
-              return <MDBNavbarItem key={index}><MDBNavbarLink onClick = {() => dispatch(select(value.id))}>{value.name}</MDBNavbarLink></MDBNavbarItem>
+              return <MDBNavbarItem key={index}><MDBNavbarLink onClick = {() => onClickProject(value.id)}>{value.name}</MDBNavbarLink></MDBNavbarItem>
             })}
             </MDBNavbarNav>
             <div style={{minWidth: '20%'}} className="d-flex justify-content-end">

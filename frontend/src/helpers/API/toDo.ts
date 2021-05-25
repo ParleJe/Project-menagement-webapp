@@ -1,10 +1,10 @@
 import ToDo from "../responseInterfaces/ToDo";
 
-const API_URL:string = "https://localhost:8080/api/toDo/";
+const API_URL:string = "http://localhost:8080/api";
 
 
-const fetchAll = (idHugeTask: number):Promise<any> => {
-    const promise = fetch (API_URL+idHugeTask, {
+const fetchAll = (idTask: number):Promise<any> => {
+    const promise = fetch (`${API_URL}/task/${idTask}/todo`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
