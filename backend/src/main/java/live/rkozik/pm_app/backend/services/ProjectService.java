@@ -43,7 +43,7 @@ public class ProjectService {
         );
     }
 
-    public ProjectDto dispatchProject(ProjectDto project) throws IllegalArgumentException {
+    public ProjectDto dispatchProject(ProjectDto project) {
         //TODO get user (who requested it) and add him as participant
         if(project.getId() != null)
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "id cannot be given");
