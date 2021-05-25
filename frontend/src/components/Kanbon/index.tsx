@@ -1,10 +1,10 @@
-import { MDBCol, MDBRow } from "mdb-react-ui-kit"
-import { Fragment, useEffect } from "react"
+import { MDBCol, MDBRow, MDBSpinner } from "mdb-react-ui-kit"
+import React, { Fragment, useEffect, useState } from "react"
 import KanbanPiece from "./KanbanPiece"
 
 import {useAppSelector, useAppDispatch} from '../../redux/hooks'
 import { fetchHugeTasks } from '../../redux/slices/HugeTasksSlice'
-import HugeTask from "../../helpers/responseInterfaces/HugeTask"
+import {getTasksDone, getTasksInProgress, getTasksNotStarted} from "../../helpers/responseInterfaces/HugeTask"
 
 /*
 3 diffrent tables - not started, in progress, done
@@ -16,35 +16,47 @@ const Kanbon = () => {
     const HugeTasksFetched = useAppSelector(state => state.hugeTasks.HugeTasks);
     const LoadingState = useAppSelector(state => state.hugeTasks.loading);
 
+    const [color, setColor] = useState('primary');
+
     useEffect( () => {
         dispatch( fetchHugeTasks(SelectedProject) );
     },[SelectedProject, dispatch]);
-    
-    if(HugeTasksFetched.length !== 0) mapTasksToCategories(HugeTasksFetched);
+
+    useEffect(() => {
+        setTimeout(() => setColor('success'), 5000);
+    })
+
+    if(LoadingState === 'pending') {
+        return (
+            <Fragment>
+                <MDBRow between className="h-100 w-100 pt-2">
+                    <div className='d-flex justify-content-center align-items-center'>
+                        <MDBSpinner grow color='secondary' style={{ width: '15rem', height: '15rem' }} >
+                            <span className='visually-hidden'>Loading...</span>
+                        </MDBSpinner>
+                    </div>
+                </MDBRow>
+            </Fragment>
+        )
+    }
 
     return (
         <Fragment>
             <MDBRow between className="h-100 w-100 pt-2">
-
                 <MDBCol size="sm-4 md-12 kanban" className="">
-                    <KanbanPiece title="Not Started" color="bg-lightblue" />
+                    <KanbanPiece title="Not Started" color="bg-lightblue" tasks={getTasksNotStarted(HugeTasksFetched)} />
                 </MDBCol>
 
                 <MDBCol size="sm-4 lg-12 kanban" className="">
-                    <KanbanPiece title="In Progress" color="bg-lightyellow" />
+                    <KanbanPiece title="In Progress" color="bg-lightyellow" tasks={getTasksInProgress(HugeTasksFetched)} />
                 </MDBCol>
 
                 <MDBCol size="sm-4 lg-12 kanban" className="">
-                    <KanbanPiece title="Done" color="bg-lightred" />
+                    <KanbanPiece title="Done" color="bg-lightred" tasks={getTasksDone(HugeTasksFetched)} />
                 </MDBCol>
-
             </MDBRow>
         </Fragment>
     )
-}
-
-const mapTasksToCategories = (tasks: HugeTask[]) => {
-    //TODO
 }
 
 export default Kanbon;
