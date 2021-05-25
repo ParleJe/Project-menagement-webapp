@@ -30,7 +30,7 @@ const NavigationBar = () => {
   const projects: Project[] = useAppSelector((state) => state.projects.projects);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {dispatch(fetchProjects())}, [dispatch])
+  useEffect(() => {dispatch(fetchProjects(1))}, [dispatch])
 
   return (
     <Fragment>
@@ -51,7 +51,7 @@ const NavigationBar = () => {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav>
             {projects.map((value, index) => {
-              return <MDBNavbarItem key={index}><MDBNavbarLink onClick = {dispatch(select(value.id))}>{value.name}</MDBNavbarLink></MDBNavbarItem>
+              return <MDBNavbarItem key={index}><MDBNavbarLink onClick = {() => dispatch(select(value.id))}>{value.name}</MDBNavbarLink></MDBNavbarItem>
             })}
             </MDBNavbarNav>
             <div style={{minWidth: '20%'}} className="d-flex justify-content-end">

@@ -1,9 +1,9 @@
 import Project from "../responseInterfaces/Project";
 
-const API_URL:string = "https://localhost:8080/api/projects/";
+const API_URL:string = "http://localhost:8080/api";
 
-const fetchAll = ():Promise<any> => {
-    const promise = fetch (API_URL, {
+const fetchAll = (idUser: number):Promise<any> => {
+    const promise = fetch (`${API_URL}/user/${idUser}/project`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'

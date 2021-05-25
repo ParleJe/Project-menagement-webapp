@@ -17,8 +17,8 @@ const initialState: projectState = {
 
 const fetchProjects = createAsyncThunk(
   'projects/fetchAll',
-  async () => {
-    const response = await fetchAll();
+  async (idUser: number) => {
+    const response = await fetchAll(idUser);
     return (await response.json()) as Project[];
   }
 )
