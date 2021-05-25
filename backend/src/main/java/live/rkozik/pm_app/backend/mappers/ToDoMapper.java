@@ -11,5 +11,5 @@ import org.mapstruct.Mapper;
 public interface ToDoMapper {
 
     SimplifiedDto ToDoToSimplifiedDto(ToDo source);
-    ToDo ToDoDtoToToDo(SimplifiedDto source);
+    ToDo SimplifiedDtoToToDo(SimplifiedDto source);
 }
