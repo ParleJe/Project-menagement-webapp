@@ -21,7 +21,7 @@ public class TasksController extends AbstractController {
         this.service = service;
     }
 
-    @GetMapping("/user/{id}/hugetask")
+    @GetMapping("/user/{id}/task")
     private ResponseEntity< List<SimplifiedDto> > getHugeTasksByUserId(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":getHugeTasksByUserId:"+getTime());
         List<SimplifiedDto> projectList = service.getTasksByIdUser(id);
@@ -32,7 +32,7 @@ public class TasksController extends AbstractController {
         return ResponseEntity.ok(projectList);
     }
 
-    @GetMapping("/project/{id}/hugetask")
+    @GetMapping("/project/{id}/task")
     private ResponseEntity< List<SimplifiedDto> > getHugeTasksByProjectId(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":getHugeTasksByProjectId:"+getTime());
         List<SimplifiedDto> projectList = service.getTasksByIdProject(id);
@@ -43,7 +43,7 @@ public class TasksController extends AbstractController {
         return ResponseEntity.ok(projectList);
     }
 
-    @GetMapping("/hugetask/{id}")
+    @GetMapping("/task/{id}")
     private ResponseEntity<SimplifiedDto> getHugeTaskById(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":getHugeTaskById:"+getTime());
 
@@ -58,7 +58,7 @@ public class TasksController extends AbstractController {
         return ResponseEntity.ok(savedProject);
     }
 
-    @PutMapping("/hugetask")
+    @PutMapping("/task")
     private ResponseEntity<SimplifiedDto> updateHugeTask(@RequestBody SimplifiedDto task) {
         logger.info(this.getClass().toString()+":createProject:"+getTime());
         SimplifiedDto savedProject = service.updateTask(task);
@@ -66,7 +66,7 @@ public class TasksController extends AbstractController {
         return ResponseEntity.ok(savedProject);
     }
 
-    @DeleteMapping("/hugetask")
+    @DeleteMapping("/task")
     private ResponseEntity<Boolean> removeHugeTask(@RequestBody SimplifiedDto task) {
         logger.info(this.getClass().toString()+":removeProject:"+getTime());
 

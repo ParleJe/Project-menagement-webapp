@@ -29,7 +29,7 @@ public class UserController extends AbstractController {
         return ResponseEntity.ok(service.getUserById(id));
     }
 
-    @GetMapping("/task/{id}/user")
+    @GetMapping("/project/{id}/user")
     private ResponseEntity< List<SimplifiedUserDto> > getUsersByProject(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":getUsersByProject:"+getTime());
         List<SimplifiedUserDto> userList = service.findAllUsersByProject(id);
