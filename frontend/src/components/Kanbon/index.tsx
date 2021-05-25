@@ -1,10 +1,10 @@
 import { MDBCol, MDBRow, MDBSpinner } from "mdb-react-ui-kit"
-import React, { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect } from "react"
 import KanbanPiece from "./KanbanPiece"
 
 import {useAppSelector, useAppDispatch} from '../../redux/hooks'
 import { fetchHugeTasks } from '../../redux/slices/HugeTasksSlice'
-import {getTasksDone, getTasksInProgress, getTasksNotStarted} from "../../helpers/responseInterfaces/HugeTask"
+import {getTasksDone, getTasksInProgress, getTasksNotStarted} from "../../helpers/responseInterfaces/Simplified"
 
 /*
 3 diffrent tables - not started, in progress, done
@@ -16,16 +16,10 @@ const Kanbon = () => {
     const HugeTasksFetched = useAppSelector(state => state.hugeTasks.HugeTasks);
     const LoadingState = useAppSelector(state => state.hugeTasks.loading);
 
-    const [color, setColor] = useState('primary');
-
     useEffect( () => {
         dispatch( fetchHugeTasks(SelectedProject) );
     },[SelectedProject, dispatch]);
-
-    useEffect(() => {
-        setTimeout(() => setColor('success'), 5000);
-    })
-
+    console.log(HugeTasksFetched);
     if(LoadingState === 'pending') {
         return (
             <Fragment>

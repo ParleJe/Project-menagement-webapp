@@ -1,11 +1,11 @@
 import { MDBContainer, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
 import { Fragment } from "react"
-import HugeTask from "../../../helpers/responseInterfaces/HugeTask";
+import Simplified from "../../../helpers/responseInterfaces/Simplified";
 
 interface props {
     color: string,
     title: string,
-    tasks: HugeTask[]
+    tasks: Simplified[]
 }
 
 const KanbanPiece = ({color, title, tasks}: props) => {

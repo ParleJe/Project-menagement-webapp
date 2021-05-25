@@ -1,11 +1,11 @@
 import HugeTask from "../responseInterfaces/HugeTask";
 
 
-const API_URL:string = "https://localhost:8080/api/projects/";
+const API_URL:string = "http://localhost:8080/api";
 
 
 const fetchAll = (idProject: number):Promise<any> => {
-    const promise = fetch (API_URL+idProject, {
+    const promise = fetch (`${API_URL}/project/${idProject}/task`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'

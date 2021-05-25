@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import HugeTask from "../../helpers/responseInterfaces/HugeTask";
 import {fetchAll, add, remove, update} from '../../helpers/API/HugeTask';
+import Simplified from "../../helpers/responseInterfaces/Simplified";
 
 interface HugeTaskState {
-    HugeTasks: HugeTask[],
+    HugeTasks: Simplified[],
     selected: number,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed'
 };
@@ -19,7 +20,7 @@ const fetchHugeTasks = createAsyncThunk(
     'HugeTask/fetchAllByProject',
     async (idProject: number) => {
       const response = await fetchAll(idProject);
-      return await response.json();
+      return await response.json() as Simplified[];
     }
   )
 
@@ -64,7 +65,7 @@ export const HugeTasksSlice = createSlice({
        })
        .addCase(fetchHugeTasks.fulfilled, (state, action) => {
            state.loading = 'succeeded';
-           console.log(action.payload);
+           state.HugeTasks = action.payload;
        })
        .addCase(fetchHugeTasks.rejected, (state) => {
            state.loading = 'failed';
