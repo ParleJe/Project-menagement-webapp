@@ -1,4 +1,5 @@
-import { MDBBtn, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBInput, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle, MDBSpinner } from 'mdb-react-ui-kit';
+import React from 'react';
 
 interface props {
     show: boolean,
@@ -10,23 +11,20 @@ const LoginTab = ({show, setShow, exitFunction}: props) => {
 
     return(
             <MDBModal show={show} getOpenState={(e: any) => setShow(e)} tabIndex='1'>
-                <MDBModalDialog centered size='lg'>
+                <MDBModalDialog centered size='sm'>
                     <MDBModalContent>
                     <MDBModalHeader>
-                        <MDBModalTitle>Modal title</MDBModalTitle>
-                        <MDBBtn className='btn-close' color='none' onClick={exitFunction}></MDBBtn>
+                        <MDBModalTitle>Login to your Account!</MDBModalTitle>
                     </MDBModalHeader>
-                    <MDBModalBody>odwahbwdiubaid</MDBModalBody>
-                    <MDBModalBody>odwahbwdiubaid</MDBModalBody>
-                    <MDBModalBody>odwahbwdiubaid</MDBModalBody>
-                    <MDBModalBody>odwahbwdiubaid</MDBModalBody>
-
-
+                    <MDBModalBody>
+                        <MDBInput label='email' id='login' type='text' />
+                        <br />
+                        <MDBInput label='password' id='pass' type='password' />
+                    </MDBModalBody>
                     <MDBModalFooter>
-                        <MDBBtn color='secondary' onClick={exitFunction}>
-                        Close
+                        <MDBBtn onClick={exitFunction}>
+                        <MDBSpinner size='sm' grow />
                         </MDBBtn>
-                        <MDBBtn>Save changes</MDBBtn>
                     </MDBModalFooter>
                     </MDBModalContent>
                 </MDBModalDialog>
