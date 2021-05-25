@@ -15,7 +15,9 @@ import {Fragment, useEffect, useState } from 'react'
 import {useAppSelector, useAppDispatch} from '../../redux/hooks'
 import Project from '../../helpers/responseInterfaces/Project';
 import {select, fetchProjects} from '../../redux/slices/projectSlice';
-import LoginTab from '../LoginTab';
+import LoginTab from '../SecurityPopover';
+import AddProjectPopover from '../AddPopover';
+import SecurityPopover from '../SecurityPopover';
 
 
 const NavigationBar = () => {
@@ -32,7 +34,7 @@ const NavigationBar = () => {
 
   return (
     <Fragment>
-      {showPopup && <LoginTab exitFunction={togglePopup} show={showPopup} setShow={setShowPopup} />}
+      {showPopup && <SecurityPopover exitFunction={togglePopup} show={showPopup} setShow={setShowPopup} />}
       <MDBNavbar expand='lg' light bgColor='light'>
         <MDBContainer fluid>
           <MDBNavbarBrand href='#'>Bénévoles</MDBNavbarBrand>
