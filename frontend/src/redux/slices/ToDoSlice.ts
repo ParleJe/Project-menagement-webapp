@@ -26,7 +26,7 @@ const addToDo = createAsyncThunk(
 
 const removeToDo = createAsyncThunk(
     'toDo/remove',
-    async ({id}: ToDo) => {
+    async (id: number) => {
         const response = await remove(id);
         return await response.json();
     }
@@ -42,7 +42,7 @@ const updateToDo = createAsyncThunk(
 
 const fetchAllToDo = createAsyncThunk(
     'toDo/fetchAll',
-    async ({id}: HugeTask) => {
+    async (id: number) => {
         const response = await fetchAll(id);
         return await response.json();
     }
