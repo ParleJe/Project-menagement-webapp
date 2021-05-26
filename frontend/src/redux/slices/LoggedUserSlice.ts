@@ -5,7 +5,7 @@ import {logIn, loginPayload, register} from '../../helpers/API/UsersAndSecurity'
 enum scopes {
     Project,
     HugeTask,
-    ToDo
+    None
 }
 
 interface LoggedState {
@@ -19,7 +19,7 @@ interface LoggedState {
 const initialState: LoggedState = {
     logged: null,
     token: "",
-    scope: scopes.Project,
+    scope: scopes.None,
     errorMsg: "",
     loading: "idle"
 };

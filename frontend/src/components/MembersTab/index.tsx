@@ -1,29 +1,35 @@
-import {MDBBtn, MDBCol, MDBContainer, MDBRow, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
+import {MDBBtn, MDBCol, MDBContainer, MDBRow, MDBInputGroup, MDBInputGroupElement, MDBSpinner } from "mdb-react-ui-kit";
 import React, { Fragment, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchAllFromProject, fetchAllFromTask } from "../../helpers/API/UsersAndSecurity";
-import User from "../../helpers/responseInterfaces/User";
+import SimplifiedUser from "../../helpers/responseInterfaces/SimplifiedUser";
 import { useAppSelector } from "../../redux/hooks";
 import { scopes } from "../../redux/slices/LoggedUserSlice";
-import { select } from "../../redux/slices/projectSlice";
-import { fetchFromProject, fetchFromTask } from "../../redux/slices/UsersSlice";
+import { fetchFromTask } from "../../redux/slices/UsersSlice";
 
 
 const MembersTab = () => {
     const scopeSelected = useAppSelector((state) => state.logged.scope);
     const dispatch = useDispatch();
     const users = useAppSelector((state) => state.users.users)
-    const selected = useAppSelector((state) => {switch (scopeSelected){
-        case scopes.Project: return state.projects.selected;
-        case scopes.HugeTask: return state.hugeTasks.selected;
-    }})
-    useEffect(() => {
-        switch(scopeSelected) {
-            case scopes.Project: dispatch(fetchFromProject(selected!)); break;
-            case scopes.HugeTask: dispatch(fetchFromTask(selected!)); break;
-        }
-    }, [dispatch, scopeSelected, selected])
+    const selected = useAppSelector((state) => state.hugeTasks.selected);
+    const loadingState = useAppSelector((state) => state.toDos.loading);
 
+    useEffect(() => {
+        if(scopeSelected === scopes.HugeTask)
+            dispatch(fetchFromTask(selected));
+    }, [dispatch, selected])
+
+    if(loadingState === 'pending') {
+        return (
+            <MDBRow between className="h-100 w-100 pt-2">
+                    <div className='d-flex justify-content-center align-items-center'>
+                        <MDBSpinner grow color='secondary' style={{ width: '15rem', height: '15rem' }} >
+                            <span className='visually-hidden'>Loading...</span>
+                        </MDBSpinner>
+                    </div>
+            </MDBRow>
+        )
+    }
     return (
         <Fragment>
             <MDBInputGroup className="mb-2 shadow"> 
@@ -31,14 +37,14 @@ const MembersTab = () => {
                     <MDBBtn outline color="success">add</MDBBtn>
             </MDBInputGroup>  
             <MDBContainer className="w-100 h-80 overflow-auto shadow-sm">
-                {users.map((user:User, key:number) => {
+                {users.map((user:SimplifiedUser, key:number) => {
                     return (
-                        <MDBRow between className=" border"> 
+                        <MDBRow key={key} between className=" border"> 
                             <MDBCol size="3 px-0">
                                 <img alt="placeholder" className="img-fluid w-100 h-100" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" />
                             </MDBCol>
                             <MDBCol center size="8" className="justify-center h-100">
-                                <h6 className="m-0 mt-2">Name Surname</h6>
+                                <h6 className="m-0 mt-2">{user.name} {user.surname}</h6>
                                 <p className="m-0 mb-2"><small>CEO</small></p>
                             </MDBCol>
                         </MDBRow>

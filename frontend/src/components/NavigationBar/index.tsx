@@ -26,7 +26,6 @@ const NavigationBar = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const togglePopup = () => setShowPopup(!showPopup);
-  console.log(showPopup)
   /*________________________REDUX________________________*/ 
   const projects: Project[] = useAppSelector((state) => state.projects.projects);
   const dispatch = useAppDispatch();

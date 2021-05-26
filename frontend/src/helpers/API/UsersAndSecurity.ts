@@ -1,6 +1,6 @@
 import User from "../responseInterfaces/User";
 
-const API_URL:string = "http://localhost:8080";
+const API_URL:string = "http://localhost:8080/api";
 
 
 const fetchAll = ():Promise<any> => {
@@ -14,7 +14,7 @@ const fetchAll = ():Promise<any> => {
 };
 
 const fetchAllFromProject = (idProject: number):Promise<any> => {
-    const promise = fetch (`${API_URL}/project/${idProject}/users`, {
+    const promise = fetch (`${API_URL}/project/${idProject}/user`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ const fetchAllFromProject = (idProject: number):Promise<any> => {
 };
 
 const fetchAllFromTask = (idTask: number):Promise<any> => {
-    const promise = fetch (`${API_URL}/task/${idTask}/users`, {
+    const promise = fetch (`${API_URL}/task/${idTask}/user`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'

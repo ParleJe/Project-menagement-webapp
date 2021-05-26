@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchAllFromProject } from '../../helpers/API/UsersAndSecurity';
-import User from '../../helpers/responseInterfaces/User';
+import { fetchAllFromProject, fetchAllFromTask } from '../../helpers/API/UsersAndSecurity';
+import SimplifiedUser from '../../helpers/responseInterfaces/SimplifiedUser';
 
 interface toDoState {
-    users: User[],
+    users: SimplifiedUser[],
     selected: number,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed'
 };
@@ -14,19 +14,11 @@ const initialState: toDoState = {
     loading: "idle"
 };
 
-const fetchFromProject = createAsyncThunk(
-    'users/fromProject',
-    async (idProject: number) => {
-        const response = await fetchAllFromProject(idProject);
-        return await response.json() as User[];
-    }
-)
-
 const fetchFromTask = createAsyncThunk(
     'users/fromTask',
     async (idTask: number) => {
-        const response = await fetchAllFromProject(idTask);
-        return await response.json() as User[];
+        const response = await fetchAllFromTask(idTask);
+        return await response.json() as SimplifiedUser[];
     }
 )
 
@@ -41,21 +33,11 @@ export const usersSlice = createSlice({
       
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchFromProject.pending, (state) => {
+        builder.addCase(fetchFromTask.pending, (state) => {
             state.loading= 'pending';
-        })
-        .addCase(fetchFromTask.pending, (state) => {
-            state.loading= 'pending';
-        })
-        .addCase(fetchFromProject.rejected, (state) => {
-            state.loading= 'failed';
         })
         .addCase(fetchFromTask.rejected, (state) => {
             state.loading= 'failed';
-        })
-        .addCase(fetchFromProject.fulfilled, (state, response) => {
-            state.loading= 'succeeded';
-            state.users = response.payload;
         })
         .addCase(fetchFromTask.fulfilled, (state, response) => {
             state.loading= 'succeeded';
@@ -65,5 +47,5 @@ export const usersSlice = createSlice({
 });
 
 export const {select} = usersSlice.actions;
-export {fetchFromTask, fetchFromProject};
+export {fetchFromTask};
 export default usersSlice.reducer;

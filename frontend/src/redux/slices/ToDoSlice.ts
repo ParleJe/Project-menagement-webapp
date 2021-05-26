@@ -70,7 +70,6 @@ export const projectSlice = createSlice({
             state.loading= 'pending';
         })
         .addCase(fetchAllToDo.fulfilled, (state, action) => {
-            console.log(action.payload);
             state.toDos = action.payload;
             state.loading = 'succeeded';
         })
@@ -79,7 +78,6 @@ export const projectSlice = createSlice({
         })
 
         .addCase(addToDo.fulfilled, (state, action) => {
-            console.log(action.payload);
             state.toDos.push(action.payload);
             state.loading = 'succeeded';
         })
@@ -87,13 +85,11 @@ export const projectSlice = createSlice({
             state.loading = 'failed';
         })
         .addCase(removeToDo.fulfilled, (state, action) => {
-            console.log(action.payload);
-            state.toDos.filter(TD => TD.id != action.payload);
+            state.toDos.filter(TD => TD.id !== action.payload);
             state.loading = 'succeeded';
         })
         .addCase(updateToDo.fulfilled, (state, action) => {
-            console.log(action.payload);
-            state.toDos.filter(TD => TD.id != action.payload.id);
+            state.toDos.filter(TD => TD.id !== action.payload.id);
             state.toDos.push(action.payload);
             state.loading = 'succeeded';
         })

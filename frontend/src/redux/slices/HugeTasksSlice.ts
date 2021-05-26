@@ -76,7 +76,6 @@ export const HugeTasksSlice = createSlice({
        })
        .addCase(addHugeTask.fulfilled, (state, action) => {
            state.loading = 'succeeded';
-           console.log(action.payload);
            state.HugeTasks.push(action.payload);
        })
        .addCase(addHugeTask.rejected, (state) => {
