@@ -1,5 +1,6 @@
 package live.rkozik.pm_app.backend.models;
 
+import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ToDo {
+public class ToDo implements Substitable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,5 +27,20 @@ public class ToDo {
     @ManyToOne
     private HugeTask hugeTask;
 
+    public ToDo substituteStaticMembers(SimplifiedDto source) {
+        if(source.getName() != null) {
+            this.setName(source.getName());
+        }
+        if(source.getDescription() != null) {
+            this.setDescription(source.getDescription());
+        }
+        if(source.getState() != null) {
+            this.setState(source.getState());
+        }
+        if(source.getPriority() != null) {
+            this.setPriority(source.getPriority());
+        }
 
+        return this;
+    }
 }
