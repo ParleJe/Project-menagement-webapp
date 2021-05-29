@@ -61,20 +61,18 @@ public class ToDoService {
     }
 
     public SimplifiedDto updateToDo(SimplifiedDto toDo) {
-        if(toDo.getId() == null || !repository.existsById(toDo.getId()))
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"id doesn't exists");
+        ToDo fetchedToDo = repository.findById(toDo.getId()).orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST,"id doesn't exists") );
+        fetchedToDo.substituteStaticMembers(toDo);
 
-        ToDo mappedToDo = mapper.SimplifiedDtoToToDo(toDo);
-
-        return mapper.ToDoToSimplifiedDto( repository.saveAndFlush(mappedToDo) );
+        return mapper.ToDoToSimplifiedDto( repository.saveAndFlush(fetchedToDo) );
     }
 
     public boolean deleteToDo(Long id) {
         try {
             repository.deleteById(id);
         } catch (IllegalArgumentException exception) {
-
-            throw new HttpClientErrorException(HttpStatus.I_AM_A_TEAPOT, "id cannot be null");
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id cannot be null");
         }
 
         return true;

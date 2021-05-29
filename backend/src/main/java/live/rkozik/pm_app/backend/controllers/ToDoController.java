@@ -31,9 +31,9 @@ public class ToDoController extends AbstractController {
     @PutMapping("/todo")
     private ResponseEntity<SimplifiedDto> updateToDo(@RequestBody SimplifiedDto toDo) {
         logger.info(this.getClass().toString()+":updateToDo:"+getTime());
-        SimplifiedDto savedProject = service.updateToDo(toDo);
+        SimplifiedDto savedToDo = service.updateToDo(toDo);
 
-        return ResponseEntity.ok(savedProject);
+        return ResponseEntity.ok(savedToDo);
     }
 
     @DeleteMapping("/todo/{id}")
