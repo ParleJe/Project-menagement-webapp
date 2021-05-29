@@ -53,13 +53,10 @@ public class HugeTaskService {
     }
 
     public SimplifiedDto dispatchTask(SimplifiedDto task, Long idProject) {
-        Optional<Project> precedentProject = projectRepository.findById(idProject);
-        Project fetchedProject = precedentProject.orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "precedent Project is invalid")
-        );
+        Project predecentProject = this.getProjectById(idProject);
 
         HugeTask taskEntity = taskMapper.HugeTaskDtoToHugeTask(task);
-        taskEntity.setProject(fetchedProject);
+        taskEntity.setProject(predecentProject);
 
         return taskMapper.TaskToSimplifiedDto(taskRepository.saveAndFlush(taskEntity));
     }
@@ -68,9 +65,19 @@ public class HugeTaskService {
         if(task.getId() == null || !taskRepository.existsById(task.getId()))
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"id doesn't exists");
 
-        HugeTask mappedTask = taskMapper.HugeTaskDtoToHugeTask(task);
+        HugeTask fetchedTask = taskRepository.findById(task.getId()).orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND,"id doesn't exists") );
+        fetchedTask.substituteStaticMembers(task);
 
-        return taskMapper.TaskToSimplifiedDto( taskRepository.saveAndFlush(mappedTask) );
+        return taskMapper.TaskToSimplifiedDto( taskRepository.saveAndFlush(fetchedTask) );
+    }
+
+    private Project getProjectById(Long id) {
+        Optional<Project> precedentProject = projectRepository.findById(id);
+
+        return precedentProject.orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "precedent Project is invalid")
+        );
     }
 
     public boolean deleteTask(SimplifiedDto task) {

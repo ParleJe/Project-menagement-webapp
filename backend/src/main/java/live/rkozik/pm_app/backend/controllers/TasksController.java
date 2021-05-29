@@ -50,7 +50,7 @@ public class TasksController extends AbstractController {
         return ResponseEntity.ok(service.getTaskById(id));
     }
 
-    @PostMapping("/project/{id}/hugetask")
+    @PostMapping("/project/{id}/task")
     private ResponseEntity<SimplifiedDto> createHugeTask(@PathVariable Long id, @RequestBody SimplifiedDto task) {
         logger.info(this.getClass().toString()+":createProject:"+getTime());
         SimplifiedDto savedProject = service.dispatchTask(task, id);
@@ -67,9 +67,9 @@ public class TasksController extends AbstractController {
     }
 
     @DeleteMapping("/task")
-    private ResponseEntity<Boolean> removeHugeTask(@RequestBody SimplifiedDto task) {
+    private ResponseEntity<Long> removeHugeTask(@RequestBody SimplifiedDto task) {
         logger.info(this.getClass().toString()+":removeProject:"+getTime());
 
-        return service.deleteTask(task)? ResponseEntity.ok(true): ResponseEntity.badRequest().build();
+        return service.deleteTask(task)? ResponseEntity.ok(task.getId()): ResponseEntity.badRequest().build();
     }
 }
