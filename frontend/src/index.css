@@ -6,6 +6,10 @@ body {
   height: 100vh;
 }
 
+h5 {
+  cursor: pointer;
+}
+
 #root {
   height: 88%;
 }

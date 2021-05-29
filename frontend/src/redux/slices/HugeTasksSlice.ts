@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import HugeTask from "../../helpers/responseInterfaces/HugeTask";
 import {fetchAll, add, remove, update} from '../../helpers/API/HugeTask';
 import Simplified from "../../helpers/responseInterfaces/Simplified";
 
@@ -47,9 +46,9 @@ const removeHugeTasks = createAsyncThunk(
 
 const updateHugeTask = createAsyncThunk(
       'HugeTask/update',
-      async (hugeTask: HugeTask) => {
+      async (hugeTask: Simplified) => {
         const response = await update(hugeTask);
-        return await response.json();
+        return await response.json() as Simplified;
       }
     )
 
@@ -76,6 +75,10 @@ export const HugeTasksSlice = createSlice({
            state.loading = 'failed';
        })
 
+       .addCase(updateHugeTask.pending, (state) => {
+        state.loading = 'pending';
+       })
+
        .addCase(addTask.pending, (state) => {
            state.loading = 'pending';
        })
@@ -91,8 +94,9 @@ export const HugeTasksSlice = createSlice({
        })
 
        .addCase(updateHugeTask.fulfilled, (state, action) => { //can be more optimised!!!! O(n) always
-           state.HugeTasks.filter(HT => HT.id !== action.payload.id);
+           state.HugeTasks = state.HugeTasks.filter(HT => HT.id !== action.payload.id);
            state.HugeTasks.push(action.payload);
+           state.loading = 'succeeded';
        })
     }
   });

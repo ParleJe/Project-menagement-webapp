@@ -34,6 +34,7 @@ export const usersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchFromTask.pending, (state) => {
+            state.users = [];
             state.loading= 'pending';
         })
         .addCase(fetchFromTask.rejected, (state) => {

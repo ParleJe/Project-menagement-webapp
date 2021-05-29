@@ -3,8 +3,9 @@ import React, { Fragment } from "react"
 import { useDispatch } from "react-redux";
 import Simplified from "../../../helpers/responseInterfaces/Simplified";
 import { useAppSelector } from "../../../redux/hooks";
-import { removeHugeTasks, select } from "../../../redux/slices/HugeTasksSlice";
+import { removeHugeTasks, select, updateHugeTask } from "../../../redux/slices/HugeTasksSlice";
 import { scopes, setScope } from "../../../redux/slices/LoggedUserSlice";
+import { setNextState, setPrevState } from "./actions";
 
 interface props {
     color: string,
@@ -13,10 +14,10 @@ interface props {
     togglePopup?: Function
 }
 
-const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
+const KanbanPiece = ({ color, title, tasks, togglePopup }: props) => {
     const dispatch = useDispatch();
     const scopeSelected = useAppSelector((state) => state.logged.scope);
-    const isAddVisible = scopeSelected === scopes.Project && togglePopup !== undefined; ;
+    const isAddVisible = scopeSelected === scopes.Project && togglePopup !== undefined;;
     const onClickKanbanPiece = (idTask: number) => {
         dispatch(setScope(scopes.HugeTask));
         dispatch(select(idTask));
@@ -24,36 +25,39 @@ const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
 
     return (
         <Fragment>
-            <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top align-items-center "+color}>
-                <h5 className='text-center'>{title}</h5>
+            <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top align-items-center " + color}>
+                <h4 className='text-center'>{title}</h4>
                 {isAddVisible && <MDBBtn outline onClick={() => togglePopup!()} floating size="sm" color='link'>
                     <MDBIcon size='lg' icon="plus" />
                 </MDBBtn>}
             </MDBRow>
             <MDBContainer className="mt-0 p-0 overflow-auto w-100">
-                
-                {tasks.length === 0 && 
-                        <div className="card my-1 mx-2 border shadow-lg">
-                            <div className="card-body">
-                                <h5 className="card-title">Nothing here yet :c</h5>
-                            </div>
+
+                {tasks.length === 0 &&
+                    <div className="card my-1 mx-2 border shadow-lg">
+                        <div className="card-body">
+                            <h5 className="card-title">Nothing here yet :c</h5>
                         </div>
-                        }
-                        
-                {tasks.map((task: Simplified, key:number) => {
-                    return(
+                    </div>
+                }
+
+                {tasks.map((task: Simplified, key: number) => {
+                    return (
                         <div key={key} className="card my-1 mx-2 border shadow-lg">
-                            
-                            <div className="col card-body" onClick={() => onClickKanbanPiece(task.id!)}>
-                                <h5 className="card-title">{task.name}</h5>
+
+                            <div className="col card-body">
+                                <h5 onClick={() => onClickKanbanPiece(task.id!)} className="card-title">
+                                    <u>{task.name}</u>
+                                </h5>
                                 <MDBProgress>
-                                  <MDBProgressBar width={(task.priority/5)*100} />
+                                    <MDBProgressBar width={(task.priority / 5) * 100} />
                                 </MDBProgress>
                                 <p className="card-text">{task.description}</p>
-                                {/* <br /> */}
                                 <div className="d-flex justify-content-between">
-                                    {task.state !== "not started" && <MDBIcon style={{cursor: 'pointer'}} icon='arrow-left'/>}
-                                    {task.state !== "done" && <MDBIcon style={{cursor: 'pointer'}} icon='arrow-right'/>}
+                                    {task.state !== "not started" &&
+                                        <MDBIcon onClick={() => dispatch(updateHugeTask(setPrevState(task)))} style={{ cursor: 'pointer' }} icon='arrow-left' />}
+                                    {task.state !== "done" &&
+                                        <MDBIcon onClick={() => dispatch(updateHugeTask(setNextState(task)))} style={{ cursor: 'pointer' }} icon='arrow-right' />}
                                 </div>
                             </div>
                             <div className="card-footer d-flex justify-content-between">

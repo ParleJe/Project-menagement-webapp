@@ -47,13 +47,14 @@ const remove = (task:Simplified):Promise<any> => {
     return promise;
 }
 
-const update = (hugeTask: HugeTask):Promise<any> => {
-    const promise = fetch (`${API_URL}${hugeTask.id}`, {
-        method: "UPDATE",
+const update = (task: Simplified):Promise<any> => {
+    console.log(task);
+    const promise = fetch (`${API_URL}/task`, {
+        method: "PUT",
         headers: {
             'Content-Type': 'application/json'
           },
-        body: JSON.stringify(hugeTask)
+        body: JSON.stringify(task)
     });
     return promise;
 }

@@ -67,6 +67,7 @@ export const projectSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchAllToDo.pending, (state) => {
+            state.toDos = [];
             state.loading= 'pending';
         })
         .addCase(fetchAllToDo.fulfilled, (state, action) => {
