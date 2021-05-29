@@ -17,7 +17,8 @@ const initialState: projectState = {
 
 const fetchProjects = createAsyncThunk(
   'projects/fetchAll',
-  async (idUser: number) => {
+  async (idUser: number,{getState}) => {
+    //const {token} = getState().loggedUser;
     const response = await fetchAll(idUser);
     return (await response.json()) as Project[];
   }
@@ -27,7 +28,7 @@ const addProject = createAsyncThunk(
   'projects/addProject',
   async (project:Project) => {
     const response = await add(project);
-    return await response.json();
+    return await response.json() as Project;
   }
 )
 
@@ -63,6 +64,7 @@ export const projectSlice = createSlice({
 
       .addCase(addProject.fulfilled, (state, action) => {
         state.projects.push(action.payload);
+        state.loading = "succeeded";
       })
       .addCase(addProject.pending, (state, action) => {
         state.loading = "pending";

@@ -12,13 +12,13 @@ const MembersTab = () => {
     const scopeSelected = useAppSelector((state) => state.logged.scope);
     const dispatch = useDispatch();
     const users = useAppSelector((state) => state.users.users)
-    const selected = useAppSelector((state) => state.hugeTasks.selected);
+    const selected = useAppSelector((state) => state.projects.selected);
     const loadingState = useAppSelector((state) => state.toDos.loading);
 
     useEffect(() => {
-        if(scopeSelected === scopes.HugeTask)
+        if(scopeSelected === scopes.Project)
             dispatch(fetchFromTask(selected));
-    }, [dispatch, selected])
+    }, [dispatch, scopeSelected, selected])
 
     return (
         <Fragment>

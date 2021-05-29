@@ -17,7 +17,7 @@ const initialState: toDoState = {
 const fetchFromTask = createAsyncThunk(
     'users/fromTask',
     async (idTask: number) => {
-        const response = await fetchAllFromTask(idTask);
+        const response = await fetchAllFromProject(idTask);
         return await response.json() as SimplifiedUser[];
     }
 )

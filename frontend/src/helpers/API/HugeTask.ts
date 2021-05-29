@@ -26,7 +26,7 @@ const fetchById = (idProject: number, idHugeTask:number):Promise<any> => {
 }
 
 const add = (task: Simplified, idProject: number):Promise<any> => {
-    const promise = fetch (`${API_URL}/project/${idProject}/hugetask`, {
+    const promise = fetch (`${API_URL}/project/${idProject}/task`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

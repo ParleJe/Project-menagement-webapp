@@ -13,7 +13,7 @@ const fetchAll = (idUser: number):Promise<any> => {
 }
 
 const add = (project:Project):Promise<any> => {
-    const promise = fetch(API_URL, {
+    const promise = fetch(`${API_URL}/project`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

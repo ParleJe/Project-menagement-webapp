@@ -1,5 +1,5 @@
 import { MDBBtn, MDBInput, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle, MDBRadio, MDBRange, MDBSpinner } from 'mdb-react-ui-kit';
-import { Dispatch, useReducer, useState } from 'react';
+import { Dispatch, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { types } from '../../helpers/interfaces/TypeEnum';
 import Project from '../../helpers/responseInterfaces/Project';
@@ -31,6 +31,16 @@ const AddPopover = ({show, setShow, idProject}: props) => {
     const loadingState = useAppSelector((state) => idProject===undefined?state.projects.loading: state.hugeTasks.loading)
     const reduxDispatch = useDispatch();
 
+    useEffect(() => {
+        if(loadingState === "succeeded" && state != initialState) {
+            dispatch({type:'name', payload: initialState.name})
+            dispatch({type:'description', payload: initialState.description})
+            dispatch({type:'priority', payload: initialState.priority})
+            dispatch({type:'state', payload: initialState.state})
+            setShow(false);
+        }
+    }, [loadingState, setShow])
+
     return(
             <MDBModal backdrop show={show} getOpenState={(e: any) => setShow(e)} tabIndex='1'>
                 <MDBModalDialog centered size='md'>
@@ -45,7 +55,7 @@ const AddPopover = ({show, setShow, idProject}: props) => {
                             <br />
                             <MDBInput onChange={(e: any) => dispatch({type:'description', payload: e.target.value})} label='description' id='desc' textarea rows={4} />
                             <br />
-                            {addType && <MDBRange
+                            {!addType && <MDBRange
                                 value={range}
                                 min='1'
                                 max='5'

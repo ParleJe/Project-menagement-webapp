@@ -33,7 +33,7 @@ const addTask = createAsyncThunk(
     'HugeTask/add',
     async({task, idProject}: TaskPayload) => {
         const response = await add(task, idProject);
-        return await response.json;
+        return await response.json() as Simplified;
     }
     )
 

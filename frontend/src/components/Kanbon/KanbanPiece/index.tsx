@@ -2,6 +2,7 @@ import { MDBBtn, MDBContainer, MDBIcon, MDBRow, MDBSpinner } from "mdb-react-ui-
 import React, { Fragment } from "react"
 import { useDispatch } from "react-redux";
 import Simplified from "../../../helpers/responseInterfaces/Simplified";
+import { useAppSelector } from "../../../redux/hooks";
 import { removeHugeTasks, select } from "../../../redux/slices/HugeTasksSlice";
 import { scopes, setScope } from "../../../redux/slices/LoggedUserSlice";
 
@@ -14,6 +15,8 @@ interface props {
 
 const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
     const dispatch = useDispatch();
+    const scopeSelected = useAppSelector((state) => state.logged.scope);
+    const isAddVisible = scopeSelected === scopes.Project;
     const onClickKanbanPiece = (idTask: number) => {
         dispatch(setScope(scopes.HugeTask));
         dispatch(select(idTask));
@@ -23,9 +26,9 @@ const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
         <Fragment>
             <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top align-items-center "+color}>
                 <h5 className='text-center'>{title}</h5>
-                <MDBBtn outline onClick={() => togglePopup()} floating size="sm" color='link'>
+                {isAddVisible && <MDBBtn outline onClick={() => togglePopup()} floating size="sm" color='link'>
                     <MDBIcon size='lg' icon="plus" />
-                </MDBBtn>
+                </MDBBtn>}
             </MDBRow>
             <MDBContainer className="mt-0 p-0 overflow-auto w-100">
                 
