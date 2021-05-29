@@ -10,13 +10,13 @@ interface props {
     color: string,
     title: string,
     tasks: Simplified[],
-    togglePopup: Function
+    togglePopup?: Function
 }
 
 const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
     const dispatch = useDispatch();
     const scopeSelected = useAppSelector((state) => state.logged.scope);
-    const isAddVisible = scopeSelected === scopes.Project;
+    const isAddVisible = scopeSelected === scopes.Project && togglePopup !== undefined; ;
     const onClickKanbanPiece = (idTask: number) => {
         dispatch(setScope(scopes.HugeTask));
         dispatch(select(idTask));
@@ -26,7 +26,7 @@ const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
         <Fragment>
             <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top align-items-center "+color}>
                 <h5 className='text-center'>{title}</h5>
-                {isAddVisible && <MDBBtn outline onClick={() => togglePopup()} floating size="sm" color='link'>
+                {isAddVisible && <MDBBtn outline onClick={() => togglePopup!()} floating size="sm" color='link'>
                     <MDBIcon size='lg' icon="plus" />
                 </MDBBtn>}
             </MDBRow>

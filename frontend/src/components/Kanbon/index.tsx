@@ -7,7 +7,6 @@ import { getTasksDone, getTasksInProgress, getTasksNotStarted } from "../../help
 import { scopes } from "../../redux/slices/LoggedUserSlice"
 import LoadingIndicator from "../LoadingIndicator"
 import AddPopover from "../AddPopover"
-import { types } from "../../helpers/interfaces/TypeEnum"
 
 
 const Kanbon = () => {
@@ -31,12 +30,12 @@ const Kanbon = () => {
             </MDBCol>
 
             <MDBCol size="sm-4 lg-12 kanban" className="">
-                <KanbanPiece title="In Progress" color="bg-lightyellow" tasks={getTasksInProgress(HugeTasksFetched)} togglePopup={togglePopup} />
+                <KanbanPiece title="In Progress" color="bg-lightyellow" tasks={getTasksInProgress(HugeTasksFetched)} />
                 {loadingState === 'pending' && <LoadingIndicator />}
             </MDBCol>
 
             <MDBCol size="sm-4 lg-12 kanban" className="">
-                <KanbanPiece title="Done" color="bg-lightred" tasks={getTasksDone(HugeTasksFetched)} togglePopup={togglePopup} />
+                <KanbanPiece title="Done" color="bg-lightred" tasks={getTasksDone(HugeTasksFetched)} />
             </MDBCol>
         </MDBRow>
     )
