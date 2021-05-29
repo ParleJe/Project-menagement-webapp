@@ -1,40 +1,56 @@
-import { MDBListGroup, MDBListGroupItem, MDBBadge, MDBContainer, MDBIcon, MDBInput, MDBBtn, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
-import ToDo from "../../helpers/classes/ToDo";
-import ToDoListProps from "../../helpers/interfaces/ToDoListProps";
-import React, {Fragment, useState} from "react";
-
-const MockData: ToDoListProps = {
-    ToDos: [new ToDo(1, "task1", [], false),new ToDo(2, "task2", [], false),new ToDo(3, "task3", [], false),
-            new ToDo(4, "task4", [], true),new ToDo(5, "task5", [], true),new ToDo(6, "task6", [], false),
-            new ToDo(7, "task7", [], false),new ToDo(8, "task8", [], true)]
-    //ToDos: []
-}
+import { MDBListGroup, MDBListGroupItem, MDBBadge, MDBContainer, MDBBtn, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
+import React, {Fragment, useEffect, useState} from "react";
+import { useAppSelector } from "../../redux/hooks";
+import { useDispatch } from "react-redux";
+import { addToDo, clearArr, fetchAllToDo, removeToDo, updateToDo } from "../../redux/slices/ToDoSlice";
+import { scopes } from "../../redux/slices/LoggedUserSlice";
+import Simplified from "../../helpers/responseInterfaces/Simplified";
+import LoadingIndicator from "../LoadingIndicator";
 
 const ToDoList = () => {
-    const [count, forceRefresh] = useState<number>(0);
+    const scopeSelected = useAppSelector(state => state.logged.scope);
+    let ToDos = useAppSelector(state => state.toDos.toDos);
+    const selected = useAppSelector(state => state.hugeTasks.selected);
+    const loadingState = useAppSelector((state) => state.toDos.loading);
+    const dispatch = useDispatch();
+    const [name, setName] = useState('');
 
-    
+    const createSimplifiedObj = () => {
+        return {
+            toDo: {name: name,
+                description: '',
+                state: 'not started',
+                priority: 1,},
+            idTask: selected
+        }
+    }
+    useEffect(() => {
+        if(scopeSelected !== scopes.HugeTask){
+         dispatch(clearArr())
+         return;
+        }
+        dispatch(fetchAllToDo(selected!));
+    }, [dispatch, scopeSelected, selected])
 
     return (
         <Fragment>
             <MDBInputGroup className="mb-2 shadow"> 
-                <MDBInputGroupElement type='text' placeholder="new TO DO? :)" />
-                <MDBBtn outline color="primary">add</MDBBtn>
+                <MDBInputGroupElement onChange={(e: any) => setName(e.target.value)} type='text' placeholder="new TO DO? :)" />
+                <MDBBtn onClick={() => dispatch(addToDo(createSimplifiedObj()))} outline color="primary">add</MDBBtn>
             </MDBInputGroup>
-            <MDBContainer className="m-0 p-0 h-80 overflow-auto shadow-sm">
+            <MDBContainer className="m-0 p-0 h-80 overflow-auto shadow-sm position-relative">
+            {loadingState === 'pending' && <LoadingIndicator />}
                 <MDBListGroup className="m-0 p-0 px-2">
-                    {MockData.ToDos.map((el:ToDo, key:number) => {
+                    {ToDos.map((el:Simplified, key:number) => {
                         return(
                             <MDBListGroupItem key={key} color={(key%2===0)?"dark":"light"}>
-                                <div className="d-flex w-100 justify-content-between align-items-center ">
+                                <div className="d-flex w-100 justify-content-between ">
                                     <h5>{el.name}</h5>
-                                    <MDBBadge onClick={() => {el.isDone= !el.isDone; forceRefresh(count+1)}} color={el.isDone?"success":"danger"} pill>
-                                        {el.isDone?"done": "not done"}
-                                    </MDBBadge>
+                                    <MDBBtn onClick={() => dispatch(removeToDo(el.id!))} className='btn-close' color='none' />
                                 </div>
                             </MDBListGroupItem>
                         )
-                    })}
+                        })}
                 </MDBListGroup>
             </MDBContainer>
         </Fragment>

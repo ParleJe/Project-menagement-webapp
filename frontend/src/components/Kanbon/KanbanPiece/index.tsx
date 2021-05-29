@@ -1,68 +1,72 @@
-import { MDBContainer, MDBRow } from "mdb-react-ui-kit";
-import { Fragment } from "react"
+import { MDBBtn, MDBContainer, MDBIcon, MDBProgress, MDBProgressBar, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
+import React, { Fragment } from "react"
+import { useDispatch } from "react-redux";
+import Simplified from "../../../helpers/responseInterfaces/Simplified";
+import { useAppSelector } from "../../../redux/hooks";
+import { removeHugeTasks, select, updateHugeTask } from "../../../redux/slices/HugeTasksSlice";
+import { scopes, setScope } from "../../../redux/slices/LoggedUserSlice";
+import { setNextState, setPrevState } from "./actions";
 
 interface props {
-    color: string
-    title: string
+    color: string,
+    title: string,
+    tasks: Simplified[],
+    togglePopup?: Function
 }
 
-const KanbanPiece = ({color, title}: props) => {
+const KanbanPiece = ({ color, title, tasks, togglePopup }: props) => {
+    const dispatch = useDispatch();
+    const scopeSelected = useAppSelector((state) => state.logged.scope);
+    const isAddVisible = scopeSelected === scopes.Project && togglePopup !== undefined;;
+    const onClickKanbanPiece = (idTask: number) => {
+        dispatch(setScope(scopes.HugeTask));
+        dispatch(select(idTask));
+    }
 
     return (
         <Fragment>
-            <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top "+color}>
-                <h5>{title}</h5>
+            <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top align-items-center " + color}>
+                <h4 className='text-center'>{title}</h4>
+                {isAddVisible && <MDBBtn outline onClick={() => togglePopup!()} floating size="sm" color='link'>
+                    <MDBIcon size='lg' icon="plus" />
+                </MDBBtn>}
             </MDBRow>
-            <MDBContainer className="mt-0 p-0 overflow-auto h-90 w-100">
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
-                            </div>
+            <MDBContainer className="mt-0 p-0 overflow-auto w-100">
 
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
-                            </div>
+                {tasks.length === 0 &&
+                    <div className="card my-1 mx-2 border shadow-lg">
+                        <div className="card-body">
+                            <h5 className="card-title">Nothing here yet :c</h5>
+                        </div>
+                    </div>
+                }
 
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
-                            </div>
+                {tasks.map((task: Simplified, key: number) => {
+                    return (
+                        <div key={key} className="card my-1 mx-2 border shadow-lg">
 
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
+                            <div className="col card-body">
+                                <h5 onClick={() => onClickKanbanPiece(task.id!)} className="card-title">
+                                    <u>{task.name}</u>
+                                </h5>
+                                <MDBProgress>
+                                    <MDBProgressBar width={(task.priority / 5) * 100} />
+                                </MDBProgress>
+                                <p className="card-text">{task.description}</p>
+                                <div className="d-flex justify-content-between">
+                                    {task.state !== "not started" &&
+                                        <MDBIcon onClick={() => dispatch(updateHugeTask(setPrevState(task)))} style={{ cursor: 'pointer' }} icon='arrow-left' />}
+                                    {task.state !== "done" &&
+                                        <MDBIcon onClick={() => dispatch(updateHugeTask(setNextState(task)))} style={{ cursor: 'pointer' }} icon='arrow-right' />}
                                 </div>
-                                <div className="card-footer">2 days ago</div>
                             </div>
-
-                            <div className="card my-1 mx-2 border shadow-lg">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">
-                                    Some quick example text to build on the card title and make up the bulk.
-                                    </p>
-                                </div>
-                                <div className="card-footer">2 days ago</div>
+                            <div className="card-footer d-flex justify-content-between">
+                                2 days ago
+                                <MDBBtn onClick={() => dispatch(removeHugeTasks(task))} className='btn-close' color='none' />
                             </div>
+                        </div>
+                    )
+                })}
             </MDBContainer>
         </Fragment>
     )

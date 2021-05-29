@@ -4,19 +4,19 @@ import './index.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import NavigationBar from './components/NavigationBar';
 import reportWebVitals from './reportWebVitals';
-import Project from './helpers/classes/Project';
 import MainBoard from './components/MainBoard';
 import { MDBContainer } from 'mdb-react-ui-kit';
-
-
-let projects: Array<Project> = [new Project(1, "name1", "description1"), new Project(2, "name2", "description2"), new Project(3, "name3", "description3")];
+import { Provider } from 'react-redux';
+import {store} from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
       <MDBContainer fluid className="h-100">
-        <NavigationBar  projects={projects} />
+        <NavigationBar />
         <MainBoard />
       </MDBContainer>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
