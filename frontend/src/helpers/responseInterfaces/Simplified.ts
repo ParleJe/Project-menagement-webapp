@@ -2,6 +2,7 @@ export default interface Simplified {
     id?: number,
     name: string,
     description: string,
+    priority: number,
     state: string
 }
 
@@ -22,4 +23,4 @@ const getTasksDone = (tasks: Simplified[]):Simplified[] => {
     return tasks.filter(task => task.state === possibleStates.DONE);
 }
 
-export {getTasksInProgress, getTasksNotStarted, getTasksDone};
+export {getTasksInProgress, getTasksNotStarted, getTasksDone, possibleStates};

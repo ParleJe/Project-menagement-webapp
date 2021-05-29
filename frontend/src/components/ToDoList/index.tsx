@@ -27,7 +27,7 @@ const ToDoList = () => {
         <Fragment>
             <MDBInputGroup className="mb-2 shadow"> 
                 <MDBInputGroupElement onChange={(e: any) => setName(e.target.value)} type='text' placeholder="new TO DO? :)" />
-                <MDBBtn onClick={() => dispatch(addToDo({toDo: {name: name, description:'', state: 'not started'}, idTask: selected}))} outline color="primary">add</MDBBtn>
+                <MDBBtn onClick={() => dispatch(addToDo({toDo: {name: name, description:'', state: 'not started',priority: 1}, idTask: selected}))} outline color="primary">add</MDBBtn>
             </MDBInputGroup>
             <MDBContainer className="m-0 p-0 h-80 overflow-auto shadow-sm position-relative">
             {loadingState === 'pending' && <LoadingIndicator />}
