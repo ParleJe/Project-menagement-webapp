@@ -16,4 +16,5 @@ public class SimplifiedDto {
     protected String name;
     protected String description;
     private String state;
+    private Integer priority;
 }

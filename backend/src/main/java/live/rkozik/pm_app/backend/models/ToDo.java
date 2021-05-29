@@ -21,6 +21,8 @@ public class ToDo {
     private String name;
     private String description;
     private String state;
+    private Integer priority;
+
     @ManyToOne
     private HugeTask hugeTask;
 
