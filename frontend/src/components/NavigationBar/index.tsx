@@ -11,14 +11,13 @@ import {
   MDBBtn,
   MDBCollapse
 } from 'mdb-react-ui-kit';
-import {Fragment, useEffect, useState } from 'react'
+import React, {Fragment, useEffect, useState } from 'react'
 import {useAppSelector, useAppDispatch} from '../../redux/hooks'
 import Project from '../../helpers/responseInterfaces/Project';
 import {select, fetchProjects} from '../../redux/slices/projectSlice';
-import LoginTab from '../SecurityPopover';
-import AddProjectPopover from '../AddPopover';
-import SecurityPopover from '../SecurityPopover';
 import { scopes, setScope } from '../../redux/slices/LoggedUserSlice';
+import AddPopover from '../AddPopover';
+import { types } from '../../helpers/interfaces/TypeEnum';
 
 
 const NavigationBar = () => {
@@ -39,7 +38,7 @@ const NavigationBar = () => {
 
   return (
     <Fragment>
-      {showPopup && <SecurityPopover exitFunction={togglePopup} show={showPopup} setShow={setShowPopup} />}
+      <AddPopover show={showPopup} setShow={setShowPopup} />
       <MDBNavbar expand='lg' light bgColor='light'>
         <MDBContainer fluid>
           <MDBNavbarBrand href='#'>Bénévoles</MDBNavbarBrand>
@@ -58,10 +57,15 @@ const NavigationBar = () => {
             {projects.map((value, index) => {
               return <MDBNavbarItem key={index}><MDBNavbarLink onClick = {() => onClickProject(value.id)}>{value.name}</MDBNavbarLink></MDBNavbarItem>
             })}
+            <MDBNavbarItem className="d-flex justify-content-end">
+              <MDBBtn outline onClick={() => togglePopup()} floating size="sm" gradient="purple" className="mg-auto my-auto">
+                <MDBIcon size='md' icon="plus" />
+              </MDBBtn>
+            </MDBNavbarItem>
             </MDBNavbarNav>
             <div style={{minWidth: '20%'}} className="d-flex justify-content-end">
               <span className="navbar-text p-3">Name Surname</span>
-              <MDBBtn onClick={() => togglePopup()} floating size="lg" gradient="purple" className="mg-auto my-auto"><MDBIcon size='lg' icon="male" /></MDBBtn>
+              <MDBBtn floating size="lg" gradient="purple" className="mg-auto my-auto"><MDBIcon size='lg' icon="male" /></MDBBtn>
             </div>
           </MDBCollapse>
         </MDBContainer>

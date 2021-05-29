@@ -5,6 +5,7 @@ import SimplifiedUser from "../../helpers/responseInterfaces/SimplifiedUser";
 import { useAppSelector } from "../../redux/hooks";
 import { scopes } from "../../redux/slices/LoggedUserSlice";
 import { fetchFromTask } from "../../redux/slices/UsersSlice";
+import LoadingIndicator from "../LoadingIndicator";
 
 
 const MembersTab = () => {
@@ -19,24 +20,14 @@ const MembersTab = () => {
             dispatch(fetchFromTask(selected));
     }, [dispatch, selected])
 
-    if(loadingState === 'pending') {
-        return (
-            <MDBRow between className="h-100 w-100 pt-2">
-                    <div className='d-flex justify-content-center align-items-center'>
-                        <MDBSpinner grow color='secondary' style={{ width: '15rem', height: '15rem' }} >
-                            <span className='visually-hidden'>Loading...</span>
-                        </MDBSpinner>
-                    </div>
-            </MDBRow>
-        )
-    }
     return (
         <Fragment>
             <MDBInputGroup className="mb-2 shadow"> 
                     <MDBInputGroupElement type='text' placeholder="find by name" />
                     <MDBBtn outline color="success">add</MDBBtn>
             </MDBInputGroup>  
-            <MDBContainer className="w-100 h-80 overflow-auto shadow-sm">
+            <MDBContainer className="w-100 h-80 overflow-auto shadow-sm position-relative">
+                {loadingState === 'pending' && <LoadingIndicator />}
                 {users.map((user:SimplifiedUser, key:number) => {
                     return (
                         <MDBRow key={key} between className=" border"> 

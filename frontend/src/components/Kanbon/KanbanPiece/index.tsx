@@ -1,17 +1,18 @@
-import { MDBContainer, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
-import { Fragment } from "react"
+import { MDBBtn, MDBContainer, MDBIcon, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
+import React, { Fragment } from "react"
 import { useDispatch } from "react-redux";
 import Simplified from "../../../helpers/responseInterfaces/Simplified";
-import { select } from "../../../redux/slices/HugeTasksSlice";
+import { removeHugeTasks, select } from "../../../redux/slices/HugeTasksSlice";
 import { scopes, setScope } from "../../../redux/slices/LoggedUserSlice";
 
 interface props {
     color: string,
     title: string,
-    tasks: Simplified[]
+    tasks: Simplified[],
+    togglePopup: Function
 }
 
-const KanbanPiece = ({color, title, tasks}: props) => {
+const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
     const dispatch = useDispatch();
     const onClickKanbanPiece = (idTask: number) => {
         dispatch(setScope(scopes.HugeTask));
@@ -20,8 +21,11 @@ const KanbanPiece = ({color, title, tasks}: props) => {
 
     return (
         <Fragment>
-            <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top "+color}>
-                <h5>{title}</h5>
+            <MDBRow className={"justify-content-center w-100 py-2 m-0 shadow rounded-top align-items-center "+color}>
+                <h5 className='text-center'>{title}</h5>
+                <MDBBtn outline onClick={() => togglePopup()} floating size="sm" color='link'>
+                    <MDBIcon size='lg' icon="plus" />
+                </MDBBtn>
             </MDBRow>
             <MDBContainer className="mt-0 p-0 overflow-auto w-100">
                 
@@ -35,12 +39,15 @@ const KanbanPiece = ({color, title, tasks}: props) => {
                         
                 {tasks.map((task: Simplified, key:number) => {
                     return(
-                        <div key={key} onClick={() => onClickKanbanPiece(task.id)} className="card my-1 mx-2 border shadow-lg">
-                            <div className="card-body">
-                                <h5 className="card-title">{task.name}</h5>
+                        <div key={key} className="card my-1 mx-2 border shadow-lg">
+                            <div className="card-body" onClick={() => onClickKanbanPiece(task.id!)}>
+                                <span><h5 className="card-title">{task.name}</h5></span>
                                 <p className="card-text">{task.description}</p>
                             </div>
-                            <div className="card-footer">2 days ago</div>
+                            <div className="card-footer d-flex justify-content-between">
+                                2 days ago
+                                <MDBBtn onClick={() => dispatch(removeHugeTasks(task))} className='btn-close' color='none' />
+                            </div>
                         </div>
                     )
                 })}

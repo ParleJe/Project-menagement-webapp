@@ -1,19 +1,20 @@
 import { MDBListGroup, MDBListGroupItem, MDBBadge, MDBContainer, MDBBtn, MDBInputGroup, MDBInputGroupElement } from "mdb-react-ui-kit";
-import ToDo from "../../helpers/responseInterfaces/ToDo";
-import React, {Fragment, useEffect} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
-import { clearArr, fetchAllToDo, updateToDo } from "../../redux/slices/ToDoSlice";
+import { addToDo, clearArr, fetchAllToDo, updateToDo } from "../../redux/slices/ToDoSlice";
 import { scopes } from "../../redux/slices/LoggedUserSlice";
 import Simplified from "../../helpers/responseInterfaces/Simplified";
+import LoadingIndicator from "../LoadingIndicator";
 
 const ToDoList = () => {
     const scopeSelected = useAppSelector(state => state.logged.scope);
     let ToDos = useAppSelector(state => state.toDos.toDos);
     const selected = useAppSelector(state => state.hugeTasks.selected);
-
+    const loadingState = useAppSelector((state) => state.toDos.loading);
     const dispatch = useDispatch();
     
+    const [name, setName] = useState('');
     useEffect(() => {
         if(scopeSelected !== scopes.HugeTask){
          dispatch(clearArr())
@@ -25,23 +26,22 @@ const ToDoList = () => {
     return (
         <Fragment>
             <MDBInputGroup className="mb-2 shadow"> 
-                <MDBInputGroupElement type='text' placeholder="new TO DO? :)" />
-                <MDBBtn outline color="primary">add</MDBBtn>
+                <MDBInputGroupElement onChange={(e: any) => setName(e.target.value)} type='text' placeholder="new TO DO? :)" />
+                <MDBBtn onClick={() => dispatch(addToDo({toDo: {name: name, description:'', state: 'not started'}, idTask: selected}))} outline color="primary">add</MDBBtn>
             </MDBInputGroup>
-            <MDBContainer className="m-0 p-0 h-80 overflow-auto shadow-sm">
+            <MDBContainer className="m-0 p-0 h-80 overflow-auto shadow-sm position-relative">
+            {loadingState === 'pending' && <LoadingIndicator />}
                 <MDBListGroup className="m-0 p-0 px-2">
                     {ToDos.map((el:Simplified, key:number) => {
                         return(
                             <MDBListGroupItem key={key} color={(key%2===0)?"dark":"light"}>
-                                <div className="d-flex w-100 justify-content-between align-items-center ">
+                                <div className="d-flex w-100 justify-content-between ">
                                     <h5>{el.name}</h5>
-                                    <MDBBadge onClick={() => {dispatch(updateToDo(el))}} color={el.state === 'done'?"success":"danger"} pill>
-                                        {el.state === 'done'?"done": "not done"}
-                                    </MDBBadge>
+                                    <MDBBtn className='btn-close' color='none' />
                                 </div>
                             </MDBListGroupItem>
                         )
-                    })}
+                        })}
                 </MDBListGroup>
             </MDBContainer>
         </Fragment>
