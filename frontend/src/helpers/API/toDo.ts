@@ -26,7 +26,7 @@ const add = (toDo: Simplified, idTask: number) => {
 
 const remove = (idToDo: number) => {
     const promise = fetch (`${API_URL}/todo/${idToDo}`, {
-        method: "POST",
+        method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
           }

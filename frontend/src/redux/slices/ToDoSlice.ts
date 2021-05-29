@@ -32,7 +32,7 @@ const removeToDo = createAsyncThunk(
     'toDo/remove',
     async (id: number) => {
         const response = await remove(id);
-        return await response.json();
+        return await response.json() as number;
     }
 )
 
@@ -86,11 +86,11 @@ export const projectSlice = createSlice({
             state.loading = 'failed';
         })
         .addCase(removeToDo.fulfilled, (state, action) => {
-            state.toDos.filter(TD => TD.id !== action.payload);
+            state.toDos = state.toDos.filter(TD => TD.id !== action.payload);
             state.loading = 'succeeded';
         })
         .addCase(updateToDo.fulfilled, (state, action) => {
-            state.toDos.filter(TD => TD.id !== action.payload.id);
+            state.toDos = state.toDos.filter(TD => TD.id !== action.payload.id);
             state.toDos.push(action.payload);
             state.loading = 'succeeded';
         })
