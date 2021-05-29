@@ -37,10 +37,10 @@ public class ToDoController extends AbstractController {
     }
 
     @DeleteMapping("/todo/{id}")
-    private ResponseEntity<Boolean> deleteToDo(@PathVariable Long id) {
+    private ResponseEntity<Long> deleteToDo(@PathVariable Long id) {
         logger.info(this.getClass().toString()+":removeToDo:"+getTime());
 
-        return service.deleteToDo(id)? ResponseEntity.ok(true): ResponseEntity.badRequest().build();
+        return service.deleteToDo(id)? ResponseEntity.ok(id): ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/task/{id}/todo")

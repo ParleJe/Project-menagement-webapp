@@ -37,9 +37,6 @@ public class TasksController extends AbstractController {
         logger.info(this.getClass().toString()+":getHugeTasksByProjectId:"+getTime());
         List<SimplifiedDto> projectList = service.getTasksByIdProject(id);
 
-        if(projectList.isEmpty())
-            return ResponseEntity.notFound().build();
-
         return ResponseEntity.ok(projectList);
     }
 

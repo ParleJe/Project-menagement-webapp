@@ -2,7 +2,9 @@ package live.rkozik.pm_app.backend.services;
 
 import live.rkozik.pm_app.backend.dtos.SimplifiedUserDto;
 import live.rkozik.pm_app.backend.mappers.UserMapper;
+import live.rkozik.pm_app.backend.models.Project;
 import live.rkozik.pm_app.backend.models.User;
+import live.rkozik.pm_app.backend.repositories.ProjectRepository;
 import live.rkozik.pm_app.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +19,13 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserMapper mapper;
     private final UserRepository repository;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public UserService(UserMapper mapper, UserRepository repository) {
+    public UserService(UserMapper mapper, UserRepository repository, ProjectRepository projectRepository) {
         this.mapper = mapper;
         this.repository = repository;
+        this.projectRepository = projectRepository;
     }
 
     public List<SimplifiedUserDto> findAllUsersByTask(Long id) {
@@ -44,5 +48,17 @@ public class UserService {
         return optionalUser.map(mapper::UserToSimplifiedUserDto).orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "cannot find User")
         );
+    }
+
+    public SimplifiedUserDto connectUserToProject(String name, String surname, Long idProject) {
+        Optional<User> optionalUser = repository.findUserByNameAndSurname(name, surname);
+        User fetchedUser = optionalUser.orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "cannot find User"));
+        Optional<Project> optionalProject = projectRepository.findById(idProject);
+        Project fetchedProject = optionalProject.orElseThrow(
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "cannot find Project"));
+        fetchedUser.getProjects().add(fetchedProject);
+
+        return mapper.UserToSimplifiedUserDto(repository.saveAndFlush(fetchedUser));
     }
 }

@@ -51,6 +51,14 @@ public class UserController extends AbstractController {
         return ResponseEntity.ok(userList);
     }
 
+    @PutMapping("/project/{id}/user")
+    private ResponseEntity<SimplifiedUserDto> setUserToProject(@PathVariable Long id, @RequestBody SimplifiedUserDto user) {
+        logger.info(this.getClass().toString()+":setUserToProject:"+getTime());
+        SimplifiedUserDto addedUser = service.connectUserToProject(user.getName(), user.getSurname(), id);
+
+        return ResponseEntity.ok(addedUser);
+    }
+
     //TODO
     @PutMapping("/user")
     private ResponseEntity<UserGetDto> updateUser(@RequestBody SimplifiedUserDto user) {

@@ -54,13 +54,13 @@ public class DataLoaderDebug implements ApplicationRunner {
     }
 
     private void initHugeTasks() {
-        hugeTasks.add(HugeTask.builder().name("Add store integration").description("Amazon store Api to generate recipies").project(projects.get(1)).hugeTaskAssigned(users.subList(0,3)).state(StateEnum.IN_PROGRESS.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("create brochure").description("create brochure").project(projects.get(0)).hugeTaskAssigned(users.subList(0,1)).state(StateEnum.IN_PROGRESS.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("hire new developer").description("hire new developer").project(projects.get(0)).hugeTaskAssigned(users.subList(0,1)).state(StateEnum.DONE.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("find new markets").description("find new markets").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.IN_PROGRESS.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("create new App").description("create new App").project(projects.get(1)).hugeTaskAssigned(users.subList(0,3)).state(StateEnum.DONE.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("Get new company name").description("Get new company name").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.DONE.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("create new product").description("create new product").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.NOT_STARTED.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("Add store integration").priority(3).description("Amazon store Api to generate recipies").project(projects.get(1)).hugeTaskAssigned(users.subList(0,3)).state(StateEnum.IN_PROGRESS.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("create brochure").priority(5).description("create brochure").project(projects.get(0)).hugeTaskAssigned(users.subList(0,1)).state(StateEnum.IN_PROGRESS.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("hire new developer").priority(3).description("hire new developer").project(projects.get(0)).hugeTaskAssigned(users.subList(0,1)).state(StateEnum.DONE.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("find new markets").priority(2).description("find new markets").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.IN_PROGRESS.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("create new App").priority(1).description("create new App").project(projects.get(1)).hugeTaskAssigned(users.subList(0,3)).state(StateEnum.DONE.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("Get new company name").priority(4).description("Get new company name").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.DONE.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("create new product").priority(2).description("create new product").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.NOT_STARTED.toString()).build());
 
         hugeTaskRepository.saveAll(hugeTasks);
         hugeTaskRepository.flush();

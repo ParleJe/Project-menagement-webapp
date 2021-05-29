@@ -13,7 +13,18 @@ const fetchAll = ():Promise<any> => {
     return promise;
 };
 
-const fetchAllFromProject = (idProject: number):Promise<any> => {
+const addUserToProject = (name: string, surname: string, idProject: number): Promise<Response> => {
+    const promise = fetch(`${API_URL}/project/${idProject}/user`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify({ name: name, surname: surname })
+    });
+    return promise;
+};
+
+const fetchAllFromProject = (idProject: number):Promise<Response> => {
     const promise = fetch (`${API_URL}/project/${idProject}/user`, {
         method: "GET",
         headers: {
@@ -23,7 +34,7 @@ const fetchAllFromProject = (idProject: number):Promise<any> => {
     return promise;
 };
 
-const fetchAllFromTask = (idTask: number):Promise<any> => {
+const fetchAllFromTask = (idTask: number):Promise<Response> => {
     const promise = fetch (`${API_URL}/task/${idTask}/user`, {
         method: "GET",
         headers: {
@@ -33,7 +44,7 @@ const fetchAllFromTask = (idTask: number):Promise<any> => {
     return promise;
 };
 
-const updateUser = (user: User): Promise<any> => {
+const updateUser = (user: User): Promise<Response> => {
     const promise = fetch (`${API_URL}/user/${user.id}`, {
         method: "PUT",
         headers: {
@@ -44,7 +55,7 @@ const updateUser = (user: User): Promise<any> => {
     return promise;
 }
 
-const removeUser = ():Promise<any> => {
+const removeUser = ():Promise<Response> => {
     const promise = fetch (`${API_URL}/users`, {
         method: "DELETE",
         headers: {
@@ -54,7 +65,7 @@ const removeUser = ():Promise<any> => {
     return promise;
 }
 
-const register = (user: User):Promise<any> => {
+const register = (user: User):Promise<Response> => {
     const promise = fetch (`${API_URL}/register`, {
         method: "POST",
         headers: {
@@ -70,7 +81,7 @@ interface loginPayload {
     password:string
 }
 
-const logIn = (payload: loginPayload):Promise<any> => {
+const logIn = (payload: loginPayload):Promise<Response> => {
     const promise = fetch (`${API_URL}/register`, {
         method: "POST",
         headers: {
@@ -81,5 +92,5 @@ const logIn = (payload: loginPayload):Promise<any> => {
     return promise;
 };
 
-export { logIn, register, removeUser, updateUser, fetchAllFromTask, fetchAllFromProject, fetchAll };
+export { logIn, register, removeUser, updateUser, fetchAllFromTask, fetchAllFromProject, fetchAll, addUserToProject };
 export type { loginPayload };
