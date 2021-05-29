@@ -1,4 +1,4 @@
-import { MDBBtn, MDBContainer, MDBIcon, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
+import { MDBBtn, MDBContainer, MDBIcon, MDBProgress, MDBProgressBar, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
 import React, { Fragment } from "react"
 import { useDispatch } from "react-redux";
 import Simplified from "../../../helpers/responseInterfaces/Simplified";
@@ -45,8 +45,12 @@ const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
                         <div key={key} className="card my-1 mx-2 border shadow-lg">
                             
                             <div className="col card-body" onClick={() => onClickKanbanPiece(task.id!)}>
-                                <h5 className="card-title"><u>{task.name}</u></h5>
+                                <h5 className="card-title">{task.name}</h5>
+                                <MDBProgress>
+                                  <MDBProgressBar width={(task.priority/5)*100} />
+                                </MDBProgress>
                                 <p className="card-text">{task.description}</p>
+                                {/* <br /> */}
                                 <div className="d-flex justify-content-between">
                                     {task.state !== "not started" && <MDBIcon style={{cursor: 'pointer'}} icon='arrow-left'/>}
                                     {task.state !== "done" && <MDBIcon style={{cursor: 'pointer'}} icon='arrow-right'/>}
