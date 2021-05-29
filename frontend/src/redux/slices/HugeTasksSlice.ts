@@ -9,6 +9,11 @@ interface HugeTaskState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed'
 };
 
+export interface TaskPayload {
+  task: Simplified,
+  idProject: number
+}
+
 const initialState: HugeTaskState = {
     HugeTasks: [],
     selected: -1,
@@ -24,19 +29,19 @@ const fetchHugeTasks = createAsyncThunk(
     }
   )
 
-const addHugeTask = createAsyncThunk(
+const addTask = createAsyncThunk(
     'HugeTask/add',
-    async(hugeTask: HugeTask) => {
-        const response = await add(hugeTask);
+    async({task, idProject}: TaskPayload) => {
+        const response = await add(task, idProject);
         return await response.json;
     }
     )
 
 const removeHugeTasks = createAsyncThunk(
     'HugeTask/remove',
-    async (hugeTask: HugeTask) => {
-      const response = await remove(hugeTask.idProject, hugeTask.id);
-      return await response.json();
+    async (task: Simplified) => {
+      const response = await remove(task);
+      return (await response.json()) as number;
     }
     )
 
@@ -71,18 +76,18 @@ export const HugeTasksSlice = createSlice({
            state.loading = 'failed';
        })
 
-       .addCase(addHugeTask.pending, (state) => {
+       .addCase(addTask.pending, (state) => {
            state.loading = 'pending';
        })
-       .addCase(addHugeTask.fulfilled, (state, action) => {
+       .addCase(addTask.fulfilled, (state, action) => {
            state.loading = 'succeeded';
            state.HugeTasks.push(action.payload);
        })
-       .addCase(addHugeTask.rejected, (state) => {
+       .addCase(addTask.rejected, (state) => {
            state.loading = 'failed';
        })
        .addCase(removeHugeTasks.fulfilled, (state, action) => {
-           state.HugeTasks.filter(HT => HT.id !== action.payload);
+           state.HugeTasks = state.HugeTasks.filter(HT => HT.id !== action.payload);
        })
 
        .addCase(updateHugeTask.fulfilled, (state, action) => { //can be more optimised!!!! O(n) always
@@ -93,5 +98,5 @@ export const HugeTasksSlice = createSlice({
   });
 
 export const {select} = HugeTasksSlice.actions;
-export {fetchHugeTasks, removeHugeTasks, updateHugeTask, addHugeTask};
+export {fetchHugeTasks, removeHugeTasks, updateHugeTask, addTask};
 export default HugeTasksSlice.reducer;

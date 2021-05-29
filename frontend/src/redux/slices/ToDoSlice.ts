@@ -24,7 +24,7 @@ const addToDo = createAsyncThunk(
     'toDo/add',
     async ({toDo, idTask}: ToDoPayload) => {
       const response = await add(toDo, idTask);
-      return await response.json();
+      return await response.json() as Simplified;
     }
   )
 

@@ -1,5 +1,5 @@
 export default interface Simplified {
-    id: number,
+    id?: number,
     name: string,
     description: string,
     state: string

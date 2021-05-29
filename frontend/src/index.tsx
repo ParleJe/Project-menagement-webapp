@@ -4,14 +4,10 @@ import './index.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import NavigationBar from './components/NavigationBar';
 import reportWebVitals from './reportWebVitals';
-import Project from './helpers/responseInterfaces/Project';
 import MainBoard from './components/MainBoard';
 import { MDBContainer } from 'mdb-react-ui-kit';
 import { Provider } from 'react-redux';
 import {store} from './redux/store';
-
-
-let projects: Array<Project> = [];
 
 ReactDOM.render(
   <React.StrictMode>
