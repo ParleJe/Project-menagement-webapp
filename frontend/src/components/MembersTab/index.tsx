@@ -13,7 +13,7 @@ const MembersTab = () => {
     const dispatch = useDispatch();
     const users = useAppSelector((state) => state.users.users)
     const selected = useAppSelector((state) => state.projects.selected);
-    const loadingState = useAppSelector((state) => state.toDos.loading);
+    const loadingState = useAppSelector((state) => state.users.loading);
 
     useEffect(() => {
         if(scopeSelected === scopes.Project)

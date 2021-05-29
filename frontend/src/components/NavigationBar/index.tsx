@@ -27,6 +27,7 @@ const NavigationBar = () => {
   const togglePopup = () => setShowPopup(!showPopup);
   /*________________________REDUX________________________*/ 
   const projects: Project[] = useAppSelector((state) => state.projects.projects);
+  const selected = useAppSelector((state) => state.projects.selected);
   const dispatch = useAppDispatch();
 
   useEffect(() => {dispatch(fetchProjects(1))}, [dispatch])
@@ -55,7 +56,7 @@ const NavigationBar = () => {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav>
             {projects.map((value, index) => {
-              return <MDBNavbarItem key={index}><MDBNavbarLink onClick = {() => onClickProject(value.id)}>{value.name}</MDBNavbarLink></MDBNavbarItem>
+              return <MDBNavbarItem key={index}><MDBNavbarLink href='#' onClick = {() => onClickProject(value.id)}>{value.name}</MDBNavbarLink></MDBNavbarItem>
             })}
             <MDBNavbarItem className="d-flex justify-content-end">
               <MDBBtn outline onClick={() => togglePopup()} floating size="sm" gradient="purple" className="mg-auto my-auto">

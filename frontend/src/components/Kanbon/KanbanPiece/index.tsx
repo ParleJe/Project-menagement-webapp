@@ -43,9 +43,14 @@ const KanbanPiece = ({color, title, tasks, togglePopup}: props) => {
                 {tasks.map((task: Simplified, key:number) => {
                     return(
                         <div key={key} className="card my-1 mx-2 border shadow-lg">
-                            <div className="card-body" onClick={() => onClickKanbanPiece(task.id!)}>
-                                <span><h5 className="card-title">{task.name}</h5></span>
+                            
+                            <div className="col card-body" onClick={() => onClickKanbanPiece(task.id!)}>
+                                <h5 className="card-title"><u>{task.name}</u></h5>
                                 <p className="card-text">{task.description}</p>
+                                <div className="d-flex justify-content-between">
+                                    {task.state !== "not started" && <MDBIcon style={{cursor: 'pointer'}} icon='arrow-left'/>}
+                                    {task.state !== "done" && <MDBIcon style={{cursor: 'pointer'}} icon='arrow-right'/>}
+                                </div>
                             </div>
                             <div className="card-footer d-flex justify-content-between">
                                 2 days ago
