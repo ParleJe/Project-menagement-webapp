@@ -4,6 +4,7 @@ import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
 import live.rkozik.pm_app.backend.dtos.SimplifiedUserDto;
 import live.rkozik.pm_app.backend.dtos.UserGetDto;
 import live.rkozik.pm_app.backend.dtos.UserPostDto;
+import live.rkozik.pm_app.backend.services.SecurityService;
 import live.rkozik.pm_app.backend.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,12 @@ import java.util.List;
 public class UserController extends AbstractController {
 
     private final UserService service;
+    private final SecurityService securityService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SecurityService securityService) {
         super(UserController.class);
         this.service = userService;
+        this.securityService = securityService;
     }
 
     @GetMapping("/user/{id}")
@@ -57,17 +60,5 @@ public class UserController extends AbstractController {
         SimplifiedUserDto addedUser = service.connectUserToProject(user.getName(), user.getSurname(), id);
 
         return ResponseEntity.ok(addedUser);
-    }
-
-    //TODO
-    @PutMapping("/user")
-    private ResponseEntity<UserGetDto> updateUser(@RequestBody SimplifiedUserDto user) {
-        return ResponseEntity.notFound().build();
-    }
-
-    //TODO
-    @DeleteMapping("/user/{id}")
-    private ResponseEntity<Boolean> deleteUser(@PathVariable Long id) {
-        return ResponseEntity.notFound().build();
     }
 }
