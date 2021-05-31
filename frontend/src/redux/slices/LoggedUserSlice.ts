@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import User from '../../helpers/responseInterfaces/User';
-import {logIn, loginPayload, register} from '../../helpers/API/UsersAndSecurity';
+import {logIn, register} from '../../helpers/API/UsersAndSecurity';
+import UserPost from '../../helpers/responseInterfaces/UserPost';
+import SimplifiedUser from '../../helpers/responseInterfaces/SimplifiedUser';
 
 enum scopes {
     Project,
@@ -8,12 +9,19 @@ enum scopes {
     None
 }
 
+export enum loadingStates {
+    IDLE = "idle",
+    PENDING = "pending",
+    SUCCEEDED = "succeeded",
+    FAILED = "failed"
+}
+
 interface LoggedState {
-    logged: User|null,
+    logged: SimplifiedUser|null,
     token: string,
     scope: scopes,
     errorMsg: string|undefined;
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+    loading: loadingStates
 };
 
 const initialState: LoggedState = {
@@ -21,22 +29,22 @@ const initialState: LoggedState = {
     token: "",
     scope: scopes.None,
     errorMsg: "",
-    loading: "idle"
+    loading: loadingStates.IDLE
 };
 
 const tryLog = createAsyncThunk(
     'login',
-    async (payload: loginPayload) => {
+    async (payload: UserPost) => {
       const response = await logIn(payload);
-      return await response.json() as User;
+      return await response.json() as UserPost;
     }
   )
 
 const tryRegister = createAsyncThunk(
     'register',
-    async (user: User) => {
+    async (user: UserPost) => {
       const response = await register(user);
-      return await response.json();
+      return await response.json() as UserPost;
     }
   )
 
@@ -46,32 +54,35 @@ export const loggedUserSlice = createSlice({
     reducers: {
       setScope: (state, action:PayloadAction<scopes>) => {
         state.scope = action.payload;
+      },
+      setLoadingState: (state, action:PayloadAction<loadingStates>) => {
+        state.loading = action.payload
       }
-
-      
     },
     extraReducers: (builder) => {
         builder.addCase(tryLog.pending, (state) => {
-            state.loading = 'pending';
+            state.loading = loadingStates.PENDING;
         })
         .addCase(tryRegister.pending, (state) => {
-            state.loading = 'pending'
+            state.loading = loadingStates.PENDING
         })
         .addCase(tryRegister.rejected, (state, payload) => {
-            state.loading = 'failed';
+            state.loading = loadingStates.FAILED;
             state.errorMsg = payload.error.message;
 
         })
-        .addCase(tryLog.rejected, (state, payload) => {
-            state.loading = 'failed';
-            state.errorMsg = payload.error.message;
+        .addCase(tryLog.rejected, (state, response) => {
+            state.loading = loadingStates.FAILED;
+            state.errorMsg = response.error.message;
         })
         .addCase(tryRegister.fulfilled, (state) => {
-            state.loading = 'succeeded';
+            state.loading = loadingStates.SUCCEEDED;
         })
-        .addCase(tryLog.fulfilled, (state, payload) => {
-            state.logged = payload.payload;
-            state.loading = 'succeeded';
+        .addCase(tryLog.fulfilled, (state, response) => {
+            const payload: UserPost = response.payload;
+            state.logged = {id: payload.id!, name: payload.name!, surname: payload.surname!};
+            state.token = response.payload.token!
+            state.loading = loadingStates.SUCCEEDED;
         })
     }
 });

@@ -1,4 +1,5 @@
 import User from "../responseInterfaces/User";
+import UserPost from "../responseInterfaces/UserPost";
 
 const API_URL:string = "http://localhost:8080/api";
 
@@ -65,7 +66,7 @@ const removeUser = ():Promise<Response> => {
     return promise;
 }
 
-const register = (user: User):Promise<Response> => {
+const register = (user: UserPost):Promise<Response> => {
     const promise = fetch (`${API_URL}/register`, {
         method: "POST",
         headers: {
@@ -76,13 +77,8 @@ const register = (user: User):Promise<Response> => {
     return promise;
 };
 
-interface loginPayload {
-    login:string,
-    password:string
-}
-
-const logIn = (payload: loginPayload):Promise<Response> => {
-    const promise = fetch (`${API_URL}/register`, {
+const logIn = (payload: UserPost):Promise<Response> => {
+    const promise = fetch (`${API_URL}/login`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -93,4 +89,3 @@ const logIn = (payload: loginPayload):Promise<Response> => {
 };
 
 export { logIn, register, removeUser, updateUser, fetchAllFromTask, fetchAllFromProject, fetchAll, addUserToProject };
-export type { loginPayload };
