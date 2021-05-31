@@ -18,24 +18,29 @@ const initialState: projectState = {
 const fetchProjects = createAsyncThunk(
   'projects/fetchAll',
   async (idUser: number,{getState}) => {
-    //const {token} = getState().loggedUser;
-    const response = await fetchAll(idUser);
+    const state = getState() as any;
+    const token = state.logged.token;
+    const response = await fetchAll(idUser, token);
     return (await response.json()) as Project[];
   }
 )
 
 const addProject = createAsyncThunk(
   'projects/addProject',
-  async (project:Project) => {
-    const response = await add(project);
+  async (project:Project, {getState}) => {
+    const state = getState() as any;
+    const token = state.logged.token;
+    const response = await add(project, token);
     return await response.json() as Project;
   }
 )
 
 const removeProject = createAsyncThunk(
   'projects/removeProjectById',
-  async (id:number) => {
-    const response = await remove(id);
+  async (id:number, {getState}) => {
+    const state = getState() as any;
+    const token = state.logged.token;
+    const response = await remove(id, token);
     return await response.json();
   }
 )
@@ -56,10 +61,10 @@ export const projectSlice = createSlice({
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = "succeeded";
         state.projects = action.payload;
-        //TODO map payload
       })
       .addCase(fetchProjects.rejected, (state, action) => {
         state.loading = "failed";
+        state.projects = [];
       })
 
       .addCase(addProject.fulfilled, (state, action) => {
@@ -71,7 +76,7 @@ export const projectSlice = createSlice({
       })
 
       .addCase(removeProject.fulfilled, (state, action) => {
-        state.projects.filter(project => project.id !== action.payload);
+        state.projects = state.projects.filter(project => project.id !== action.payload);
       })
     }
   });

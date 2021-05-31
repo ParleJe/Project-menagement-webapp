@@ -3,7 +3,7 @@ import {fetchAll, add, remove, update} from '../../helpers/API/HugeTask';
 import Simplified from "../../helpers/responseInterfaces/Simplified";
 
 interface HugeTaskState {
-    HugeTasks: Simplified[],
+    tasks: Simplified[],
     selected: number,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed'
 };
@@ -14,40 +14,48 @@ export interface TaskPayload {
 }
 
 const initialState: HugeTaskState = {
-    HugeTasks: [],
+    tasks: [],
     selected: -1,
     loading: "idle"
 };
 
 //____________________________________________
 const fetchHugeTasks = createAsyncThunk(
-    'HugeTask/fetchAllByProject',
-    async (idProject: number) => {
-      const response = await fetchAll(idProject);
+    'Task/fetchAllByProject',
+    async (idProject: number, {getState}) => {
+      const state = getState() as any;
+      const token = state.logged.token;
+      const response = await fetchAll(idProject, token);
       return await response.json() as Simplified[];
     }
   )
 
 const addTask = createAsyncThunk(
-    'HugeTask/add',
-    async({task, idProject}: TaskPayload) => {
-        const response = await add(task, idProject);
+    'Task/add',
+    async({task, idProject}: TaskPayload, {getState}) => {
+      const state = getState() as any;
+      const token = state.logged.token;
+        const response = await add(task, idProject, token);
         return await response.json() as Simplified;
     }
     )
 
 const removeHugeTasks = createAsyncThunk(
-    'HugeTask/remove',
-    async (task: Simplified) => {
-      const response = await remove(task);
+    'Task/remove',
+    async (task: Simplified, {getState}) => {
+      const state = getState() as any;
+      const token = state.logged.token;
+      const response = await remove(task, token);
       return (await response.json()) as number;
     }
     )
 
 const updateHugeTask = createAsyncThunk(
-      'HugeTask/update',
-      async (hugeTask: Simplified) => {
-        const response = await update(hugeTask);
+      'Task/update',
+      async (hugeTask: Simplified,{getState}) => {
+        const state = getState() as any;
+      const token = state.logged.token;
+        const response = await update(hugeTask, token);
         return await response.json() as Simplified;
       }
     )
@@ -55,7 +63,7 @@ const updateHugeTask = createAsyncThunk(
 
 //____________________________________________
 export const HugeTasksSlice = createSlice({
-    name: 'hugeTask',
+    name: 'tasks',
     initialState,
     reducers: {
       select: (state, action:PayloadAction<number>) => {
@@ -69,10 +77,11 @@ export const HugeTasksSlice = createSlice({
        })
        .addCase(fetchHugeTasks.fulfilled, (state, action) => {
            state.loading = 'succeeded';
-           state.HugeTasks = action.payload;
+           state.tasks = action.payload;
        })
        .addCase(fetchHugeTasks.rejected, (state) => {
            state.loading = 'failed';
+           state.tasks = [];
        })
 
        .addCase(updateHugeTask.pending, (state) => {
@@ -84,18 +93,18 @@ export const HugeTasksSlice = createSlice({
        })
        .addCase(addTask.fulfilled, (state, action) => {
            state.loading = 'succeeded';
-           state.HugeTasks.push(action.payload);
+           state.tasks.push(action.payload);
        })
        .addCase(addTask.rejected, (state) => {
            state.loading = 'failed';
        })
        .addCase(removeHugeTasks.fulfilled, (state, action) => {
-           state.HugeTasks = state.HugeTasks.filter(HT => HT.id !== action.payload);
+           state.tasks = state.tasks.filter(T => T.id !== action.payload);
        })
 
        .addCase(updateHugeTask.fulfilled, (state, action) => { //can be more optimised!!!! O(n) always
-           state.HugeTasks = state.HugeTasks.filter(HT => HT.id !== action.payload.id);
-           state.HugeTasks.push(action.payload);
+           state.tasks = state.tasks.filter(T => T.id !== action.payload.id);
+           state.tasks.push(action.payload);
            state.loading = 'succeeded';
        })
     }

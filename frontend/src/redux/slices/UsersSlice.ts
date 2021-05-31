@@ -16,8 +16,10 @@ const initialState: UserState = {
 
 const fetchFromTask = createAsyncThunk(
     'users/fromTask',
-    async (idTask: number) => {
-        const response = await fetchAllFromProject(idTask);
+    async (idTask: number, {getState}) => {
+        const state = getState() as any;
+        const token = state.logged.token;
+        const response = await fetchAllFromProject(idTask, token);
         return await response.json() as SimplifiedUser[];
     }
 )
@@ -30,8 +32,10 @@ export interface addUserPayload {
 
 const addToProject = createAsyncThunk(
     'users/addToProject',
-    async ({name, surname, idProject}: addUserPayload) => {
-        const response = await addUserToProject(name, surname, idProject);
+    async ({name, surname, idProject}: addUserPayload, {getState}) => {
+        const state = getState() as any;
+        const token = state.logged.token;
+        const response = await addUserToProject(name, surname, idProject, token);
         return await response.json() as SimplifiedUser;
     }
 )
@@ -53,6 +57,7 @@ export const usersSlice = createSlice({
         })
         .addCase(fetchFromTask.rejected, (state) => {
             state.loading = 'failed';
+            state.users = [];
         })
         .addCase(fetchFromTask.fulfilled, (state, response) => {
             state.loading = 'succeeded';

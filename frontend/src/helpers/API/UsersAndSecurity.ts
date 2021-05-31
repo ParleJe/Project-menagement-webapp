@@ -1,91 +1,85 @@
 import User from "../responseInterfaces/User";
 import UserPost from "../responseInterfaces/UserPost";
 
-const API_URL:string = "http://localhost:8080/api";
+const API_URL: string = "http://localhost:8080/api";
 
 
-const fetchAll = ():Promise<any> => {
-    const promise = fetch (`${API_URL}/user`, {
+const fetchAll = (): Promise<any> => {
+    const promise = fetch(`${API_URL}/user`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
-          },
+        },
     });
     return promise;
 };
 
-const addUserToProject = (name: string, surname: string, idProject: number): Promise<Response> => {
+const addUserToProject = (name: string, surname: string, idProject: number, token: number): Promise<Response> => {
     const promise = fetch(`${API_URL}/project/${idProject}/user`, {
         method: "PUT",
         headers: {
-            'Content-Type': 'application/json'
-          },
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ name: name, surname: surname })
     });
     return promise;
 };
 
-const fetchAllFromProject = (idProject: number):Promise<Response> => {
-    const promise = fetch (`${API_URL}/project/${idProject}/user`, {
+const fetchAllFromProject = (idProject: number, token: number): Promise<Response> => {
+    const promise = fetch(`${API_URL}/project/${idProject}/user`, {
         method: "GET",
         headers: {
-            'Content-Type': 'application/json'
-          },
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
     });
     return promise;
 };
 
-const fetchAllFromTask = (idTask: number):Promise<Response> => {
-    const promise = fetch (`${API_URL}/task/${idTask}/user`, {
+const fetchAllFromTask = (idTask: number, token: number): Promise<Response> => {
+    const promise = fetch(`${API_URL}/task/${idTask}/user`, {
         method: "GET",
         headers: {
-            'Content-Type': 'application/json'
-          },
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
     });
     return promise;
 };
 
-const updateUser = (user: User): Promise<Response> => {
-    const promise = fetch (`${API_URL}/user/${user.id}`, {
+const updateUser = (user: User, token: number): Promise<Response> => {
+    const promise = fetch(`${API_URL}/user/${user.id}`, {
         method: "PUT",
         headers: {
-            'Content-Type': 'application/json'
-          },
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(user)
     });
     return promise;
 }
 
-const removeUser = ():Promise<Response> => {
-    const promise = fetch (`${API_URL}/users`, {
-        method: "DELETE",
-        headers: {
-            'Content-Type': 'application/json'
-          },
-    });
-    return promise;
-}
-
-const register = (user: UserPost):Promise<Response> => {
-    const promise = fetch (`${API_URL}/register`, {
+const register = (user: UserPost): Promise<Response> => {
+    const promise = fetch(`${API_URL}/register`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
-          },
+        },
         body: JSON.stringify(user)
     });
     return promise;
 };
 
-const logIn = (payload: UserPost):Promise<Response> => {
-    const promise = fetch (`${API_URL}/login`, {
+const logIn = (payload: UserPost): Promise<Response> => {
+    const promise = fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
-          },
+        },
         body: JSON.stringify(payload)
     });
     return promise;
 };
 
-export { logIn, register, removeUser, updateUser, fetchAllFromTask, fetchAllFromProject, fetchAll, addUserToProject };
+export { logIn, register, updateUser, fetchAllFromTask, fetchAllFromProject, fetchAll, addUserToProject };
