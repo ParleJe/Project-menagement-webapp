@@ -25,7 +25,7 @@ public class ToDo implements Substitutable {
     private Integer priority;
 
     @ManyToOne
-    private HugeTask hugeTask;
+    private Task task;
 
     @Override
     public ToDo substituteStaticMembers(SimplifiedDto source) {

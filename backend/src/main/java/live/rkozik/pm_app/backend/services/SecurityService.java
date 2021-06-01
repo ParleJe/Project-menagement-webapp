@@ -6,6 +6,7 @@ import live.rkozik.pm_app.backend.models.User;
 import live.rkozik.pm_app.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,10 @@ public class SecurityService implements UserDetailsService {
     public SecurityService(UserRepository repository, UserMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
+    }
+
+    public static User getAuthenticatedUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @Override

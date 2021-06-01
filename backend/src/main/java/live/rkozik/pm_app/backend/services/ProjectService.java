@@ -3,6 +3,7 @@ package live.rkozik.pm_app.backend.services;
 import live.rkozik.pm_app.backend.dtos.ProjectDto;
 import live.rkozik.pm_app.backend.mappers.ProjectMapper;
 import live.rkozik.pm_app.backend.models.Project;
+import live.rkozik.pm_app.backend.models.User;
 import live.rkozik.pm_app.backend.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static live.rkozik.pm_app.backend.services.SecurityService.getAuthenticatedUser;
 
 @Service
 public class ProjectService {
@@ -42,11 +45,13 @@ public class ProjectService {
     }
 
     public ProjectDto dispatchProject(ProjectDto project) {
-        //TODO get user (who requested it) and add him as participant
-        if (project.getId() != null)
+        User user = getAuthenticatedUser();
+        if (project.getId() != null) {
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "id cannot be given");
+        }
 
         Project mappedProject = mapper.ProjectDtoToProject(project);
+        mappedProject.setUsersAssigned(List.of(user));
 
         return mapper.ProjectToProjectDto(repository.saveAndFlush(mappedProject));
     }

@@ -2,9 +2,9 @@ package live.rkozik.pm_app.backend.services;
 
 import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
 import live.rkozik.pm_app.backend.mappers.ToDoMapper;
-import live.rkozik.pm_app.backend.models.HugeTask;
+import live.rkozik.pm_app.backend.models.Task;
 import live.rkozik.pm_app.backend.models.ToDo;
-import live.rkozik.pm_app.backend.repositories.HugeTaskRepository;
+import live.rkozik.pm_app.backend.repositories.TaskRepository;
 import live.rkozik.pm_app.backend.repositories.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +20,10 @@ public class ToDoService {
 
     private final ToDoRepository repository;
     private final ToDoMapper mapper;
-    private final HugeTaskRepository HTRepository;
+    private final TaskRepository HTRepository;
 
     @Autowired
-    public ToDoService(ToDoRepository repository, ToDoMapper mapper, HugeTaskRepository HTRepository) {
+    public ToDoService(ToDoRepository repository, ToDoMapper mapper, TaskRepository HTRepository) {
         this.repository = repository;
         this.mapper = mapper;
         this.HTRepository = HTRepository;
@@ -48,13 +48,13 @@ public class ToDoService {
         if (toDo.getId() != null)
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "id cannot be given");
 
-        Optional<HugeTask> precedentHugeTask = HTRepository.findById(idHugeTask);
-        HugeTask fetchedHugeTask = precedentHugeTask.orElseThrow(
+        Optional<Task> precedentHugeTask = HTRepository.findById(idHugeTask);
+        Task fetchedTask = precedentHugeTask.orElseThrow(
                 () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "precedent Project is invalid")
         );
 
         ToDo mappedToDo = mapper.SimplifiedDtoToToDo(toDo);
-        mappedToDo.setHugeTask(fetchedHugeTask);
+        mappedToDo.setTask(fetchedTask);
 
         return mapper.ToDoToSimplifiedDto(repository.saveAndFlush(mappedToDo));
     }

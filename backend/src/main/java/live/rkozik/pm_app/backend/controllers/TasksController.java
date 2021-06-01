@@ -1,7 +1,7 @@
 package live.rkozik.pm_app.backend.controllers;
 
 import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
-import live.rkozik.pm_app.backend.services.HugeTaskService;
+import live.rkozik.pm_app.backend.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class TasksController extends AbstractController {
 
-    private final HugeTaskService service;
+    private final TaskService service;
 
     @Autowired
-    public TasksController(HugeTaskService service) {
+    public TasksController(TaskService service) {
         super(TasksController.class);
 
         this.service = service;

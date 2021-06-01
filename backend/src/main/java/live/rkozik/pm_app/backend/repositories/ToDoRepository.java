@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ToDoRepository extends JpaRepository<ToDo, Long> {
 
-    @Query(value = "SELECT t FROM ToDo t inner join fetch t.hugeTask as ht where ht.id = ?1")
+    @Query(value = "SELECT td FROM ToDo td inner join fetch td.task as t where t.id = ?1")
     List<ToDo> findByHugeTask(Long idTask);
 }

@@ -13,13 +13,13 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "HugeTasks")
+@Table(name = "Tasks")
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HugeTask implements Substitutable {
+public class Task implements Substitutable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,11 +32,11 @@ public class HugeTask implements Substitutable {
     @ManyToMany
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
-            name = "HugeTasksAssigned",
-            joinColumns = @JoinColumn(name = "idHugeTasks"),
+            name = "tasksAssigned",
+            joinColumns = @JoinColumn(name = "idTasks"),
             inverseJoinColumns = @JoinColumn(name = "idUsers"))
-    private List<User> hugeTaskAssigned;
-    @OneToMany(targetEntity = ToDo.class, mappedBy = "hugeTask")
+    private List<User> taskAssigned;
+    @OneToMany(targetEntity = ToDo.class, mappedBy = "task")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ToDo> toDos;
     @ManyToOne
@@ -44,7 +44,7 @@ public class HugeTask implements Substitutable {
     private Project project;
 
     @Override
-    public HugeTask substituteStaticMembers(SimplifiedDto source) {
+    public Task substituteStaticMembers(SimplifiedDto source) {
         if (source.getName() != null) {
             this.setName(source.getName());
         }

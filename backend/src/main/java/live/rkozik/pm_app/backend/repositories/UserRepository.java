@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT u FROM User u inner join fetch u.hugeTasks as ht where ht.id = ?1")
+    @Query(value = "SELECT u FROM User u inner join fetch u.tasks as t where t.id = ?1")
     List<User> findByTask(Long idTask);
 
     @Query(value = "SELECT u FROM User u inner join fetch u.projects as p where p.id = ?1")

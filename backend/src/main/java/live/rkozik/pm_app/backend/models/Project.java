@@ -32,8 +32,8 @@ public class Project {
             joinColumns = @JoinColumn(name = "idProjects"),
             inverseJoinColumns = @JoinColumn(name = "idUsers"))
     private List<User> usersAssigned;
-    @OneToMany(targetEntity = HugeTask.class, mappedBy = "project")
+    @OneToMany(targetEntity = Task.class, mappedBy = "project")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<HugeTask> tasks;
+    private List<Task> tasks;
 
 }

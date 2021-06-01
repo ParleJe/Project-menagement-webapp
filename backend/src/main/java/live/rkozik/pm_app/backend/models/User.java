@@ -39,10 +39,10 @@ public class User implements UserDetails {
     private List<Project> projects;
     @ManyToMany
     @JoinTable(
-            name = "HugeTasksAssigned",
+            name = "tasksAssigned",
             joinColumns = @JoinColumn(name = "idUsers"),
-            inverseJoinColumns = @JoinColumn(name = "idHugeTasks"))
-    private List<HugeTask> hugeTasks;
+            inverseJoinColumns = @JoinColumn(name = "idTasks"))
+    private List<Task> tasks;
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
