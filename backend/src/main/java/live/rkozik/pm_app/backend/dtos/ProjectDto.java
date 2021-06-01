@@ -10,9 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
-    protected Long id;
-    protected String name;
-    protected String description;
+    private Long id;
+    private String name;
+    private String description;
     private List<SimplifiedUserDto> usersAssigned;
     private List<SimplifiedUserDto> tasks;
 }

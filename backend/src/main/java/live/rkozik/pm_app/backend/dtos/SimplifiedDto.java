@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class SimplifiedDto {
-    protected Long id;
-    protected String name;
-    protected String description;
+    private Long id;
+    private String name;
+    private String description;
     private String state;
     private Integer priority;
 }
