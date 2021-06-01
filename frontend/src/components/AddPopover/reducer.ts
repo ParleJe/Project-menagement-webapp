@@ -1,7 +1,7 @@
 
 interface ReducerAction {
     type: string,
-    payload?: string|number
+    payload?: string | number
 }
 
 export interface AddPopoverReducerState {
@@ -19,12 +19,12 @@ const initialState: AddPopoverReducerState = {
 }
 
 const reducer = (prevState: any, action: ReducerAction) => {
-    switch(action.type) {
-        case 'name': return {...prevState, name: action.payload};
-        case 'description': return {...prevState, description: action.payload};
-        case 'priority': return {...prevState, priority: action.payload as number};
+    switch (action.type) {
+        case 'name': return { ...prevState, name: action.payload };
+        case 'description': return { ...prevState, description: action.payload };
+        case 'priority': return { ...prevState, priority: action.payload as number };
         case 'reset': return initialState;
     }
 }
 
-export {initialState, reducer};
+export { initialState, reducer };
