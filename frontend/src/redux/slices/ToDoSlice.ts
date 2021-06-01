@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchAll, add, remove, update } from '../../helpers/API/toDo';
+import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
 import Simplified from '../../helpers/responseInterfaces/Simplified';
 
 interface toDoState {
     toDos: Simplified[],
     selected: number,
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+    loading: LoadingStateEnum
 };
 
 interface ToDoPayload {
@@ -16,7 +17,7 @@ interface ToDoPayload {
 const initialState: toDoState = {
     toDos: [],
     selected: -1,
-    loading: "idle"
+    loading: LoadingStateEnum.IDLE
 };
 
 const addToDo = createAsyncThunk(
@@ -75,32 +76,32 @@ export const projectSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchAllToDo.pending, (state) => {
             state.toDos = [];
-            state.loading = 'pending';
+            state.loading = LoadingStateEnum.PENDING;
         })
             .addCase(fetchAllToDo.fulfilled, (state, action) => {
                 state.toDos = action.payload;
-                state.loading = 'succeeded';
+                state.loading = LoadingStateEnum.SUCCEEDED;
             })
             .addCase(fetchAllToDo.rejected, (state) => {
-                state.loading = 'failed';
+                state.loading = LoadingStateEnum.FAILED;
                 state.toDos = [];
             })
 
             .addCase(addToDo.fulfilled, (state, action) => {
                 state.toDos.push(action.payload);
-                state.loading = 'succeeded';
+                state.loading = LoadingStateEnum.SUCCEEDED;
             })
             .addCase(addToDo.rejected, (state) => {
-                state.loading = 'failed';
+                state.loading = LoadingStateEnum.FAILED;
             })
             .addCase(removeToDo.fulfilled, (state, action) => {
                 state.toDos = state.toDos.filter(TD => TD.id !== action.payload);
-                state.loading = 'succeeded';
+                state.loading = LoadingStateEnum.SUCCEEDED;
             })
             .addCase(updateToDo.fulfilled, (state, action) => {
                 state.toDos = state.toDos.filter(TD => TD.id !== action.payload.id);
                 state.toDos.push(action.payload);
-                state.loading = 'succeeded';
+                state.loading = LoadingStateEnum.SUCCEEDED;
             })
     }
 });

@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {fetchAll, add, remove, update} from '../../helpers/API/HugeTask';
+import LoadingStateEnum from "../../helpers/enums/LoadingStateEnum";
 import Simplified from "../../helpers/responseInterfaces/Simplified";
 
 interface HugeTaskState {
     tasks: Simplified[],
     selected: number,
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+    loading: LoadingStateEnum
 };
 
 export interface TaskPayload {
@@ -16,7 +17,7 @@ export interface TaskPayload {
 const initialState: HugeTaskState = {
     tasks: [],
     selected: -1,
-    loading: "idle"
+    loading: LoadingStateEnum.IDLE
 };
 
 //____________________________________________
@@ -73,39 +74,40 @@ export const HugeTasksSlice = createSlice({
     },
     extraReducers: (builder) => {
        builder.addCase(fetchHugeTasks.pending, (state) => {
-           state.loading = 'pending';
+           state.loading = LoadingStateEnum.PENDING;
        })
        .addCase(fetchHugeTasks.fulfilled, (state, action) => {
-           state.loading = 'succeeded';
+           state.loading = LoadingStateEnum.SUCCEEDED;
            state.tasks = action.payload;
        })
        .addCase(fetchHugeTasks.rejected, (state) => {
-           state.loading = 'failed';
+           state.loading = LoadingStateEnum.FAILED;
            state.tasks = [];
        })
 
        .addCase(updateHugeTask.pending, (state) => {
-        state.loading = 'pending';
+        state.loading = LoadingStateEnum.PENDING;
        })
 
        .addCase(addTask.pending, (state) => {
-           state.loading = 'pending';
+           state.loading = LoadingStateEnum.PENDING;
        })
        .addCase(addTask.fulfilled, (state, action) => {
-           state.loading = 'succeeded';
+           state.loading = LoadingStateEnum.SUCCEEDED;
            state.tasks.push(action.payload);
        })
        .addCase(addTask.rejected, (state) => {
-           state.loading = 'failed';
+           state.loading = LoadingStateEnum.FAILED;
        })
        .addCase(removeHugeTasks.fulfilled, (state, action) => {
            state.tasks = state.tasks.filter(T => T.id !== action.payload);
+           state.loading = LoadingStateEnum.SUCCEEDED;
        })
 
        .addCase(updateHugeTask.fulfilled, (state, action) => { //can be more optimised!!!! O(n) always
            state.tasks = state.tasks.filter(T => T.id !== action.payload.id);
            state.tasks.push(action.payload);
-           state.loading = 'succeeded';
+           state.loading = LoadingStateEnum.SUCCEEDED;
        })
     }
   });

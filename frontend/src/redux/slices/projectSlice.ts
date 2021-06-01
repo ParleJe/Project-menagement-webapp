@@ -1,18 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Project from "../../helpers/responseInterfaces/Project";
 import {fetchAll, add, remove} from "../../helpers/API/projects"
+import LoadingStateEnum from "../../helpers/enums/LoadingStateEnum";
 
 
 interface projectState {
     projects: Project[],
     selected: number,
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+    loading: LoadingStateEnum
 };
 
 const initialState: projectState = {
     projects: [],
     selected: -1,
-    loading: "idle"
+    loading: LoadingStateEnum.IDLE
 };
 
 const fetchProjects = createAsyncThunk(
@@ -55,28 +56,29 @@ export const projectSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-      builder.addCase(fetchProjects.pending, (state, action) => {
-        state.loading = "pending";
+      builder.addCase(fetchProjects.pending, (state) => {
+        state.loading = LoadingStateEnum.PENDING;
       })
       .addCase(fetchProjects.fulfilled, (state, action) => {
-        state.loading = "succeeded";
+        state.loading = LoadingStateEnum.SUCCEEDED;
         state.projects = action.payload;
       })
-      .addCase(fetchProjects.rejected, (state, action) => {
-        state.loading = "failed";
+      .addCase(fetchProjects.rejected, (state) => {
+        state.loading = LoadingStateEnum.FAILED;
         state.projects = [];
       })
 
       .addCase(addProject.fulfilled, (state, action) => {
         state.projects.push(action.payload);
-        state.loading = "succeeded";
+        state.loading = LoadingStateEnum.SUCCEEDED;
       })
-      .addCase(addProject.pending, (state, action) => {
-        state.loading = "pending";
+      .addCase(addProject.pending, (state) => {
+        state.loading = LoadingStateEnum.PENDING;
       })
 
       .addCase(removeProject.fulfilled, (state, action) => {
         state.projects = state.projects.filter(project => project.id !== action.payload);
+        state.loading = LoadingStateEnum.SUCCEEDED;
       })
     }
   });

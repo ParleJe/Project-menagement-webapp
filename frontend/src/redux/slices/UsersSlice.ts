@@ -1,17 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchAllFromProject, addUserToProject } from '../../helpers/API/UsersAndSecurity';
+import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
 import SimplifiedUser from '../../helpers/responseInterfaces/SimplifiedUser';
 
 interface UserState {
     users: SimplifiedUser[],
     selected: number,
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+    loading: LoadingStateEnum
 };
 
 const initialState: UserState = {
     users: [],
     selected: -1,
-    loading: "idle"
+    loading: LoadingStateEnum.IDLE
 };
 
 const fetchFromTask = createAsyncThunk(
@@ -53,25 +54,25 @@ export const usersSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchFromTask.pending, (state) => {
             state.users = [];
-            state.loading = 'pending';
+            state.loading = LoadingStateEnum.PENDING;
         })
         .addCase(fetchFromTask.rejected, (state) => {
-            state.loading = 'failed';
+            state.loading = LoadingStateEnum.FAILED;
             state.users = [];
         })
         .addCase(fetchFromTask.fulfilled, (state, response) => {
-            state.loading = 'succeeded';
+            state.loading = LoadingStateEnum.SUCCEEDED;
             state.users = response.payload;
         })
         .addCase(addToProject.pending, (state) => {
-            state.loading = 'pending';
+            state.loading = LoadingStateEnum.PENDING;
         })
         .addCase(addToProject.fulfilled, (state, response) => {
             state.users.push(response.payload);
-            state.loading = 'succeeded';
+            state.loading = LoadingStateEnum.SUCCEEDED;
         })
         .addCase(addToProject.rejected, (state) => {
-            state.loading = 'failed';
+            state.loading = LoadingStateEnum.FAILED;
         })
     }
 });

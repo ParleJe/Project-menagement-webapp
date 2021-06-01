@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {logIn, register} from '../../helpers/API/UsersAndSecurity';
 import UserPost from '../../helpers/responseInterfaces/UserPost';
 import SimplifiedUser from '../../helpers/responseInterfaces/SimplifiedUser';
+import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
 
 enum scopes {
     Project,
@@ -9,19 +10,14 @@ enum scopes {
     None
 }
 
-export enum loadingStates {
-    IDLE = "idle",
-    PENDING = "pending",
-    SUCCEEDED = "succeeded",
-    FAILED = "failed"
-}
+
 
 interface LoggedState {
     logged: SimplifiedUser|null,
     token: string,
     scope: scopes,
     errorMsg: string|undefined;
-    loading: loadingStates
+    loading: LoadingStateEnum
 };
 
 const initialState: LoggedState = {
@@ -29,7 +25,7 @@ const initialState: LoggedState = {
     token: "",
     scope: scopes.None,
     errorMsg: "",
-    loading: loadingStates.IDLE
+    loading: LoadingStateEnum.IDLE
 };
 
 const tryLog = createAsyncThunk(
@@ -55,34 +51,34 @@ export const loggedUserSlice = createSlice({
       setScope: (state, action:PayloadAction<scopes>) => {
         state.scope = action.payload;
       },
-      setLoadingState: (state, action:PayloadAction<loadingStates>) => {
+      setLoadingState: (state, action:PayloadAction<LoadingStateEnum>) => {
         state.loading = action.payload
       }
     },
     extraReducers: (builder) => {
         builder.addCase(tryLog.pending, (state) => {
-            state.loading = loadingStates.PENDING;
+            state.loading = LoadingStateEnum.PENDING;
         })
         .addCase(tryRegister.pending, (state) => {
-            state.loading = loadingStates.PENDING
+            state.loading = LoadingStateEnum.PENDING
         })
         .addCase(tryRegister.rejected, (state, payload) => {
-            state.loading = loadingStates.FAILED;
+            state.loading = LoadingStateEnum.FAILED;
             state.errorMsg = payload.error.message;
 
         })
         .addCase(tryLog.rejected, (state, response) => {
-            state.loading = loadingStates.FAILED;
+            state.loading = LoadingStateEnum.FAILED;
             state.errorMsg = response.error.message;
         })
         .addCase(tryRegister.fulfilled, (state) => {
-            state.loading = loadingStates.SUCCEEDED;
+            state.loading = LoadingStateEnum.SUCCEEDED;
         })
         .addCase(tryLog.fulfilled, (state, response) => {
             const payload: UserPost = response.payload;
             state.logged = {id: payload.id!, name: payload.name!, surname: payload.surname!};
             state.token = response.payload.token!
-            state.loading = loadingStates.SUCCEEDED;
+            state.loading = LoadingStateEnum.SUCCEEDED;
         })
     }
 });
