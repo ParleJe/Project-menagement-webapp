@@ -32,8 +32,7 @@ public class RequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException
-    {
+                                    FilterChain filterChain) throws ServletException, IOException {
         String requestTokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         String email = null;
         String token = null;
@@ -48,9 +47,8 @@ public class RequestFilter extends OncePerRequestFilter {
             } catch (JwtException e) {
                 System.out.println(e.getMessage());
             }
-        } else {
-            logger.warn("JWT Token does not begin with Bearer String");
         }
+
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             User user = securityService.loadUserByUsername(email);
