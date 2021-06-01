@@ -22,7 +22,7 @@ public class ToDoController extends AbstractController {
 
     @PostMapping("/task/{id}/todo")
     private ResponseEntity<SimplifiedDto> createToDo(@RequestBody SimplifiedDto toDo, @PathVariable Long id) {
-        logger.info(this.getClass().toString()+":createToDo:"+getTime());
+        logger.info(this.getClass().toString() + ":createToDo:" + getTime());
         SimplifiedDto savedProject = service.dispatchToDo(toDo, id);
 
         return ResponseEntity.ok(savedProject);
@@ -30,7 +30,7 @@ public class ToDoController extends AbstractController {
 
     @PutMapping("/todo")
     private ResponseEntity<SimplifiedDto> updateToDo(@RequestBody SimplifiedDto toDo) {
-        logger.info(this.getClass().toString()+":updateToDo:"+getTime());
+        logger.info(this.getClass().toString() + ":updateToDo:" + getTime());
         SimplifiedDto savedToDo = service.updateToDo(toDo);
 
         return ResponseEntity.ok(savedToDo);
@@ -38,17 +38,17 @@ public class ToDoController extends AbstractController {
 
     @DeleteMapping("/todo/{id}")
     private ResponseEntity<Long> deleteToDo(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":removeToDo:"+getTime());
+        logger.info(this.getClass().toString() + ":deleteToDo:" + getTime());
 
-        return service.deleteToDo(id)? ResponseEntity.ok(id): ResponseEntity.badRequest().build();
+        return service.deleteToDo(id) ? ResponseEntity.ok(id) : ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/task/{id}/todo")
     private ResponseEntity<List<SimplifiedDto>> getToDoByTask(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":getToDoByTask:"+getTime());
+        logger.info(this.getClass().toString() + ":getToDoByTask:" + getTime());
         List<SimplifiedDto> toDoList = service.findAllToDoByTask(id);
 
-        if(toDoList.isEmpty())
+        if (toDoList.isEmpty())
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(toDoList);
@@ -56,7 +56,7 @@ public class ToDoController extends AbstractController {
 
     @GetMapping("/todo/{id}")
     private ResponseEntity<SimplifiedDto> getToDoById(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":getToDoById:"+getTime());
+        logger.info(this.getClass().toString() + ":getToDoById:" + getTime());
 
         return ResponseEntity.ok(service.getToDoById(id));
     }

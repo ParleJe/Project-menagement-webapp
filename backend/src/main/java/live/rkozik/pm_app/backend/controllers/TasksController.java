@@ -22,51 +22,51 @@ public class TasksController extends AbstractController {
     }
 
     @GetMapping("/user/{id}/task")
-    private ResponseEntity< List<SimplifiedDto> > getHugeTasksByUserId(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":getHugeTasksByUserId:"+getTime());
+    private ResponseEntity<List<SimplifiedDto>> getTasksByUserId(@PathVariable Long id) {
+        logger.info(this.getClass().toString() + ":getHugeTasksByUserId:" + getTime());
         List<SimplifiedDto> projectList = service.getTasksByIdUser(id);
 
-        if(projectList.isEmpty())
+        if (projectList.isEmpty())
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(projectList);
     }
 
     @GetMapping("/project/{id}/task")
-    private ResponseEntity< List<SimplifiedDto> > getHugeTasksByProjectId(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":getHugeTasksByProjectId:"+getTime());
+    private ResponseEntity<List<SimplifiedDto>> getTasksByProjectId(@PathVariable Long id) {
+        logger.info(this.getClass().toString() + ":getHugeTasksByProjectId:" + getTime());
         List<SimplifiedDto> projectList = service.getTasksByIdProject(id);
 
         return ResponseEntity.ok(projectList);
     }
 
     @GetMapping("/task/{id}")
-    private ResponseEntity<SimplifiedDto> getHugeTaskById(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":getHugeTaskById:"+getTime());
+    private ResponseEntity<SimplifiedDto> getTaskById(@PathVariable Long id) {
+        logger.info(this.getClass().toString() + ":getHugeTaskById:" + getTime());
 
         return ResponseEntity.ok(service.getTaskById(id));
     }
 
     @PostMapping("/project/{id}/task")
-    private ResponseEntity<SimplifiedDto> createHugeTask(@PathVariable Long id, @RequestBody SimplifiedDto task) {
-        logger.info(this.getClass().toString()+":createProject:"+getTime());
+    private ResponseEntity<SimplifiedDto> createTask(@PathVariable Long id, @RequestBody SimplifiedDto task) {
+        logger.info(this.getClass().toString() + ":createProject:" + getTime());
         SimplifiedDto savedProject = service.dispatchTask(task, id);
 
         return ResponseEntity.ok(savedProject);
     }
 
     @PutMapping("/task")
-    private ResponseEntity<SimplifiedDto> updateHugeTask(@RequestBody SimplifiedDto task) {
-        logger.info(this.getClass().toString()+":createProject:"+getTime());
+    private ResponseEntity<SimplifiedDto> updateTask(@RequestBody SimplifiedDto task) {
+        logger.info(this.getClass().toString() + ":createProject:" + getTime());
         SimplifiedDto savedProject = service.updateTask(task);
 
         return ResponseEntity.ok(savedProject);
     }
 
     @DeleteMapping("/task")
-    private ResponseEntity<Long> removeHugeTask(@RequestBody SimplifiedDto task) {
-        logger.info(this.getClass().toString()+":removeProject:"+getTime());
+    private ResponseEntity<Long> removeTask(@RequestBody SimplifiedDto task) {
+        logger.info(this.getClass().toString() + ":removeProject:" + getTime());
 
-        return service.deleteTask(task)? ResponseEntity.ok(task.getId()): ResponseEntity.badRequest().build();
+        return service.deleteTask(task) ? ResponseEntity.ok(task.getId()) : ResponseEntity.badRequest().build();
     }
 }

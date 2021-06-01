@@ -20,7 +20,7 @@ abstract class AbstractController {
 
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<String> handleHTMLExceptions(HttpClientErrorException exception) {
-        logger.error(exception.getCause().toString() + exception.getStackTrace().toString());
+        logger.error(exception.getCause().toString() + exception.getCause().toString());
         return ResponseEntity.status(exception.getStatusCode())
                 .body(exception.getMessage());
     }

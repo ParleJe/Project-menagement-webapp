@@ -14,7 +14,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Objects;
@@ -29,7 +32,9 @@ public class SecurityController extends AbstractController {
     private final SecurityService service;
 
     @Autowired
-    public SecurityController(TokenUtil tokenUtil, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, SecurityService securityService, UserMapper userMapper) {
+    public SecurityController(TokenUtil tokenUtil, AuthenticationManager authenticationManager,
+                              PasswordEncoder passwordEncoder, SecurityService securityService, UserMapper userMapper)
+    {
         super(SecurityController.class);
 
         this.tokenUtil = tokenUtil;

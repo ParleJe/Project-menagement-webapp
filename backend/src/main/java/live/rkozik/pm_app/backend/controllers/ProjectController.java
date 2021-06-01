@@ -22,33 +22,30 @@ public class ProjectController extends AbstractController {
     }
 
     @GetMapping("/user/{id}/project")
-    private ResponseEntity< List<ProjectDto> > getProjectsByUserId(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":getProjectsByUserId:"+getTime());
+    private ResponseEntity<List<ProjectDto>> getProjectsByUserId(@PathVariable Long id) {
+        logger.info(this.getClass().toString() + ":getProjectsByUserId:" + getTime());
         List<ProjectDto> projectList = service.findAllProjectsByUserId(id);
-
-        if(projectList.isEmpty())
-            return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(projectList);
     }
 
     @GetMapping("/project/{id}")
     private ResponseEntity<ProjectDto> getProjectById(@PathVariable Long id) {
-        logger.info(this.getClass().toString()+":getProjectById:"+getTime());
+        logger.info(this.getClass().toString() + ":getProjectById:" + getTime());
 
         return ResponseEntity.ok(service.getProjectById(id));
     }
 
     @DeleteMapping("/project")
     private ResponseEntity<Boolean> removeProject(@RequestBody ProjectDto project) {
-        logger.info(this.getClass().toString()+":removeProject:"+getTime());
+        logger.info(this.getClass().toString() + ":removeProject:" + getTime());
 
-        return service.deleteProject(project)? ResponseEntity.ok(true): ResponseEntity.badRequest().build();
+        return service.deleteProject(project) ? ResponseEntity.ok(true) : ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/project")
     private ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto project) {
-        logger.info(this.getClass().toString()+":createProject:"+getTime());
+        logger.info(this.getClass().toString() + ":createProject:" + getTime());
         ProjectDto savedProject = service.dispatchProject(project);
 
         return ResponseEntity.ok(savedProject);
@@ -56,7 +53,7 @@ public class ProjectController extends AbstractController {
 
     @PutMapping("/project")
     private ResponseEntity<ProjectDto> updateProject(@RequestBody ProjectDto project) {
-        logger.info(this.getClass().toString()+":updateProject:"+getTime());
+        logger.info(this.getClass().toString() + ":updateProject:" + getTime());
         ProjectDto savedProject = service.updateProject(project);
 
         return ResponseEntity.ok(savedProject);
