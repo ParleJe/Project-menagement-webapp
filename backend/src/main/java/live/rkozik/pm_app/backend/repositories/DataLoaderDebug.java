@@ -4,7 +4,6 @@ import live.rkozik.pm_app.backend.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -33,20 +32,20 @@ public class DataLoaderDebug implements ApplicationRunner {
     }
 
     private void initUsers() {
-            users.add(User.builder().email("espencer@gmail.com").name("Edmund").surname("Spencer").password("spencere").build());
-            users.add(User.builder().email("ebehn@gmail.com").name("Aphra").surname("Behn").password("behap").build());
-            users.add(User.builder().email("jclarie@gmail.com").name("John").surname("Clarie").password("clarjo").build());
-            users.add(User.builder().email("drossetti@gmail.com").name("Dante").surname("Rossetti").password("rossetde").build());
-            users.add(User.builder().email("sarmitage@gmail.com").name("Simon").surname("Armitage").password("armitasa").build());
-            userRepository.saveAll(users);
-            userRepository.flush();
-            users = userRepository.findAll();
+        users.add(User.builder().email("espencer@gmail.com").name("Edmund").surname("Spencer").password("spencere").build());
+        users.add(User.builder().email("ebehn@gmail.com").name("Aphra").surname("Behn").password("behap").build());
+        users.add(User.builder().email("jclarie@gmail.com").name("John").surname("Clarie").password("clarjo").build());
+        users.add(User.builder().email("drossetti@gmail.com").name("Dante").surname("Rossetti").password("rossetde").build());
+        users.add(User.builder().email("sarmitage@gmail.com").name("Simon").surname("Armitage").password("armitasa").build());
+        userRepository.saveAll(users);
+        userRepository.flush();
+        users = userRepository.findAll();
     }
 
     private void initProjects() {
-        projects.add(Project.builder().name("human relations").description("table for HR").usersAssigned(users.subList(0,1)).build());
-        projects.add(Project.builder().name("IT department").description("table for IT").usersAssigned(users.subList(0,3)).build());
-        projects.add(Project.builder().name("marketing").description("table for marketing").usersAssigned(users.subList(1,4)).build());
+        projects.add(Project.builder().name("human relations").description("table for HR").usersAssigned(users.subList(0, 1)).build());
+        projects.add(Project.builder().name("IT department").description("table for IT").usersAssigned(users.subList(0, 3)).build());
+        projects.add(Project.builder().name("marketing").description("table for marketing").usersAssigned(users.subList(1, 4)).build());
 
         projectRepository.saveAll(projects);
         projectRepository.flush();
@@ -54,13 +53,20 @@ public class DataLoaderDebug implements ApplicationRunner {
     }
 
     private void initHugeTasks() {
-        hugeTasks.add(HugeTask.builder().name("Add store integration").priority(3).description("Amazon store Api to generate recipies").project(projects.get(1)).hugeTaskAssigned(users.subList(0,3)).state(StateEnum.IN_PROGRESS.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("create brochure").priority(5).description("create brochure").project(projects.get(0)).hugeTaskAssigned(users.subList(0,1)).state(StateEnum.IN_PROGRESS.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("hire new developer").priority(3).description("hire new developer").project(projects.get(0)).hugeTaskAssigned(users.subList(0,1)).state(StateEnum.DONE.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("find new markets").priority(2).description("find new markets").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.IN_PROGRESS.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("create new App").priority(1).description("create new App").project(projects.get(1)).hugeTaskAssigned(users.subList(0,3)).state(StateEnum.DONE.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("Get new company name").priority(4).description("Get new company name").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.DONE.toString()).build());
-        hugeTasks.add(HugeTask.builder().name("create new product").priority(2).description("create new product").project(projects.get(2)).hugeTaskAssigned(users.subList(1,4)).state(StateEnum.NOT_STARTED.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("Add store integration").priority(3).description("Amazon store Api to generate recipies")
+                .project(projects.get(1)).hugeTaskAssigned(users.subList(0, 3)).state(StateEnum.IN_PROGRESS.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("create brochure").priority(5).description("create brochure")
+                .project(projects.get(0)).hugeTaskAssigned(users.subList(0, 1)).state(StateEnum.IN_PROGRESS.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("hire new developer").priority(3).description("hire new developer")
+                .project(projects.get(0)).hugeTaskAssigned(users.subList(0, 1)).state(StateEnum.DONE.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("find new markets").priority(2).description("find new markets")
+                .project(projects.get(2)).hugeTaskAssigned(users.subList(1, 4)).state(StateEnum.IN_PROGRESS.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("create new App").priority(1).description("create new App")
+                .project(projects.get(1)).hugeTaskAssigned(users.subList(0, 3)).state(StateEnum.DONE.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("Get new company name").priority(4).description("Get new company name")
+                .project(projects.get(2)).hugeTaskAssigned(users.subList(1, 4)).state(StateEnum.DONE.toString()).build());
+        hugeTasks.add(HugeTask.builder().name("create new product").priority(2).description("create new product")
+                .project(projects.get(2)).hugeTaskAssigned(users.subList(1, 4)).state(StateEnum.NOT_STARTED.toString()).build());
 
         hugeTaskRepository.saveAll(hugeTasks);
         hugeTaskRepository.flush();

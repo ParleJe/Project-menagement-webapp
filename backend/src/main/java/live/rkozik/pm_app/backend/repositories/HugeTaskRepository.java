@@ -1,10 +1,8 @@
 package live.rkozik.pm_app.backend.repositories;
 
 import live.rkozik.pm_app.backend.models.HugeTask;
-import live.rkozik.pm_app.backend.models.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
