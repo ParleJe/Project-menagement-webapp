@@ -47,7 +47,7 @@ public class SecurityController extends AbstractController {
     }
 
     @PostMapping("/register")
-    private ResponseEntity<?> register(@RequestBody UserPostDto user) {
+    private ResponseEntity<Boolean> register(@RequestBody UserPostDto user) {
         if (this.tryRegister(user)) {
             return ResponseEntity.ok().build();
         }
