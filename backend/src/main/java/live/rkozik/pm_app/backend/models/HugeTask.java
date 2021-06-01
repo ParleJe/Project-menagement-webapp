@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HugeTask implements Substitable {
+public class HugeTask implements Substitutable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,20 +43,21 @@ public class HugeTask implements Substitable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;
 
+    @Override
     public HugeTask substituteStaticMembers(SimplifiedDto source) {
-        if(source.getName() != null) {
+        if (source.getName() != null) {
             this.setName(source.getName());
         }
 
-        if(source.getDescription() != null) {
+        if (source.getDescription() != null) {
             this.setDescription(source.getDescription());
         }
 
-        if(source.getState() != null) {
+        if (source.getState() != null) {
             this.setState(source.getState());
         }
 
-        if(source.getPriority() != null) {
+        if (source.getPriority() != null) {
             this.setPriority(source.getPriority());
         }
 

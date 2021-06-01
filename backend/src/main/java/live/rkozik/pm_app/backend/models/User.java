@@ -47,7 +47,7 @@ public class User implements UserDetails {
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if(this.getPermission() == PermissionEnum.USER) {
+        if (this.getPermission() == PermissionEnum.USER) {
             authorities.add(new SimpleGrantedAuthority(PermissionEnum.USER.name()));
             return authorities;
         }
@@ -61,7 +61,7 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return this.password;
     }
 

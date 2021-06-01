@@ -6,7 +6,7 @@ public enum PermissionEnum implements Serializable {
     USER(0),
     PROJECT_MANAGER(1);
 
-    private int level;
+    private final int level;
 
     PermissionEnum(int level) {
         this.level = level;

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ToDo implements Substitable {
+public class ToDo implements Substitutable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,17 +27,18 @@ public class ToDo implements Substitable {
     @ManyToOne
     private HugeTask hugeTask;
 
+    @Override
     public ToDo substituteStaticMembers(SimplifiedDto source) {
-        if(source.getName() != null) {
+        if (source.getName() != null) {
             this.setName(source.getName());
         }
-        if(source.getDescription() != null) {
+        if (source.getDescription() != null) {
             this.setDescription(source.getDescription());
         }
-        if(source.getState() != null) {
+        if (source.getState() != null) {
             this.setState(source.getState());
         }
-        if(source.getPriority() != null) {
+        if (source.getPriority() != null) {
             this.setPriority(source.getPriority());
         }
 
