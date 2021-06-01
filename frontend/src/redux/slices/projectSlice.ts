@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Project from "../../helpers/responseInterfaces/Project";
-import {fetchAll, add, remove} from "../../helpers/API/projects"
+import {fetchAll, add, remove} from "../../helpers/API/Projects"
 import LoadingStateEnum from "../../helpers/enums/LoadingStateEnum";
 
 

@@ -1,6 +1,7 @@
 import { MDBBtn, MDBInput, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle, MDBRange, MDBSpinner } from 'mdb-react-ui-kit';
 import { useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
 import { useAppSelector } from '../../redux/hooks';
 import { tryAdd } from './actions';
 import { initialState, reducer } from './reducer';
@@ -58,8 +59,8 @@ const AddPopover = ({ show, setShow, idProject }: AddPopoverProps) => {
                     </MDBModalBody>
                     <MDBModalFooter>
                         <MDBBtn onClick={() => tryAdd(reduxDispatch, state, idProject)} color={addType ? "info" : "success"}>
-                            {loadingState !== 'pending' && "Submit!"}
-                            {loadingState === 'pending' && <MDBSpinner size='sm' grow />}
+                            {loadingState !== LoadingStateEnum.PENDING && "Submit!"}
+                            {loadingState === LoadingStateEnum.PENDING && <MDBSpinner size='sm' grow />}
                         </MDBBtn>
                     </MDBModalFooter >
                 </MDBModalContent>

@@ -1,27 +1,30 @@
-import { MDBBtn, MDBContainer, MDBIcon, MDBProgress, MDBProgressBar, MDBRow, MDBSpinner } from "mdb-react-ui-kit";
-import React, { Fragment } from "react"
+import {
+    MDBBtn,
+    MDBContainer,
+    MDBIcon,
+    MDBProgress,
+    MDBProgressBar,
+    MDBRow
+} from "mdb-react-ui-kit";
+import { Fragment } from "react"
 import { useDispatch } from "react-redux";
+import SelectedScopeEnum from "../../../helpers/enums/SelectedScopeEnum";
 import Simplified from "../../../helpers/responseInterfaces/Simplified";
 import { useAppSelector } from "../../../redux/hooks";
-import { removeHugeTasks, select, updateHugeTask } from "../../../redux/slices/HugeTasksSlice";
-import { scopes, setScope } from "../../../redux/slices/LoggedUserSlice";
-import { setNextState, setPrevState } from "./actions";
+import { removeHugeTasks, updateHugeTask } from "../../../redux/slices/HugeTasksSlice";
+import { onClickKanbanPiece, setNextState, setPrevState } from "./actions";
 
-interface props {
+interface KanbanPieceProps {
     color: string,
     title: string,
     tasks: Simplified[],
     togglePopup?: Function
 }
 
-const KanbanPiece = ({ color, title, tasks, togglePopup }: props) => {
+const KanbanPiece = ({ color, title, tasks, togglePopup }: KanbanPieceProps) => {
     const dispatch = useDispatch();
     const scopeSelected = useAppSelector((state) => state.logged.scope);
-    const isAddVisible = scopeSelected === scopes.Project && togglePopup !== undefined;;
-    const onClickKanbanPiece = (idTask: number) => {
-        dispatch(setScope(scopes.HugeTask));
-        dispatch(select(idTask));
-    }
+    const isAddVisible = scopeSelected === SelectedScopeEnum.PROJECT && togglePopup !== undefined;;
 
     return (
         <Fragment>
@@ -46,7 +49,7 @@ const KanbanPiece = ({ color, title, tasks, togglePopup }: props) => {
                         <div key={key} className="card my-1 mx-2 border shadow-lg">
 
                             <div className="col card-body">
-                                <h5 onClick={() => onClickKanbanPiece(task.id!)} className="card-title">
+                                <h5 onClick={() => onClickKanbanPiece(dispatch, task.id!)} className="card-title">
                                     <u>{task.name}</u>
                                 </h5>
                                 <MDBProgress>
@@ -60,8 +63,7 @@ const KanbanPiece = ({ color, title, tasks, togglePopup }: props) => {
                                         <MDBIcon onClick={() => dispatch(updateHugeTask(setNextState(task)))} style={{ cursor: 'pointer' }} icon='arrow-right' />}
                                 </div>
                             </div>
-                            <div className="card-footer d-flex justify-content-between">
-                                2 days ago
+                            <div className="card-footer d-flex justify-content-end">
                                 <MDBBtn onClick={() => dispatch(removeHugeTasks(task))} className='btn-close' color='none' />
                             </div>
                         </div>

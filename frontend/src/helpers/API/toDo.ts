@@ -39,7 +39,7 @@ const remove = (idToDo: number, token: number): Promise<Response> => {
 
 const update = (toDo: Simplified, token: number): Promise<Response> => {
     const promise = fetch (`${API_URL}/todo`, {
-        method: "UPDATE",
+        method: "PUT",
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

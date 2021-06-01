@@ -10,13 +10,13 @@ const SPAComponent = () => {
     const LoggedUser = useAppSelector((state) => state.logged.logged);
     const isLogged = LoggedUser === null;
 
-        return (
-            <MDBContainer fluid className="h-100">
-                {isLogged &&  <SecurityPopover show={isLogged} />}
-                <NavigationBar />
-                <MainBoard />
-            </MDBContainer>
-        );
+    return (
+        <MDBContainer fluid className="h-100">
+            {isLogged && <SecurityPopover show={isLogged} />}
+            <NavigationBar />
+            <MainBoard />
+        </MDBContainer>
+    );
 };
 
 export default SPAComponent;

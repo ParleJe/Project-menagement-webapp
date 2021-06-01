@@ -1,9 +1,18 @@
-import { MDBBtn, MDBCol, MDBContainer, MDBRow, MDBInputGroup, MDBInputGroupElement, MDBSpinner } from "mdb-react-ui-kit";
+import {
+    MDBBtn,
+    MDBCol,
+    MDBContainer,
+    MDBRow,
+    MDBInputGroup,
+    MDBInputGroupElement,
+    MDBSpinner
+} from "mdb-react-ui-kit";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import LoadingStateEnum from "../../helpers/enums/LoadingStateEnum";
+import SelectedScopeEnum from "../../helpers/enums/SelectedScopeEnum";
 import SimplifiedUser from "../../helpers/responseInterfaces/SimplifiedUser";
 import { useAppSelector } from "../../redux/hooks";
-import { scopes } from "../../redux/slices/LoggedUserSlice";
 import { fetchFromTask, addToProject } from "../../redux/slices/UsersSlice";
 import LoadingIndicator from "../LoadingIndicator";
 
@@ -26,7 +35,7 @@ const MembersTab = () => {
     }
 
     useEffect(() => {
-        if (scopeSelected === scopes.Project)
+        if (scopeSelected === SelectedScopeEnum.PROJECT)
             dispatch(fetchFromTask(selected));
     }, [dispatch, scopeSelected, selected])
 
@@ -34,10 +43,14 @@ const MembersTab = () => {
         <Fragment>
             <MDBInputGroup className="mb-2 shadow">
                 <MDBInputGroupElement onChange={(e: any) => setSearch(e.target.value)} type='text' placeholder="find by name" />
-                <MDBBtn onClick={() => submit()} outline color="success">add</MDBBtn>
+                <MDBBtn onClick={() => submit()} outline color="success">
+                    {loadingState !== LoadingStateEnum.PENDING && 'add'}
+                    {loadingState === LoadingStateEnum.PENDING && <MDBSpinner grow color="success" size="sm" >
+                                                                      <span className="visually-hidden">Loading...</span>
+                                                                  </MDBSpinner>  }
+                </MDBBtn>
             </MDBInputGroup>
             <MDBContainer className="w-100 h-80 overflow-auto shadow-sm position-relative">
-                {loadingState === 'pending' && <LoadingIndicator />}
                 {users.map((user: SimplifiedUser, key: number) => {
                     return (
                         <MDBRow key={key} between className=" border">

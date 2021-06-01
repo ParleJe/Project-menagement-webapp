@@ -1,26 +1,24 @@
+import ExecutionStatusEnum from "../enums/ExecutionStatusEnum";
+
 export default interface Simplified {
     id?: number,
     name: string,
     description: string,
     priority: number,
-    state: string
+    state: ExecutionStatusEnum
 }
 
-enum possibleStates {
-    IN_PROGRESS = "in progress",
-    NOT_STARTED = "not started",
-    DONE = "done",
-}
+
 
 const getTasksInProgress = (tasks: Simplified[]):Simplified[] => {
-    return tasks.filter(task => task.state === possibleStates.IN_PROGRESS);
+    return tasks.filter(task => task.state === ExecutionStatusEnum.IN_PROGRESS);
 }
 
 const getTasksNotStarted = (tasks: Simplified[]):Simplified[] => {
-    return tasks.filter(task => task.state === possibleStates.NOT_STARTED);
+    return tasks.filter(task => task.state === ExecutionStatusEnum.NOT_STARTED);
 }
 const getTasksDone = (tasks: Simplified[]):Simplified[] => {
-    return tasks.filter(task => task.state === possibleStates.DONE);
+    return tasks.filter(task => task.state === ExecutionStatusEnum.DONE);
 }
 
-export {getTasksInProgress, getTasksNotStarted, getTasksDone, possibleStates};
+export {getTasksInProgress, getTasksNotStarted, getTasksDone};

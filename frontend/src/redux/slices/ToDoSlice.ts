@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchAll, add, remove, update } from '../../helpers/API/toDo';
+import { add, remove, fetchAll, update } from '../../helpers/API/ToDo';
 import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
 import Simplified from '../../helpers/responseInterfaces/Simplified';
 
@@ -93,6 +93,9 @@ export const projectSlice = createSlice({
             })
             .addCase(addToDo.rejected, (state) => {
                 state.loading = LoadingStateEnum.FAILED;
+            })
+            .addCase(addToDo.pending, (state) => {
+                state.loading = LoadingStateEnum.PENDING;
             })
             .addCase(removeToDo.fulfilled, (state, action) => {
                 state.toDos = state.toDos.filter(TD => TD.id !== action.payload);

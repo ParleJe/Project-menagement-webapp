@@ -4,9 +4,10 @@ import KanbanPiece from "./KanbanPiece"
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { fetchHugeTasks } from '../../redux/slices/HugeTasksSlice'
 import { getTasksDone, getTasksInProgress, getTasksNotStarted } from "../../helpers/responseInterfaces/Simplified"
-import { scopes } from "../../redux/slices/LoggedUserSlice"
 import LoadingIndicator from "../LoadingIndicator"
 import AddPopover from "../AddPopover"
+import LoadingStateEnum from "../../helpers/enums/LoadingStateEnum"
+import SelectedScopeEnum from "../../helpers/enums/SelectedScopeEnum"
 
 
 const Kanbon = () => {
@@ -15,11 +16,12 @@ const Kanbon = () => {
     const HugeTasksFetched = useAppSelector(state => state.hugeTasks.tasks);
     const loadingState = useAppSelector(state => state.hugeTasks.loading);
     const currentScope = useAppSelector(state => state.logged.scope)
+    
     const [showPopup, setShowPopup] = useState<boolean>(false);
-
     const togglePopup = () => setShowPopup(!showPopup);
+
     useEffect(() => {
-        if (currentScope === scopes.Project) dispatch(fetchHugeTasks(SelectedProject));
+        if (currentScope === SelectedScopeEnum.PROJECT) dispatch(fetchHugeTasks(SelectedProject));
     }, [SelectedProject, currentScope, dispatch]);
 
     return (
@@ -31,7 +33,7 @@ const Kanbon = () => {
 
             <MDBCol size="sm-4 lg-12 kanban" className="">
                 <KanbanPiece title="In Progress" color="bg-lightyellow" tasks={getTasksInProgress(HugeTasksFetched)} />
-                {loadingState === 'pending' && <LoadingIndicator />}
+                {loadingState === LoadingStateEnum.PENDING && <LoadingIndicator />}
             </MDBCol>
 
             <MDBCol size="sm-4 lg-12 kanban" className="">

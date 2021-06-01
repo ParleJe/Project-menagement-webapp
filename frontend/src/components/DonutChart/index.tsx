@@ -1,17 +1,17 @@
 import { MDBContainer } from 'mdb-react-ui-kit';
 import { Fragment } from 'react';
 import { PieChart } from 'react-minimal-pie-chart';
+import SelectedScopeEnum from '../../helpers/enums/SelectedScopeEnum';
 import { getTasksDone, getTasksInProgress, getTasksNotStarted } from '../../helpers/responseInterfaces/Simplified';
 import { useAppSelector } from '../../redux/hooks';
-import { scopes } from '../../redux/slices/LoggedUserSlice';
 
 const DonutChart = () => {
 
   const scopeSelected = useAppSelector((state) => state.logged.scope);
   const dataToEvaluate = useAppSelector((state) => {
     switch (scopeSelected) {
-      case scopes.Project: return state.hugeTasks.tasks;
-      case scopes.HugeTask: return state.toDos.toDos;
+      case SelectedScopeEnum.PROJECT: return state.hugeTasks.tasks;
+      case SelectedScopeEnum.TASK: return state.toDos.toDos;
       default: return null;
     }
   })
