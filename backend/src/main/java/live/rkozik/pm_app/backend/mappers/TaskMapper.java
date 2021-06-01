@@ -8,10 +8,10 @@ import org.mapstruct.Mapper;
         componentModel = "spring",
         uses = {UserMapper.class, ToDoMapper.class, ProjectMapper.class}
 )
-public interface HugeTaskMapper {
+public interface TaskMapper {
 
 
-    HugeTask HugeTaskDtoToHugeTask(SimplifiedDto source);
+    HugeTask SimplifiedDtoToTask(SimplifiedDto source);
     SimplifiedDto TaskToSimplifiedDto(HugeTask source);
 
 

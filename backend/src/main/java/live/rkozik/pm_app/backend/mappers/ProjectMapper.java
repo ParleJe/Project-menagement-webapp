@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(
         componentModel = "spring",
-        uses = {HugeTaskMapper.class, ToDoMapper.class, UserMapper.class}
+        uses = {TaskMapper.class, ToDoMapper.class, UserMapper.class}
 )
 public interface ProjectMapper {
 
