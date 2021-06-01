@@ -12,7 +12,7 @@ import AddPopover from "../AddPopover"
 const Kanbon = () => {
     const dispatch = useAppDispatch();
     const SelectedProject = useAppSelector(state => state.projects.selected);
-    const HugeTasksFetched = useAppSelector(state => state.hugeTasks.HugeTasks);
+    const HugeTasksFetched = useAppSelector(state => state.hugeTasks.tasks);
     const loadingState = useAppSelector(state => state.hugeTasks.loading);
     const currentScope = useAppSelector(state => state.logged.scope)
     const [showPopup, setShowPopup] = useState<boolean>(false);

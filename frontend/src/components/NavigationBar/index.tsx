@@ -17,7 +17,6 @@ import Project from '../../helpers/responseInterfaces/Project';
 import {select, fetchProjects} from '../../redux/slices/projectSlice';
 import { scopes, setScope } from '../../redux/slices/LoggedUserSlice';
 import AddPopover from '../AddPopover';
-import { types } from '../../helpers/interfaces/TypeEnum';
 
 
 const NavigationBar = () => {
@@ -29,8 +28,12 @@ const NavigationBar = () => {
   const projects: Project[] = useAppSelector((state) => state.projects.projects);
   const selected = useAppSelector((state) => state.projects.selected);
   const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector((state) => state.logged.logged);
 
-  useEffect(() => {dispatch(fetchProjects(1))}, [dispatch])
+  useEffect(() => {
+    if(loggedUser !== null)
+        dispatch(fetchProjects(1))
+  }, [dispatch, loggedUser])
 
   const onClickProject = (idProject: number) => {
     dispatch(setScope(scopes.Project))

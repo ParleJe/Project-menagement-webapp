@@ -1,4 +1,3 @@
-import User from "../responseInterfaces/User";
 import UserPost from "../responseInterfaces/UserPost";
 
 const API_URL: string = "http://localhost:8080/api";
@@ -48,7 +47,7 @@ const fetchAllFromTask = (idTask: number, token: number): Promise<Response> => {
     return promise;
 };
 
-const updateUser = (user: User, token: number): Promise<Response> => {
+const updateUser = (user: UserPost, token: number): Promise<Response> => {
     const promise = fetch(`${API_URL}/user/${user.id}`, {
         method: "PUT",
         headers: {

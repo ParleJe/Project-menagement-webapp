@@ -1,7 +1,10 @@
 import { MDBBtn, MDBDropdown, MDBDropdownItem, MDBDropdownLink, MDBDropdownMenu, MDBDropdownToggle, MDBInput, MDBInputGroup, MDBInputGroupElement, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle, MDBSpinner } from 'mdb-react-ui-kit';
-import React, { Fragment, useState } from 'react';
-import { useAppSelector } from '../../redux/hooks';
-import { loadingStates } from '../../redux/slices/LoggedUserSlice';
+import React, { Fragment, useReducer, useState } from 'react';
+import { logIn } from '../../helpers/API/UsersAndSecurity';
+import UserPost from '../../helpers/responseInterfaces/UserPost';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { loadingStates, tryLog, tryRegister } from '../../redux/slices/LoggedUserSlice';
+import { initialState, reducer } from '../SecurityPopover/reducer';
 
 interface props {
     show: boolean,
@@ -17,24 +20,38 @@ enum types {
 const SecurityPopover = ({show}: props) => {
     const [currentType, setCurrentType] = useState<string>(types.login);
     const loadingState = useAppSelector((state) => state.logged.loading);
+    const [inputState, dispatch] = useReducer(reducer, initialState);
+    const reduxDispatch = useAppDispatch();
+    const handleClick = () => {
+        const stateToSend = inputState;
+        console.log(stateToSend);
+        console.log(inputState);
+        dispatch({type: "reset", payload: ""});
+        if(currentType === types.login) return reduxDispatch(tryLog(stateToSend))
+        return reduxDispatch(tryRegister(stateToSend));
 
+    }
     return(
-            <MDBModal staticBackdrop show={show} getOpenState={(e: any) => true} tabIndex='1'>
+            <MDBModal staticBackdrop show={show} tabIndex='1'>
                 <MDBModalDialog centered size='sm'>
                     <MDBModalContent>
                     <MDBModalHeader>
                         <MDBModalTitle>{currentType} to your Account!</MDBModalTitle>
                     </MDBModalHeader>
                     <MDBModalBody>
-                        <MDBInput label='email' id='email' type='email' />
+                        <MDBInput onChange={(e: any) => dispatch({type: "email", payload: e.target.value})} 
+                            label='email' id='email' type='email' />
                         <br />
-                        <MDBInput label='password' id='pass' type='password' />
+                        <MDBInput onChange={(e: any) => dispatch({type: "password", payload: e.target.value})}
+                            label='password' id='pass' type='password' />
                         {currentType === types.register && 
                         <Fragment>
                             <hr />
-                            <MDBInput label="name" id="name" type="text" />
+                            <MDBInput onChange={(e: any) => dispatch({type: "name", payload: e.target.value})}
+                                label="name" id="name" type="text" />
                             <br />
-                            <MDBInput label="surname" id="surname" type="text" />
+                            <MDBInput onChange={(e: any) => dispatch({type: "surname", payload: e.target.value})}
+                                label="surname" id="surname" type="text" />
                         </Fragment>
                         }
                     </MDBModalBody>
@@ -54,7 +71,7 @@ const SecurityPopover = ({show}: props) => {
                                     </MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
-                            <MDBBtn outline>
+                            <MDBBtn onClick={() => handleClick()} outline>
                                 {loadingState !== loadingStates.PENDING && currentType}
                                 {loadingState === loadingStates.PENDING && <MDBSpinner grow size="sm" />}
                             </MDBBtn>

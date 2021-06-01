@@ -1,7 +1,6 @@
 import { MDBBtn, MDBInput, MDBModal, MDBModalBody, MDBModalContent, MDBModalDialog, MDBModalFooter, MDBModalHeader, MDBModalTitle, MDBRadio, MDBRange, MDBSpinner } from 'mdb-react-ui-kit';
 import { Dispatch, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { types } from '../../helpers/interfaces/TypeEnum';
 import Project from '../../helpers/responseInterfaces/Project';
 import { useAppSelector } from '../../redux/hooks';
 import { addTask, TaskPayload } from '../../redux/slices/HugeTasksSlice';
@@ -32,13 +31,14 @@ const AddPopover = ({show, setShow, idProject}: props) => {
     const reduxDispatch = useDispatch();
 
     useEffect(() => {
-        if(loadingState === "succeeded" && state != initialState) {
+        if(loadingState === "succeeded" && state !== initialState) {
             dispatch({type:'name', payload: initialState.name})
             dispatch({type:'description', payload: initialState.description})
             dispatch({type:'priority', payload: initialState.priority})
-            dispatch({type:'state', payload: initialState.state})
+            dispatch({type:'reset'})
             setShow(false);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadingState, setShow])
 
     return(
