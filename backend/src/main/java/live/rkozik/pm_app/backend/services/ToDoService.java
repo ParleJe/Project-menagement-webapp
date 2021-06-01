@@ -3,7 +3,6 @@ package live.rkozik.pm_app.backend.services;
 import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
 import live.rkozik.pm_app.backend.mappers.ToDoMapper;
 import live.rkozik.pm_app.backend.models.HugeTask;
-import live.rkozik.pm_app.backend.models.Project;
 import live.rkozik.pm_app.backend.models.ToDo;
 import live.rkozik.pm_app.backend.repositories.HugeTaskRepository;
 import live.rkozik.pm_app.backend.repositories.ToDoRepository;
@@ -46,7 +45,7 @@ public class ToDoService {
     }
 
     public SimplifiedDto dispatchToDo(SimplifiedDto toDo, Long idHugeTask) {
-        if(toDo.getId() != null)
+        if (toDo.getId() != null)
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "id cannot be given");
 
         Optional<HugeTask> precedentHugeTask = HTRepository.findById(idHugeTask);
@@ -57,15 +56,15 @@ public class ToDoService {
         ToDo mappedToDo = mapper.SimplifiedDtoToToDo(toDo);
         mappedToDo.setHugeTask(fetchedHugeTask);
 
-        return mapper.ToDoToSimplifiedDto( repository.saveAndFlush(mappedToDo) );
+        return mapper.ToDoToSimplifiedDto(repository.saveAndFlush(mappedToDo));
     }
 
     public SimplifiedDto updateToDo(SimplifiedDto toDo) {
         ToDo fetchedToDo = repository.findById(toDo.getId()).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST,"id doesn't exists") );
+                () -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id doesn't exists"));
         fetchedToDo.substituteStaticMembers(toDo);
 
-        return mapper.ToDoToSimplifiedDto( repository.saveAndFlush(fetchedToDo) );
+        return mapper.ToDoToSimplifiedDto(repository.saveAndFlush(fetchedToDo));
     }
 
     public boolean deleteToDo(Long id) {

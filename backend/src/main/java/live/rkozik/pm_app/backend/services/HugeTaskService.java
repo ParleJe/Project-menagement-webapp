@@ -2,7 +2,7 @@ package live.rkozik.pm_app.backend.services;
 
 
 import live.rkozik.pm_app.backend.dtos.SimplifiedDto;
-import live.rkozik.pm_app.backend.mappers.HugeTaskMapper;
+import live.rkozik.pm_app.backend.mappers.TaskMapper;
 import live.rkozik.pm_app.backend.models.HugeTask;
 import live.rkozik.pm_app.backend.models.Project;
 import live.rkozik.pm_app.backend.repositories.HugeTaskRepository;
@@ -21,10 +21,10 @@ public class HugeTaskService {
 
     private final HugeTaskRepository taskRepository;
     private final ProjectRepository projectRepository;
-    private final HugeTaskMapper taskMapper;
+    private final TaskMapper taskMapper;
 
     @Autowired
-    public HugeTaskService(HugeTaskRepository taskRepository, ProjectRepository projectRepository, HugeTaskMapper taskMapper) {
+    public HugeTaskService(HugeTaskRepository taskRepository, ProjectRepository projectRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
         this.taskMapper = taskMapper;
@@ -55,21 +55,21 @@ public class HugeTaskService {
     public SimplifiedDto dispatchTask(SimplifiedDto task, Long idProject) {
         Project predecentProject = this.getProjectById(idProject);
 
-        HugeTask taskEntity = taskMapper.HugeTaskDtoToHugeTask(task);
+        HugeTask taskEntity = taskMapper.SimplifiedDtoToTask(task);
         taskEntity.setProject(predecentProject);
 
         return taskMapper.TaskToSimplifiedDto(taskRepository.saveAndFlush(taskEntity));
     }
 
     public SimplifiedDto updateTask(SimplifiedDto task) {
-        if(task.getId() == null || !taskRepository.existsById(task.getId()))
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"id doesn't exists");
+        if (task.getId() == null || !taskRepository.existsById(task.getId()))
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "id doesn't exists");
 
         HugeTask fetchedTask = taskRepository.findById(task.getId()).orElseThrow(
-                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND,"id doesn't exists") );
+                () -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "id doesn't exists"));
         fetchedTask.substituteStaticMembers(task);
 
-        return taskMapper.TaskToSimplifiedDto( taskRepository.saveAndFlush(fetchedTask) );
+        return taskMapper.TaskToSimplifiedDto(taskRepository.saveAndFlush(fetchedTask));
     }
 
     private Project getProjectById(Long id) {

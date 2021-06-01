@@ -4,11 +4,9 @@ import live.rkozik.pm_app.backend.dtos.ProjectDto;
 import live.rkozik.pm_app.backend.mappers.ProjectMapper;
 import live.rkozik.pm_app.backend.models.Project;
 import live.rkozik.pm_app.backend.repositories.ProjectRepository;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
@@ -45,21 +43,21 @@ public class ProjectService {
 
     public ProjectDto dispatchProject(ProjectDto project) {
         //TODO get user (who requested it) and add him as participant
-        if(project.getId() != null)
+        if (project.getId() != null)
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "id cannot be given");
 
         Project mappedProject = mapper.ProjectDtoToProject(project);
 
-        return mapper.ProjectToProjectDto( repository.saveAndFlush(mappedProject) );
+        return mapper.ProjectToProjectDto(repository.saveAndFlush(mappedProject));
     }
 
     public ProjectDto updateProject(ProjectDto project) {
-        if(project.getId() == null || !repository.existsById(project.getId()))
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"id doesn't exists");
+        if (project.getId() == null || !repository.existsById(project.getId()))
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "id doesn't exists");
 
         Project mappedProject = mapper.ProjectDtoToProject(project);
 
-        return mapper.ProjectToProjectDto( repository.saveAndFlush(mappedProject) );
+        return mapper.ProjectToProjectDto(repository.saveAndFlush(mappedProject));
     }
 
     public boolean deleteProject(ProjectDto project) {
