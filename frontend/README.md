@@ -3,5 +3,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Added dependencies:
-- bootstrapMD
-- TypeScript
+- [x] bootstrapMD
+- [x] TypeScript
+- [x] React Redux
+- [x] Prettier
+- [x] React minimal pie chart 
