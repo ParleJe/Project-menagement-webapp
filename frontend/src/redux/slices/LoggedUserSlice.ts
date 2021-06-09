@@ -45,7 +45,11 @@ export const loggedUserSlice = createSlice({
       state.scope = action.payload;
     },
     setLoadingState: (state, action: PayloadAction<LoadingStateEnum>) => {
-      state.loading = action.payload
+      state.loading = action.payload;
+    },
+    logoutUser: (state) => {
+      state.token = "";
+      state.logged = null;
     }
   },
   extraReducers: (builder) => {
@@ -64,7 +68,7 @@ export const loggedUserSlice = createSlice({
         state.loading = LoadingStateEnum.FAILED;
         state.errorMsg = response.error.message;
       })
-      .addCase(tryRegister.fulfilled, (state, response) => {
+      .addCase(tryRegister.fulfilled, (state) => {
         state.loading = LoadingStateEnum.SUCCEEDED;
 
       })
@@ -81,6 +85,6 @@ export const loggedUserSlice = createSlice({
   }
 });
 
-export const { setScope } = loggedUserSlice.actions;
+export const { setScope, setLoadingState, logoutUser } = loggedUserSlice.actions;
 export { tryLog, tryRegister };
 export default loggedUserSlice.reducer;

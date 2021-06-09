@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import SelectedScopeEnum from "../../helpers/enums/SelectedScopeEnum";
-import { setScope } from "../../redux/slices/LoggedUserSlice";
+import { logoutUser, setScope } from "../../redux/slices/LoggedUserSlice";
 import { select } from "../../redux/slices/projectSlice";
 
 const onClickProject = (idProject: number, reduxDispatch: Dispatch<any>): void => {
@@ -8,4 +8,8 @@ const onClickProject = (idProject: number, reduxDispatch: Dispatch<any>): void =
     reduxDispatch(select(idProject));
 };
 
-export { onClickProject }
+const onClickProfileButton = (reduxDispatch: Dispatch<any>): void => {
+    reduxDispatch(logoutUser());
+}
+
+export { onClickProject, onClickProfileButton }

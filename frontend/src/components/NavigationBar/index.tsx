@@ -15,7 +15,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import Project from '../../helpers/responseInterfaces/Project';
 import { fetchProjects } from '../../redux/slices/projectSlice';
 import AddPopover from '../AddPopover';
-import { onClickProject } from './actions';
+import { onClickProject, onClickProfileButton } from './actions';
 
 
 const NavigationBar = () => {
@@ -54,10 +54,10 @@ const NavigationBar = () => {
             <MDBNavbarNav>
               {projects.map((value, index) => {
                 return <MDBNavbarItem key={index}>
-                          <MDBNavbarLink active={value.id === selected} href='#' onClick={() => onClickProject(value.id, dispatch)}>
-                            {value.name}
-                          </MDBNavbarLink>
-                        </MDBNavbarItem>
+                  <MDBNavbarLink active={value.id === selected} href='#' onClick={() => onClickProject(value.id, dispatch)}>
+                    {value.name}
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
               })}
               <MDBNavbarItem className="d-flex justify-content-end">
                 <MDBBtn outline onClick={() => togglePopup()} floating size="sm" gradient="purple" className="mg-auto my-auto">
@@ -67,7 +67,10 @@ const NavigationBar = () => {
             </MDBNavbarNav>
             <div style={{ minWidth: '20%' }} className="d-flex justify-content-end">
               <span className="navbar-text p-3">{loggedUser !== null && `${loggedUser?.name} ${loggedUser?.surname}`}</span>
-              <MDBBtn floating size="lg" gradient="purple" className="mg-auto my-auto"><MDBIcon size='lg' icon="male" /></MDBBtn>
+              <MDBBtn floating size="lg" gradient="purple" className="mg-auto my-auto" onClick={() => onClickProfileButton(dispatch)}>
+                
+              <MDBIcon size='lg' icon="sign-out-alt" />
+              </MDBBtn>
             </div>
           </MDBCollapse>
         </MDBContainer>
