@@ -21,7 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
 import { initialState, reducer } from '../SecurityPopover/reducer';
 import { handleSecurityPopoverSubmit } from './actions';
-import { SecurityPopoverModes } from '../../helpers/enums/SecurityPopoverModesEnum';
+import { SecurityPopoverModesEnum } from '../../helpers/enums/SecurityPopoverModesEnum';
 
 interface props {
   show: boolean;
@@ -30,8 +30,8 @@ interface props {
 }
 
 const SecurityPopover = ({ show }: props) => {
-  const [currentMode, setCurrentMode] = useState<SecurityPopoverModes>(
-    SecurityPopoverModes.login
+  const [currentMode, setCurrentMode] = useState<SecurityPopoverModesEnum>(
+    SecurityPopoverModesEnum.login
   );
   const loadingState = useAppSelector((state) => state.logged.loading);
   const [inputState, dispatch] = useReducer(reducer, initialState);
@@ -64,7 +64,7 @@ const SecurityPopover = ({ show }: props) => {
               id="pass"
               type="password"
             />
-            {currentMode === SecurityPopoverModes.register && (
+            {currentMode === SecurityPopoverModesEnum.register && (
               <Fragment>
                 <hr />
                 <MDBInput
@@ -98,18 +98,18 @@ const SecurityPopover = ({ show }: props) => {
                 <MDBDropdownMenu>
                   <MDBDropdownItem>
                     <MDBDropdownLink
-                      onClick={() => setCurrentMode(SecurityPopoverModes.login)}
+                      onClick={() => setCurrentMode(SecurityPopoverModesEnum.login)}
                     >
-                      {SecurityPopoverModes.login}
+                      {SecurityPopoverModesEnum.login}
                     </MDBDropdownLink>
                   </MDBDropdownItem>
                   <MDBDropdownItem>
                     <MDBDropdownLink
                       onClick={() =>
-                        setCurrentMode(SecurityPopoverModes.register)
+                        setCurrentMode(SecurityPopoverModesEnum.register)
                       }
                     >
-                      {SecurityPopoverModes.register}
+                      {SecurityPopoverModesEnum.register}
                     </MDBDropdownLink>
                   </MDBDropdownItem>
                 </MDBDropdownMenu>
@@ -120,7 +120,8 @@ const SecurityPopover = ({ show }: props) => {
                     dispatch,
                     reduxDispatch,
                     inputState,
-                    currentMode
+                    currentMode,
+                    setCurrentMode
                   )
                 }
                 outline

@@ -1,4 +1,4 @@
-export enum SecurityPopoverModes {
+export enum SecurityPopoverModesEnum {
   register = 'Register',
   login = 'Login',
 }
