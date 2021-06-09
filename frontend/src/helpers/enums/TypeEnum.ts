@@ -1,6 +1,6 @@
 enum types {
-    project = "Project",
-    task = 'Task'
+  project = 'Project',
+  task = 'Task',
 }
 
-export {types};
+export { types };

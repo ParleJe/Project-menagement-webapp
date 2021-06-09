@@ -6,14 +6,14 @@ import LoggedUserSlice from './slices/LoggedUserSlice';
 import UsersSlice from './slices/UsersSlice';
 
 export const store = configureStore({
-    reducer: {
-      projects: projectReducer,
-      hugeTasks: hugeTaskReducer,
-      toDos: toDoReducer,
-      logged: LoggedUserSlice,
-      users: UsersSlice
-    },
-  })
+  reducer: {
+    projects: projectReducer,
+    hugeTasks: hugeTaskReducer,
+    toDos: toDoReducer,
+    logged: LoggedUserSlice,
+    users: UsersSlice,
+  },
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 

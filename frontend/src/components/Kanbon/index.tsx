@@ -1,46 +1,69 @@
-import { MDBCol, MDBRow } from "mdb-react-ui-kit"
-import { useEffect, useState } from "react"
-import KanbanPiece from "./KanbanPiece"
-import { useAppSelector, useAppDispatch } from '../../redux/hooks'
-import { fetchHugeTasks } from '../../redux/slices/HugeTasksSlice'
-import { getTasksDone, getTasksInProgress, getTasksNotStarted } from "../../helpers/responseInterfaces/Simplified"
-import LoadingIndicator from "../LoadingIndicator"
-import AddPopover from "../AddPopover"
-import LoadingStateEnum from "../../helpers/enums/LoadingStateEnum"
-import SelectedScopeEnum from "../../helpers/enums/SelectedScopeEnum"
-
+import { MDBCol, MDBRow } from 'mdb-react-ui-kit';
+import { useEffect, useState } from 'react';
+import KanbanPiece from './KanbanPiece';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { fetchHugeTasks } from '../../redux/slices/HugeTasksSlice';
+import {
+  getTasksDone,
+  getTasksInProgress,
+  getTasksNotStarted,
+} from '../../helpers/responseInterfaces/Simplified';
+import LoadingIndicator from '../LoadingIndicator';
+import AddPopover from '../AddPopover';
+import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
+import SelectedScopeEnum from '../../helpers/enums/SelectedScopeEnum';
 
 const Kanbon = () => {
-    const dispatch = useAppDispatch();
-    const SelectedProject = useAppSelector(state => state.projects.selected);
-    const HugeTasksFetched = useAppSelector(state => state.hugeTasks.tasks);
-    const loadingState = useAppSelector(state => state.hugeTasks.loading);
-    const currentScope = useAppSelector(state => state.logged.scope)
-    
-    const [showPopup, setShowPopup] = useState<boolean>(false);
-    const togglePopup = () => setShowPopup(!showPopup);
+  const dispatch = useAppDispatch();
+  const SelectedProject = useAppSelector((state) => state.projects.selected);
+  const HugeTasksFetched = useAppSelector((state) => state.hugeTasks.tasks);
+  const loadingState = useAppSelector((state) => state.hugeTasks.loading);
+  const currentScope = useAppSelector((state) => state.logged.scope);
 
-    useEffect(() => {
-        if (currentScope === SelectedScopeEnum.PROJECT) dispatch(fetchHugeTasks(SelectedProject));
-    }, [SelectedProject, currentScope, dispatch]);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const togglePopup = () => setShowPopup(!showPopup);
 
-    return (
-        <MDBRow between className="h-100 w-100 pt-2 position-relative">
-            {showPopup && <AddPopover idProject={SelectedProject} show={showPopup} setShow={setShowPopup} />}
-            <MDBCol size="sm-4 md-12 kanban" className="">
-                <KanbanPiece title="Not Started" color="bg-lightblue" tasks={getTasksNotStarted(HugeTasksFetched)} togglePopup={togglePopup} />
-            </MDBCol>
+  useEffect(() => {
+    if (currentScope === SelectedScopeEnum.PROJECT)
+      dispatch(fetchHugeTasks(SelectedProject));
+  }, [SelectedProject, currentScope, dispatch]);
 
-            <MDBCol size="sm-4 lg-12 kanban" className="">
-                <KanbanPiece title="In Progress" color="bg-lightyellow" tasks={getTasksInProgress(HugeTasksFetched)} />
-                {loadingState === LoadingStateEnum.PENDING && <LoadingIndicator />}
-            </MDBCol>
+  return (
+    <MDBRow between className="h-100 w-100 pt-2 position-relative">
+      {showPopup && (
+        <AddPopover
+          idProject={SelectedProject}
+          show={showPopup}
+          setShow={setShowPopup}
+        />
+      )}
+      <MDBCol size="sm-4 md-12 kanban" className="">
+        <KanbanPiece
+          title="Not Started"
+          color="bg-lightblue"
+          tasks={getTasksNotStarted(HugeTasksFetched)}
+          togglePopup={togglePopup}
+        />
+      </MDBCol>
 
-            <MDBCol size="sm-4 lg-12 kanban" className="">
-                <KanbanPiece title="Done" color="bg-lightred" tasks={getTasksDone(HugeTasksFetched)} />
-            </MDBCol>
-        </MDBRow>
-    )
-}
+      <MDBCol size="sm-4 lg-12 kanban" className="">
+        <KanbanPiece
+          title="In Progress"
+          color="bg-lightyellow"
+          tasks={getTasksInProgress(HugeTasksFetched)}
+        />
+        {loadingState === LoadingStateEnum.PENDING && <LoadingIndicator />}
+      </MDBCol>
+
+      <MDBCol size="sm-4 lg-12 kanban" className="">
+        <KanbanPiece
+          title="Done"
+          color="bg-lightred"
+          tasks={getTasksDone(HugeTasksFetched)}
+        />
+      </MDBCol>
+    </MDBRow>
+  );
+};
 
 export default Kanbon;

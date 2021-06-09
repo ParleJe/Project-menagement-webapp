@@ -6,36 +6,30 @@ import LoadingStateEnum from '../../helpers/enums/LoadingStateEnum';
 import SelectedScopeEnum from '../../helpers/enums/SelectedScopeEnum';
 
 interface LoggedState {
-  logged: SimplifiedUser | null,
-  token: string,
-  scope: SelectedScopeEnum,
+  logged: SimplifiedUser | null;
+  token: string;
+  scope: SelectedScopeEnum;
   errorMsg: string | undefined;
-  loading: LoadingStateEnum
-};
+  loading: LoadingStateEnum;
+}
 
 const initialState: LoggedState = {
   logged: null,
-  token: "",
+  token: '',
   scope: SelectedScopeEnum.NONE,
-  errorMsg: "",
-  loading: LoadingStateEnum.IDLE
+  errorMsg: '',
+  loading: LoadingStateEnum.IDLE,
 };
 
-const tryLog = createAsyncThunk(
-  'login',
-  async (payload: UserPost) => {
-    const response = await logIn(payload);
-    return await response.json();
-  }
-)
+const tryLog = createAsyncThunk('login', async (payload: UserPost) => {
+  const response = await logIn(payload);
+  return await response.json();
+});
 
-const tryRegister = createAsyncThunk(
-  'register',
-  async (user: UserPost) => {
-    const response = await register(user);
-    return await response.json() as UserPost;
-  }
-)
+const tryRegister = createAsyncThunk('register', async (user: UserPost) => {
+  const response = await register(user);
+  return (await response.json()) as UserPost;
+});
 
 export const loggedUserSlice = createSlice({
   name: 'loggedUser',
@@ -48,21 +42,21 @@ export const loggedUserSlice = createSlice({
       state.loading = action.payload;
     },
     logoutUser: (state) => {
-      state.token = "";
+      state.token = '';
       state.logged = null;
-    }
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(tryLog.pending, (state) => {
-      state.loading = LoadingStateEnum.PENDING;
-    })
+    builder
+      .addCase(tryLog.pending, (state) => {
+        state.loading = LoadingStateEnum.PENDING;
+      })
       .addCase(tryRegister.pending, (state) => {
-        state.loading = LoadingStateEnum.PENDING
+        state.loading = LoadingStateEnum.PENDING;
       })
       .addCase(tryRegister.rejected, (state, payload) => {
         state.loading = LoadingStateEnum.FAILED;
         state.errorMsg = payload.error.message;
-
       })
       .addCase(tryLog.rejected, (state, response) => {
         state.loading = LoadingStateEnum.FAILED;
@@ -70,7 +64,6 @@ export const loggedUserSlice = createSlice({
       })
       .addCase(tryRegister.fulfilled, (state) => {
         state.loading = LoadingStateEnum.SUCCEEDED;
-
       })
       .addCase(tryLog.fulfilled, (state, response) => {
         state.loading = LoadingStateEnum.SUCCEEDED;
@@ -79,12 +72,17 @@ export const loggedUserSlice = createSlice({
         if (response.payload.status > 300 || response.payload.status < 200) {
           return;
         }
-        state.logged = { id: payload.id!, name: payload.name!, surname: payload.surname! };
-        state.token = response.payload.token!
-      })
-  }
+        state.logged = {
+          id: payload.id!,
+          name: payload.name!,
+          surname: payload.surname!,
+        };
+        state.token = response.payload.token!;
+      });
+  },
 });
 
-export const { setScope, setLoadingState, logoutUser } = loggedUserSlice.actions;
+export const { setScope, setLoadingState, logoutUser } =
+  loggedUserSlice.actions;
 export { tryLog, tryRegister };
 export default loggedUserSlice.reducer;

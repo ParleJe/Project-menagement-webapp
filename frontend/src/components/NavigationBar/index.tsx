@@ -8,15 +8,14 @@ import {
   MDBNavbarItem,
   MDBNavbarLink,
   MDBBtn,
-  MDBCollapse
+  MDBCollapse,
 } from 'mdb-react-ui-kit';
-import React, { Dispatch, Fragment, useEffect, useState } from 'react'
-import { useAppSelector, useAppDispatch } from '../../redux/hooks'
+import React, { Dispatch, Fragment, useEffect, useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import Project from '../../helpers/responseInterfaces/Project';
 import { fetchProjects } from '../../redux/slices/projectSlice';
 import AddPopover from '../AddPopover';
 import { onClickProject, onClickProfileButton } from './actions';
-
 
 const NavigationBar = () => {
   const [showBasic, setShowBasic] = useState(false);
@@ -24,52 +23,77 @@ const NavigationBar = () => {
 
   const togglePopup = (): void => setShowPopup(!showPopup);
   /*________________________REDUX________________________*/
-  const projects: Project[] = useAppSelector((state) => state.projects.projects);
+  const projects: Project[] = useAppSelector(
+    (state) => state.projects.projects
+  );
   const selected: number = useAppSelector((state) => state.projects.selected);
   const dispatch: Dispatch<any> = useAppDispatch();
   const loggedUser = useAppSelector((state) => state.logged.logged);
 
   useEffect(() => {
-    if (loggedUser !== null)
-      dispatch(fetchProjects(loggedUser.id))
-  }, [dispatch, loggedUser])
+    if (loggedUser !== null) dispatch(fetchProjects(loggedUser.id));
+  }, [dispatch, loggedUser]);
 
   return (
     <Fragment>
       <AddPopover show={showPopup} setShow={setShowPopup} />
-      <MDBNavbar expand='lg' light bgColor='light'>
+      <MDBNavbar expand="lg" light bgColor="light">
         <MDBContainer fluid>
-          <MDBNavbarBrand href='#'>Bénévoles</MDBNavbarBrand>
+          <MDBNavbarBrand href="#">Bénévoles</MDBNavbarBrand>
 
           <MDBNavbarToggler
-            aria-controls='navbarSupportedContent'
-            aria-expanded='false'
-            aria-label='Toggle navigation'
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
             onClick={() => setShowBasic(!showBasic)}
           >
-            <MDBIcon icon='bars' fas />
+            <MDBIcon icon="bars" fas />
           </MDBNavbarToggler>
 
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav>
               {projects.map((value, index) => {
-                return <MDBNavbarItem key={index}>
-                  <MDBNavbarLink active={value.id === selected} href='#' onClick={() => onClickProject(value.id, dispatch)}>
-                    {value.name}
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
+                return (
+                  <MDBNavbarItem key={index}>
+                    <MDBNavbarLink
+                      active={value.id === selected}
+                      href="#"
+                      onClick={() => onClickProject(value.id, dispatch)}
+                    >
+                      {value.name}
+                    </MDBNavbarLink>
+                  </MDBNavbarItem>
+                );
               })}
               <MDBNavbarItem className="d-flex justify-content-end">
-                <MDBBtn outline onClick={() => togglePopup()} floating size="sm" gradient="purple" className="mg-auto my-auto">
-                  <MDBIcon size='md' icon="plus" />
+                <MDBBtn
+                  outline
+                  onClick={() => togglePopup()}
+                  floating
+                  size="sm"
+                  gradient="purple"
+                  className="mg-auto my-auto"
+                >
+                  <MDBIcon size="md" icon="plus" />
                 </MDBBtn>
               </MDBNavbarItem>
             </MDBNavbarNav>
-            <div style={{ minWidth: '20%' }} className="d-flex justify-content-end">
-              <span className="navbar-text p-3">{loggedUser !== null && `${loggedUser?.name} ${loggedUser?.surname}`}</span>
-              <MDBBtn floating size="lg" gradient="purple" className="mg-auto my-auto" onClick={() => onClickProfileButton(dispatch)}>
-                
-              <MDBIcon size='lg' icon="sign-out-alt" />
+            <div
+              style={{ minWidth: '20%' }}
+              className="d-flex justify-content-end"
+            >
+              <span className="navbar-text p-3">
+                {loggedUser !== null &&
+                  `${loggedUser?.name} ${loggedUser?.surname}`}
+              </span>
+              <MDBBtn
+                floating
+                size="lg"
+                gradient="purple"
+                className="mg-auto my-auto"
+                onClick={() => onClickProfileButton(dispatch)}
+              >
+                <MDBIcon size="lg" icon="sign-out-alt" />
               </MDBBtn>
             </div>
           </MDBCollapse>
@@ -77,6 +101,6 @@ const NavigationBar = () => {
       </MDBNavbar>
     </Fragment>
   );
-}
+};
 
 export default NavigationBar;
