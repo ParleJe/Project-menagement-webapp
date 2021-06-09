@@ -26,7 +26,7 @@ const DonutChart = () => {
 
   return (
     <Fragment>
-      <h1 className="text-center">Progress:</h1>
+      <h1 className="text-center">{scopeSelected + scopeSelected !== SelectedScopeEnum.NONE?":":""}</h1>
       <MDBContainer className="h-80 w-100">
         <PieChart viewBoxSize={[100, 100]} animate onClick={(e, index) => alert(data[index].title)} lineWidth={30} rounded data={data} />
       </MDBContainer>

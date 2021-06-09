@@ -1,7 +1,7 @@
 export enum SelectedScopeEnum {
-    PROJECT,
-    TASK,
-    NONE
+    PROJECT = "project",
+    TASK = "task",
+    NONE = ""
 }
 
 export default SelectedScopeEnum;
